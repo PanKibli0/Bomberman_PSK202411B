@@ -3,29 +3,37 @@
 #include "position.h"
 #include "bomb.h"
 
+
 // FUNKCJE BOMBY
+#define MIN_DISTANCE 40
 
-int p = 20;
 
-void initBomb(Bomb* bomb, int x, int y, int power) {
+void initBomb(Bomb* bomb, int x, int y, int power, float time) {
     bomb->position.x = x;
     bomb->position.y = y;
     bomb->power = power;
-    bomb->bombGraphic = al_create_bitmap(p*2, p*2);
+    bomb->time = time;
     
-
+    bomb->bombGraphic = al_create_bitmap(40, 40);
     al_set_target_bitmap(bomb->bombGraphic);
-    al_draw_filled_circle(p, p, 0, al_map_rgb(255, 40, 40));
-    al_draw_circle(p, p, 10, al_map_rgb(255, 255, 255), 2);
+    al_draw_rectangle(0, 0, 40,40, al_map_rgb(255, 255, 255), 40);
     ;
 }
+        
+bool addBomb(Bomb** bomb, int x, int y, int power, float time) {
+    for (Bomb* bombElement = *bomb; bombElement != NULL; bombElement = bombElement->next) {
+        int dx = abs(bombElement->position.x - x);
+        int dy = abs(bombElement->position.y - y);
+        if (dx < MIN_DISTANCE && dy < MIN_DISTANCE) {
+            return false;
+        }
+    }
 
-               
-void addBomb(Bomb** bomb, int x, int y, int power) {
     Bomb* newBomb = malloc(sizeof(Bomb));
-    initBomb(newBomb, x, y, power);
+    initBomb(newBomb, x, y, power, time);
     newBomb->next = *bomb;
     *bomb = newBomb;
+    return true;
 }
 
 
@@ -33,11 +41,32 @@ void addBomb(Bomb** bomb, int x, int y, int power) {
 void drawBombs(Bomb* bomb, ALLEGRO_DISPLAY* display) {
     for (Bomb* bombElement = bomb; bombElement != NULL; bombElement = bombElement->next) {
         al_set_target_bitmap(al_get_backbuffer(display));
-        al_draw_bitmap(bombElement->bombGraphic, bombElement->position.x-10, bombElement->position.y-10, 0);
+        al_draw_bitmap(bombElement->bombGraphic, bombElement->position.x, bombElement->position.y, 0);
     }
 }
 
+void explodedBomb(Bomb** bomb, Bomb* explodedBomb) {
+    if (*bomb == explodedBomb) {
+        *bomb = explodedBomb->next;
+    }
+    else {
+        for (Bomb* bombElement = *bomb; bombElement != NULL; bombElement = bombElement->next) {
+            if (bombElement->next == explodedBomb) {
+                bombElement->next = explodedBomb->next;
+                break;
+            }
+        }
+    }
+    free(explodedBomb);
+}
 
+void timerBomb(Bomb** bomb) {
+    for (Bomb* bombElement = *bomb; bombElement != NULL; bombElement = bombElement->next) {
+        bombElement->time -= 1.0 / FPS;
 
-
-
+        if (bombElement->time <= 0) {
+            explodedBomb(bomb, bombElement);
+            break; 
+        }
+    }
+}

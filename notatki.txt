@@ -3,11 +3,14 @@ wybuch = kolzija usuwanie + grafiki + czas === 2/4d
 power-up = kolizja zmiana = 2d
 
 
-//ALLEGRO_TIMER* gameTimer = al_create_timer(1 / FPS);
+
 
 zorbic ten timer z fps
 
-dodac do sterowanie kontrole bomb
+
 bomby usuwanie sie po czasie;
 
-wieksze bomby i je robic po srodku;
+
+
+ALLEGRO_TIMER* timer = al_create_timer(1.0 / 60 );
+	al_start_timer(timer);

@@ -7,6 +7,7 @@ typedef struct Bomb {
     Position position;
     ALLEGRO_BITMAP* bombGraphic;
     int power;
+    float time;
     struct Bomb* next; // Nastepna bomba
 } Bomb;
 
@@ -18,9 +19,10 @@ typedef struct {
 
 // FUKCJE
 
-void initBomb(Bomb* bomb, int x, int y, int power);
-void addBomb(Bomb** head, int x, int y, int power);
+void initBomb(Bomb* bomb, int x, int y, int power, float time);
+bool addBomb(Bomb** head, int x, int y, int power, float time);
 void drawBombs(Bomb* head, ALLEGRO_DISPLAY* display);
+void timerBomb(Bomb** bomb);
 
 
 #endif /* BOMB_H */
