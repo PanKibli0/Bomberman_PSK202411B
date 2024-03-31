@@ -17,7 +17,6 @@ void drawMap(ALLEGRO_BITMAP* map, ALLEGRO_DISPLAY* display) {
 }
 
 
-
 // G³ówna pêtla gry
 int main() {
 	srand(time(0));
@@ -29,20 +28,26 @@ int main() {
 	ALLEGRO_DISPLAY* display = al_create_display(800, 450);
 	ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
 	ALLEGRO_KEYBOARD_STATE keyState;
-	//ALLEGRO_TIMER* gameTimer = al_create_timer(1 / FPS);
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	bool key[ALLEGRO_KEY_MAX] = { false };
 
+	// BITMAP DLA ALL
+
 	ALLEGRO_BITMAP* map = al_create_bitmap(800, 450);
 	al_set_target_bitmap(map);
-	al_clear_to_color(al_map_rgb(255, 128, 128));
+	al_clear_to_color(al_map_rgb(128, 128, 128));
+
+	//ALLEGRO_BITMAP *bombsPlaces = al_create_bitmap(800, 450);
+
+
 
 	ALLEGRO_BITMAP* playerGraphic = al_create_bitmap(30, 30);
 	al_set_target_bitmap(playerGraphic);
 	al_clear_to_color(al_map_rgb(255, 0, 0));
 	//al_set_target_bitmap(al_get_backbuffer(display));
 
-	// INICJACJA GRACZY
+	// INICJACJA GRY
+		// GRACZ
 	int playerNumber = rand() % 3 + 1;
 	printf("%d", playerNumber);
 	Player* players = malloc(playerNumber * sizeof(Player));
@@ -54,7 +59,10 @@ int main() {
 	case 1: initPlayer(&players[0], playerGraphic, rand() % 770, rand() % 420, 3, 20, al_map_rgb(rand() % 256, rand() % 256, rand() % 256), (int[]) { ALLEGRO_KEY_W, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_A, ALLEGRO_KEY_E});
 	}
 
-	al_clear_to_color(al_map_rgb(128, 128, 128));
+		// BOMBY
+	Bomb* bomb = NULL;
+	
+
 
 	// PETLA GRY
 	while (run) {
@@ -68,12 +76,17 @@ int main() {
 		
 		drawMap(map, display);
 
-		if (al_key_down(&keyState, ALLEGRO_KEY_Q)) {
-			setBomb(&players[0], 10); 
+		if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
+			if (event.keyboard.keycode == ALLEGRO_KEY_Q) {
+				addBomb(&bomb, players[0].position.x, players[0].position.y, 1);
+			}
 		}
 
 		for (int i = 0; i < playerNumber; i++)
 			drawPlayer(&players[i]);
+
+		drawBombs(bomb, display);
+
 		al_flip_display();
 
 	}

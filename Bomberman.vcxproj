@@ -142,6 +142,9 @@
     <ClInclude Include="player.h" />
     <ClInclude Include="position.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="notatki.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="packages\AllegroDeps.1.14.0\build\native\AllegroDeps.targets" Condition="Exists('packages\AllegroDeps.1.14.0\build\native\AllegroDeps.targets')" />

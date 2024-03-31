@@ -1,17 +1,9 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 #include "position.h"
+#include "player.h"
 //#include "bomb.h"
 
-// GRACZ
-typedef struct {
-	Position position;
-	ALLEGRO_BITMAP* playerGraphic;
-	int velocity;
-	int bomb;
-	ALLEGRO_COLOR color;
-	int controlKeys[5];
-} Player;
 
 // FUNKCJE GRACZA
 void initPlayer(Player* player, ALLEGRO_BITMAP* playerGraphic, int x, int y, int velocity, int bomb, ALLEGRO_COLOR color, int controlKeys[5]) {

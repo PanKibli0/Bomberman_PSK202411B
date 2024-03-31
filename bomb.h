@@ -1,14 +1,13 @@
 #ifndef BOMB_H
 #define BOMB_H
 
-#include <allegro5/allegro.h>
 #include "position.h"
 
-
-typedef struct {
-	Position position;
-	ALLEGRO_BITMAP* playerGraphic;
-	int power;
+typedef struct Bomb {
+    Position position;
+    ALLEGRO_BITMAP* bombGraphic;
+    int power;
+    struct Bomb* next; // Nastepna bomba
 } Bomb;
 
 typedef struct {
@@ -18,7 +17,10 @@ typedef struct {
 } Explode;
 
 // FUKCJE
-void setBomb(Player* player, int power);
+
+void initBomb(Bomb* bomb, int x, int y, int power);
+void addBomb(Bomb** head, int x, int y, int power);
+void drawBombs(Bomb* head, ALLEGRO_DISPLAY* display);
 
 
 #endif /* BOMB_H */

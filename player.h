@@ -1,7 +1,6 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <allegro5/allegro.h>
 #include "position.h"
     
 
@@ -11,7 +10,7 @@ typedef struct {
     int velocity;
     int bomb;
     ALLEGRO_COLOR color;
-    int keys[5];
+    int controlKeys[5];
 } Player;
 
 // FUKCJE
