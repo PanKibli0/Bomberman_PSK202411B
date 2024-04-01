@@ -12,8 +12,9 @@ typedef struct {
 
 
 typedef struct {
+    unsigned int health;
     Position position;
-    ALLEGRO_BITMAP* playerGraphic;
+    ALLEGRO_BITMAP* graphic;
     float velocity;
     BombData bombs;
     ALLEGRO_COLOR color;
@@ -21,7 +22,7 @@ typedef struct {
 } Player;
 
 // FUKCJE
-void initPlayer(Player* player, int x, int y, int velocity, int bombAmount, float bombTime, int bombPower, ALLEGRO_COLOR color, int controlKeys[5]);
+void initPlayer(Player* player,unsigned int health, int x, int y, float velocity, int bombAmount, float bombTime, int bombPower, ALLEGRO_COLOR color, int controlKeys[5]);
 void drawPlayer(Player* player, ALLEGRO_DISPLAY* display);
 void movePlayer(Player* player, ALLEGRO_KEYBOARD_STATE* keyState);
 void placeBomb(Player* player, Bomb** bomb, ALLEGRO_KEYBOARD_STATE* keyState);

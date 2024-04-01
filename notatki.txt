@@ -3,14 +3,3 @@ wybuch = kolzija usuwanie + grafiki + czas === 2/4d
 power-up = kolizja zmiana = 2d
 
 
-
-
-zorbic ten timer z fps
-
-
-bomby usuwanie sie po czasie;
-
-
-
-ALLEGRO_TIMER* timer = al_create_timer(1.0 / 60 );
-	al_start_timer(timer);

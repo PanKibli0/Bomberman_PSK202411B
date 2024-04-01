@@ -1,21 +1,16 @@
 #ifndef BOMB_H
 #define BOMB_H
 
-#include "position.h"
+
 
 typedef struct Bomb {
     Position position;
-    ALLEGRO_BITMAP* bombGraphic;
+    ALLEGRO_BITMAP* graphic;
     int power;
     float time;
     struct Bomb* next; // Nastepna bomba
 } Bomb;
 
-typedef struct {
-	Position position;
-	ALLEGRO_BITMAP* playerGraphic;
-	int direction;
-} Explode;
 
 // FUKCJE
 

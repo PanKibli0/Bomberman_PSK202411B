@@ -133,12 +133,16 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="block.c" />
     <ClCompile Include="bomb.c" />
+    <ClCompile Include="collision.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="player.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="block.h" />
     <ClInclude Include="bomb.h" />
+    <ClInclude Include="collision.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="position.h" />
   </ItemGroup>

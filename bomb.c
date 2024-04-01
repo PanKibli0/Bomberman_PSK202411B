@@ -1,12 +1,8 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
+
 #include "position.h"
 #include "bomb.h"
-
-
-// FUNKCJE BOMBY
-#define MIN_DISTANCE 40
-
 
 void initBomb(Bomb* bomb, int x, int y, int power, float time) {
     bomb->position.x = x;
@@ -14,8 +10,8 @@ void initBomb(Bomb* bomb, int x, int y, int power, float time) {
     bomb->power = power;
     bomb->time = time;
     
-    bomb->bombGraphic = al_create_bitmap(40, 40);
-    al_set_target_bitmap(bomb->bombGraphic);
+    bomb->graphic = al_create_bitmap(40, 40);
+    al_set_target_bitmap(bomb->graphic);
     al_draw_rectangle(0, 0, 40,40, al_map_rgb(255, 255, 255), 40);
     ;
 }
@@ -41,7 +37,7 @@ bool addBomb(Bomb** bomb, int x, int y, int power, float time) {
 void drawBombs(Bomb* bomb, ALLEGRO_DISPLAY* display) {
     for (Bomb* bombElement = bomb; bombElement != NULL; bombElement = bombElement->next) {
         al_set_target_bitmap(al_get_backbuffer(display));
-        al_draw_bitmap(bombElement->bombGraphic, bombElement->position.x, bombElement->position.y, 0);
+        al_draw_bitmap(bombElement->graphic, bombElement->position.x, bombElement->position.y, 0);
     }
 }
 
