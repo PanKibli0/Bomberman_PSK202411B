@@ -1,9 +1,8 @@
-kolizja z bombami;
-wybuchy === kolizja z block + kolizja z player (plater->health -= 1);
-
-
+// DO ZROBIENIA:
+wybuchy === kolizja z block + kolizja z player (player->health -= 1);
 RYSOWANIE MAPY
+
 
 Panel INFO 
 
-ladne porsuxanie sie
+ladne poruszanie sie

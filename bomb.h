@@ -1,7 +1,7 @@
 #ifndef BOMB_H
 #define BOMB_H
 
-
+#include "position.h"
 
 typedef struct Bomb {
     Position position;

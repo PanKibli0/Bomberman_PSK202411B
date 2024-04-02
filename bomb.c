@@ -56,11 +56,12 @@ void explodedBomb(Bomb** bomb, Bomb* explodedBomb) {
     free(explodedBomb);
 }
 
-void timerBomb(Bomb** bomb) {
+void timerBomb(Bomb** bomb ) {
     for (Bomb* bombElement = *bomb; bombElement != NULL; bombElement = bombElement->next) {
         bombElement->time -= 1.0 / FPS;
 
         if (bombElement->time <= 0) {
+            //explosion(bombElement->position.x, bombElement->position.x)
             explodedBomb(bomb, bombElement);
             break; 
         }
