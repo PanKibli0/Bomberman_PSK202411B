@@ -73,7 +73,7 @@ int main() {
 	case 4: initPlayer(&players[3], 3,rand() % 770, rand() % 420, (float) 5, 3, 5, 1, al_map_rgb(rand() % 256, rand() % 256, rand() % 256), (int[]) { ALLEGRO_KEY_PAD_8, ALLEGRO_KEY_PAD_5, ALLEGRO_KEY_PAD_6, ALLEGRO_KEY_PAD_4, ALLEGRO_KEY_PAD_9});
 	case 3: initPlayer(&players[2], 3,rand() % 770, rand() % 420, (float) 3, 3, 5, 1, al_map_rgb(rand() % 256, rand() % 256, rand() % 256), (int[]) { ALLEGRO_KEY_I, ALLEGRO_KEY_K, ALLEGRO_KEY_L, ALLEGRO_KEY_J, ALLEGRO_KEY_O});
 	case 2: initPlayer(&players[1], 3,rand() % 770, rand() % 420, (float) 2 , 3, 1, 1, al_map_rgb(rand() % 256, rand() % 256, rand() % 256), (int[]) { ALLEGRO_KEY_UP, ALLEGRO_KEY_DOWN, ALLEGRO_KEY_RIGHT, ALLEGRO_KEY_LEFT, ALLEGRO_KEY_PAD_0});
-	case 1: initPlayer(&players[0], 3,rand() % 770, rand() % 420, (float) 1.15 , 30, 2.5, 1, al_map_rgb(rand() % 256, rand() % 256, rand() % 256), (int[]) { ALLEGRO_KEY_W, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_A, ALLEGRO_KEY_Q});
+	case 1: initPlayer(&players[0], 3,rand() % 770, rand() % 420, (float) 2 , 30, 2.5, 1, al_map_rgb(rand() % 256, rand() % 256, rand() % 256), (int[]) { ALLEGRO_KEY_W, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_A, ALLEGRO_KEY_Q});
 	}
 
 		// BOMBY
@@ -94,7 +94,7 @@ int main() {
 			
 
 			for (int i = 0; i < playerNumber; i++)
-				movePlayer(&players[i], &keyState);
+				movePlayer(&players[i], &keyState, blocks, bombs);
 
 			for (int i = 0; i < playerNumber; i++)
 				placeBomb(&players[i], &bombs, &keyState);
