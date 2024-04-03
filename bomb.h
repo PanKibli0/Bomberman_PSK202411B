@@ -4,23 +4,22 @@
 #include "position.h"
 //#include "player.h"
 
-
 typedef struct Bomb {
     Position position;
     ALLEGRO_BITMAP* graphic;
     int power;
     float time;
     struct Bomb* next; // Nastepna bomba
-    struct Player* owner;
+    int owner; // Indeks wlasciciela bomby
 } Bomb;
 
 
 // FUKCJE
 
-void initBomb(Bomb* bomb, int x, int y, int power, float time);
-bool addBomb(Bomb** head, int x, int y, int power, float time);
+void initBomb(Bomb* bomb, int x, int y, int power, float time, int owner);
+bool addBomb(Bomb** head, int x, int y, int power, float time, int owner);
 void drawBombs(Bomb* head, ALLEGRO_DISPLAY* display);
-void timerBomb(Bomb** bomb);
+int timerBomb(Bomb** bomb);
 
 
 #endif /* BOMB_H */

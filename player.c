@@ -80,9 +80,9 @@ void placeBomb(Player* players, int playerNumber, Bomb** bomb, ALLEGRO_KEYBOARD_
 			int bombX = ((int)(players[i].position.x + 20) / 40) * 40; 
 			int bombY = ((int)(players[i].position.y + 20) / 40) * 40; 
 
-			if (addBomb(bomb, bombX, bombY, players[i].bombs.BombPower, players[i].bombs.bombTime)) {
+			if (addBomb(bomb, bombX, bombY, players[i].bombs.BombPower, players[i].bombs.bombTime, i)) {
 				players[i].bombs.bombAmount -= 1;
-				printf("BOMBS: %d \t", players[i].bombs.bombAmount);
+				printf("BOMBS: %d \n", players[i].bombs.bombAmount);
 			}
 		}
 	}

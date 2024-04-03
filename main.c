@@ -124,9 +124,13 @@ int main() {
 			movePlayer(players, playerNumber, &keyState, blocks, bombs);
 			placeBomb(players, playerNumber, &bombs, &keyState);
 
+			int bombExplode = timerBomb(&bombs);
+			
 
-			timerBomb(&bombs);
-
+			if (bombExplode) {
+				players[bombExplode - 1].bombs.bombAmount += 1;
+			};
+				
 
 			if (al_key_down(&keyState, ALLEGRO_KEY_ESCAPE)) run = false;
 
