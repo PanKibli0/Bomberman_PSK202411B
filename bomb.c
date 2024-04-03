@@ -4,6 +4,7 @@
 #include "position.h"
 #include "bomb.h"
 
+
 void initBomb(Bomb* bomb, int x, int y, int power, float time) {
     bomb->position.x = x;
     bomb->position.y = y;

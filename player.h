@@ -25,7 +25,7 @@ typedef struct {
 // FUKCJE
 void initPlayer(Player* player, unsigned int health, int x, int y, float velocity, int bombAmount, float bombTime, int bombPower, ALLEGRO_COLOR color, int controlKeys[5]);
 void drawPlayer(Player* player, ALLEGRO_DISPLAY* display);
-void movePlayer(Player* player,int playerNumber, ALLEGRO_KEYBOARD_STATE* keyState, Block* block, Bomb* bomb);
+void movePlayer(Player* player, int playerNumber, ALLEGRO_KEYBOARD_STATE* keyState, Block* block, Bomb* bomb);
 void placeBomb(Player* players, int playerNumber, Bomb** bomb, ALLEGRO_KEYBOARD_STATE* keyState);
 
 

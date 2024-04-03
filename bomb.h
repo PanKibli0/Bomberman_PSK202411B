@@ -4,12 +4,14 @@
 #include "position.h"
 //#include "player.h"
 
+
 typedef struct Bomb {
     Position position;
     ALLEGRO_BITMAP* graphic;
     int power;
     float time;
     struct Bomb* next; // Nastepna bomba
+    struct Player* owner;
 } Bomb;
 
 
