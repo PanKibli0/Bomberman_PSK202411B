@@ -38,44 +38,52 @@ void drawPlayer(Player* player, ALLEGRO_DISPLAY* display) {
 // -----------------------------------
 
 
-void movePlayer(Player* player, ALLEGRO_KEYBOARD_STATE* keyState, Block* block, Bomb* bomb, Player* players, int playerNumber, int playerIndex) {
-	float dx = 0, dy = 0;
+void movePlayer(Player* players, int playerNumber, ALLEGRO_KEYBOARD_STATE* keyState, Block* block, Bomb* bomb) {
+	for (int i = 0; i < playerNumber; i++) {
+		float dx = 0, dy = 0;
 
-	if (al_key_down(keyState, player->controlKeys[0]))
-		dy -= player->velocity;
-	if (al_key_down(keyState, player->controlKeys[1]))
-		dy += player->velocity;
-	if (al_key_down(keyState, player->controlKeys[2]))
-		dx += player->velocity;
-	if (al_key_down(keyState, player->controlKeys[3]))
-		dx -= player->velocity;
+		if (al_key_down(keyState, players[i].controlKeys[0]))
+			dy -= players[i].velocity;
+		if (al_key_down(keyState, players[i].controlKeys[1]))
+			dy += players[i].velocity;
+		if (al_key_down(keyState, players[i].controlKeys[2]))
+			dx += players[i].velocity;
+		if (al_key_down(keyState, players[i].controlKeys[3]))
+			dx -= players[i].velocity;
 
-	float newX = player->position.x + dx;
-	float newY = player->position.y + dy;
+		float newX = players[i].position.x + dx;
+		float newY = players[i].position.y + dy;
 
-	bool onBomb = checkBombCollision(player->position.x, player->position.y, bomb);
+		bool onBomb = checkBombCollision(players[i].position.x, players[i].position.y, bomb);
 
-	if (!onBomb) {
-		if (!checkBlockCollision(newX, newY, block) && !checkPlayerCollision(newX, newY, players, playerNumber, playerIndex) && !checkBombCollision(newX, newY, bomb)) {
-			player->position.x = newX;
-			player->position.y = newY;
+		if (!onBomb) {
+			if (!checkBlockCollision(newX, newY, block) && !checkPlayerCollision(newX, newY, players, playerNumber, i) && !checkBombCollision(newX, newY, bomb)) {
+				players[i].position.x = newX;
+				players[i].position.y = newY;
+			}
 		}
-	}
-	else {
-		if (!checkBlockCollision(newX, newY, block) && !checkPlayerCollision(newX, newY, players, playerNumber, playerIndex)) {
-			player->position.x = newX;
-			player->position.y = newY;
+		else {
+			if (!checkBlockCollision(newX, newY, block) && !checkPlayerCollision(newX, newY, players, playerNumber, i)) {
+				players[i].position.x = newX;
+				players[i].position.y = newY;
+			}
 		}
 	}
 }
 
 // ----------------------------------------------------
 
-void placeBomb(Player* player, Bomb** bomb, ALLEGRO_KEYBOARD_STATE* keyState) {
-	if (al_key_down(keyState, player->controlKeys[4]) && player->bombs.bombAmount > 0) {
-		if (addBomb(bomb, player->position.x, player->position.y, player->bombs.BombPower, player->bombs.bombTime))
-			player->bombs.bombAmount -= 1;
+void placeBomb(Player* players, int playerNumber, Bomb** bomb, ALLEGRO_KEYBOARD_STATE* keyState) {
+	for (int i = 0; i < playerNumber; ++i) {
+		if (al_key_down(keyState, players[i].controlKeys[4]) && players[i].bombs.bombAmount > 0) {
+			// Obliczanie pozycji bomby na podstawie pozycji gracza
+			int bombX = ((int)(players[i].position.x + 20) / 40) * 40; 
+			int bombY = ((int)(players[i].position.y + 20) / 40) * 40; 
 
-		printf("BOMBS: %d \t", player->bombs.bombAmount);
+			if (addBomb(bomb, bombX, bombY, players[i].bombs.BombPower, players[i].bombs.bombTime)) {
+				players[i].bombs.bombAmount -= 1;
+				printf("BOMBS: %d \t", players[i].bombs.bombAmount);
+			}
+		}
 	}
 }

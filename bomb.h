@@ -2,6 +2,7 @@
 #define BOMB_H
 
 #include "position.h"
+//#include "player.h"
 
 typedef struct Bomb {
     Position position;
