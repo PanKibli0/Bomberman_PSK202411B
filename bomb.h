@@ -1,8 +1,10 @@
 #ifndef BOMB_H
 #define BOMB_H
 
-#include "position.h"
 #include "block.h"
+#include "player.h"
+
+//struct Player;
 
 typedef struct Bomb {
     Position position;
@@ -10,16 +12,15 @@ typedef struct Bomb {
     int power;
     float time;
     struct Bomb* next; // Nastepna bomba
-    int owner; // Indeks wlasciciela bomby
+    Player* owner; // wlasciciel bomby
 } Bomb;
 
 
 // FUKCJE
-
-void initBomb(Bomb* bomb, int x, int y, int power, float time, int owner);
-bool addBomb(Bomb** head, int x, int y, int power, float time, int owner);
+void initBomb(Bomb* bomb, int x, int y, int power, float time,  Player* owner);
+bool addBomb(Bomb** head, int x, int y, int power, float time,  Player* owner);
 void drawBombs(Bomb* head, ALLEGRO_DISPLAY* display);
-int timerBomb(Bomb** bomb, Block* blocks);
+void timerBomb(Bomb** bomb, Block* blocks, Player* players);
 
 
 #endif /* BOMB_H */

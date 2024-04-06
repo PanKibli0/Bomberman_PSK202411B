@@ -4,7 +4,6 @@
 
 #include "position.h"
 #include "player.h"
-#include "bomb.h"
 #include "block.h"
 #include "collision.h"
 
@@ -81,7 +80,7 @@ void placeBomb(Player* players, int playerNumber, Bomb** bomb, ALLEGRO_KEYBOARD_
 			int bombX = ((int)(players[i].position.x + 20) / 40) * 40; 
 			int bombY = ((int)(players[i].position.y + 20) / 40) * 40; 
 
-			if (addBomb(bomb, bombX, bombY, players[i].bombs.BombPower, players[i].bombs.bombTime, i)) {
+			if (addBomb(bomb, bombX, bombY, players[i].bombs.BombPower, players[i].bombs.bombTime, &players[i])) {
 				players[i].bombs.bombAmount -= 1;
 				printf("BOMBS: %d \n", players[i].bombs.bombAmount);
 			}

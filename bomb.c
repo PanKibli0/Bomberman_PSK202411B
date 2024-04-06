@@ -3,9 +3,11 @@
 
 #include "position.h"
 #include "bomb.h"
+#include "explosion.h"
+#include "player.h"
 
 
-void initBomb(Bomb* bomb, int x, int y, int power, float time, int owner) {
+void initBomb(Bomb* bomb, int x, int y, int power, float time, Player* owner) {
     bomb->position.x = x;
     bomb->position.y = y;
     bomb->power = power;
@@ -18,7 +20,7 @@ void initBomb(Bomb* bomb, int x, int y, int power, float time, int owner) {
     ;
 }
 
-bool addBomb(Bomb** bomb, int x, int y, int power, float time, int owner) {
+bool addBomb(Bomb** bomb, int x, int y, int power, float time, Player* owner) {
     for (Bomb* bombElement = *bomb; bombElement != NULL; bombElement = bombElement->next) {
         int dx = abs(bombElement->position.x - x);
         int dy = abs(bombElement->position.y - y);
@@ -58,18 +60,15 @@ void explodedBomb(Bomb** bomb, Bomb* explodedBomb) {
     free(explodedBomb);
 }
 
-int timerBomb(Bomb** bomb, Block* blocks) {
+void timerBomb(Bomb** bomb, Block* blocks, Player* players) {
     for (Bomb* bombElement = *bomb; bombElement != NULL; bombElement = bombElement->next) {
         bombElement->time -= 1.0 / FPS;
 
         if (bombElement->time <= 0) {
-            //explosion();
-            int owner = bombElement->owner;
+            explosion(bombElement, blocks);
+            bombElement->owner->bombs.bombAmount++;
             explodedBomb(bomb, bombElement);
-            
-            return owner +1;
-        }
-        
+            break;
+        }    
     }
-    return 0;
 }
