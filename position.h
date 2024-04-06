@@ -3,7 +3,7 @@
 
 #include <allegro5/allegro.h>
 #define FPS 60
-#define MIN_DISTANCE 40
+#define TILE 40
 
 typedef struct {
     float x, y;

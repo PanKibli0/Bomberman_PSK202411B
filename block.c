@@ -26,7 +26,7 @@ bool addBlock(Block** block, int x, int y, int health) {
 	for (Block* blockElement = *block; blockElement != NULL; blockElement = blockElement->next) {
 		int dx = abs(blockElement->position.x - x);
 		int dy = abs(blockElement->position.y - y);
-		if (dx < MIN_DISTANCE && dy < MIN_DISTANCE) {
+		if (dx < 40 && dy < 40) {
 			return false;
 		}
 	}

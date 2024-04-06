@@ -6,8 +6,8 @@
 #include "block.h"
 
 
-bool checkBlockCollision(float x, float y, Block* block);
+bool checkBlockCollision(float x, float y, int range, Block* block);
 bool checkBombCollision(float x, float y, Bomb* bomb);
-bool checkPlayerCollision(float x, float y, Player* players, int playerNumber, int currentPlayerIndex);
+bool checkPlayerCollision(float x, float y, int range, Player* players, int playerNumber, int currentPlayerIndex);
 
 #endif /* COLLISION_H */
