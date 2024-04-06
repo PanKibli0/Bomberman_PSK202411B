@@ -136,7 +136,7 @@
     <ClCompile Include="block.c" />
     <ClCompile Include="bomb.c" />
     <ClCompile Include="collision.c" />
-    <ClCompile Include="explode.c" />
+    <ClCompile Include="explosion.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="map.c" />
     <ClCompile Include="player.c" />
@@ -145,7 +145,7 @@
     <ClInclude Include="block.h" />
     <ClInclude Include="bomb.h" />
     <ClInclude Include="collision.h" />
-    <ClInclude Include="explode.h" />
+    <ClInclude Include="explosion.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="position.h" />

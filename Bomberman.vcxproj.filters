@@ -33,7 +33,7 @@
     <ClCompile Include="collision.c">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="explode.c">
+    <ClCompile Include="explosion.c">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
     <ClCompile Include="map.c">
@@ -56,7 +56,7 @@
     <ClInclude Include="collision.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="explode.h">
+    <ClInclude Include="explosion.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="map.h">

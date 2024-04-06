@@ -58,12 +58,12 @@ void explodedBomb(Bomb** bomb, Bomb* explodedBomb) {
     free(explodedBomb);
 }
 
-int timerBomb(Bomb** bomb) {
+int timerBomb(Bomb** bomb, Block* blocks) {
     for (Bomb* bombElement = *bomb; bombElement != NULL; bombElement = bombElement->next) {
         bombElement->time -= 1.0 / FPS;
 
         if (bombElement->time <= 0) {
-            //explosion(bombElement->position.x, bombElement->position.x)
+            //explosion();
             int owner = bombElement->owner;
             explodedBomb(bomb, bombElement);
             

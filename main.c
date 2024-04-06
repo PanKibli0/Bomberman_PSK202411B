@@ -7,7 +7,7 @@
 #include "position.h"
 #include "bomb.h"
 #include "block.h"
-#include "explode.h"
+#include "explosion.h"
 
 bool run = true;
 
@@ -124,7 +124,7 @@ int main() {
 			movePlayer(players, playerNumber, &keyState, blocks, bombs);
 			placeBomb(players, playerNumber, &bombs, &keyState);
 
-			int bombExplode = timerBomb(&bombs);
+			int bombExplode = timerBomb(&bombs, blocks);
 			
 
 			if (bombExplode) {
