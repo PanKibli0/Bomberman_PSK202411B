@@ -3,15 +3,13 @@
 #include "bomb.h"
 #include "block.h"
 
-bool checkBlockCollision(float x, float y, int range, Block* block) {
-
+bool checkBlockCollision(float x, float y, Block* block) {
     for (Block* blockElement = block; blockElement != NULL; blockElement = blockElement->next) {
         if (x + 40 > blockElement->position.x && x < blockElement->position.x + 40 &&
             y + 40 > blockElement->position.y && y < blockElement->position.y + 40) {
             return true;
         }
     }
-
     return false;
 }
 
@@ -25,7 +23,7 @@ bool checkBombCollision(float x, float y, Bomb* bomb) {
     return false;
 }
 
-bool checkPlayerCollision(float x, float y, int range, Player* players, int playerNumber, int currentPlayerIndex) {
+bool checkPlayerCollision(float x, float y, Player* players, int playerNumber, int currentPlayerIndex) {
     for (int i = 0; i < playerNumber; ++i) {
         if (i != currentPlayerIndex) {
             if (x + 40 > players[i].position.x && x < players[i].position.x + 40 &&

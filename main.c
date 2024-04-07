@@ -126,7 +126,7 @@ int main() {
 			movePlayer(players, playerNumber, &keyState, blocks, bombs);
 			placeBomb(players, playerNumber, &bombs, &keyState);
 
-			timerBomb(&bombs, blocks, players);
+			timerBomb(&bombs, blocks, players, playerNumber);
 			
 			if (al_key_down(&keyState, ALLEGRO_KEY_ESCAPE)) run = false;
 

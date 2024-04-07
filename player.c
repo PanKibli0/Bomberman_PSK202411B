@@ -57,13 +57,13 @@ void movePlayer(Player* players, int playerNumber, ALLEGRO_KEYBOARD_STATE* keySt
 			bool onBomb = checkBombCollision(players[i].position.x, players[i].position.y, bomb);
 
 			if (!onBomb) {
-				if (!checkBlockCollision(newX, newY, 1, block) && !checkPlayerCollision(newX, newY, 1, players, playerNumber, i) && !checkBombCollision(newX, newY, bomb)) {
+				if (!checkBlockCollision(newX, newY, block) && !checkPlayerCollision(newX, newY, players, playerNumber, i) && !checkBombCollision(newX, newY, bomb)) {
 					players[i].position.x = newX;
 					players[i].position.y = newY;
 				}
 			}
 			else {
-				if (!checkBlockCollision(newX, newY, 1, block) && !checkPlayerCollision(newX, newY, 1, players, playerNumber, i)) {
+				if (!checkBlockCollision(newX, newY,  block) && !checkPlayerCollision(newX, newY, players, playerNumber, i)) {
 					players[i].position.x = newX;
 					players[i].position.y = newY;
 				}

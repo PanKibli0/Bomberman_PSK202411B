@@ -4,14 +4,19 @@
 #include "player.h"
 #include "collision.h"
 
-#include <allegro5/allegro_primitives.h>
 
 void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber) {
-    int x = bomb->position.x;
-    int y = bomb->position.y;
     int power = bomb->power;
-    
-    printf("\t explosion: %d %d \n", x, y);
 
-    //for (!checkBlock);
+    for (int i = 1; i <= power; ++i) {
+        float x = bomb->position.x + 40 * i;
+        float y = bomb->position.y;
+        if (checkBlockCollision(x, y, blocks)) {
+            printf("EXPLODE RIGHT");
+            break;
+        }
+    }
+
+    
+
 }

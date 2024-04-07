@@ -60,12 +60,13 @@ void explodedBomb(Bomb** bomb, Bomb* explodedBomb) {
     free(explodedBomb);
 }
 
-void timerBomb(Bomb** bomb, Block* blocks, Player* players) {
+void timerBomb(Bomb** bomb, Block* blocks, Player* players, int playerNumber) {
     for (Bomb* bombElement = *bomb; bombElement != NULL; bombElement = bombElement->next) {
         bombElement->time -= 1.0 / FPS;
 
         if (bombElement->time <= 0) {
-            explosion(bombElement, blocks);
+            
+            explosion(bombElement, blocks, players, playerNumber);
             bombElement->owner->bombs.bombAmount++;
             explodedBomb(bomb, bombElement);
             break;
