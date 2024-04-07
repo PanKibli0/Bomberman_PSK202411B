@@ -66,7 +66,7 @@ void timerBomb(Bomb** bomb, Block* blocks, Player* players, int playerNumber) {
 
         if (bombElement->time <= 0) {
             
-            explosion(bombElement, blocks, players, playerNumber);
+            explosion(bombElement, &blocks);
             bombElement->owner->bombs.bombAmount++;
             explodedBomb(bomb, bombElement);
             break;

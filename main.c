@@ -30,7 +30,7 @@ void displayRefreshing(ALLEGRO_DISPLAY* display, ALLEGRO_BITMAP* map, Block* blo
 // USUNAC DO CZEGOS INNEGO POTRZEBNE
 void Blocks(Block** blocks) {
 
-	
+	/*
 	for (int i = 0; i < 960; i += 40) {
 		addBlock(blocks, i, 0, -1);
 		addBlock(blocks, i, 480, -1);
@@ -40,23 +40,23 @@ void Blocks(Block** blocks) {
 		addBlock(blocks, 0, i, -1);
 		addBlock(blocks, 920, i, -1);
 	}
-	
-	for (int i = 80; i < 960; i += 80) {
-		for (int j = 80; j < 480; j += 80)
-			addBlock(blocks, i, j, -1);
 
-	};
-	/*
-	for (int i = 40; i < 960; i += 40) {
-		for (int j = 40; j < 500; j += 40)
-			addBlock(blocks, i, j, 1);
+
+	for (int i = 80; i < 960; i += 80) {
+		for (int j = 80; j < 480; j += 80) {
+
+			addBlock(blocks, i, j, -1);
+		};
 	};
 	*/
 
-
 	for (int i = 80; i < 920; i += 40) {
-		for (int j = 80; j < 460; j += 40)
+		for (int j = 80; j < 460; j += 40) {
+			if ((i / 40) % 2 == 0 && (j / 40) % 2 == 0) {
+				continue;
+			}
 			addBlock(blocks, i, j, 1);
+		};
 	};
 
 }
@@ -127,7 +127,7 @@ int main() {
 			placeBomb(players, playerNumber, &bombs, &keyState);
 
 			timerBomb(&bombs, blocks, players, playerNumber);
-			
+
 			if (al_key_down(&keyState, ALLEGRO_KEY_ESCAPE)) run = false;
 
 			displayRefreshing(display, map, blocks, bombs, players, playerNumber);

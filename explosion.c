@@ -1,22 +1,37 @@
 #include "explosion.h"
-#include "bomb.h"
-#include "block.h"
-#include "player.h"
-#include "collision.h"
 
+void explosion(Bomb* bomb, Block** blocks) {
+    int x = bomb->position.x;
+    int y = bomb->position.y;
 
-void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber) {
-    int power = bomb->power;
-
-    for (int i = 1; i <= power; ++i) {
-        float x = bomb->position.x + 40 * i;
-        float y = bomb->position.y;
-        if (checkBlockCollision(x, y, blocks)) {
-            printf("EXPLODE RIGHT");
+    // PRAWO
+    for (Block* blockElement = *blocks; blockElement != NULL; blockElement = blockElement->next) {
+        if (blockElement->position.x == x + 40 && blockElement->position.y == y) {
+            breakBlock(blocks, blockElement);
             break;
         }
     }
 
-    
+    // LEWO
+    for (Block* blockElement = *blocks; blockElement != NULL; blockElement = blockElement->next) {
+        if (blockElement->position.x == x - 40 && blockElement->position.y == y) {
+            breakBlock(blocks, blockElement);
+            break;
+        }
+    }
 
+    // GORA
+    for (Block* blockElement = *blocks; blockElement != NULL; blockElement = blockElement->next) {
+        if (blockElement->position.x == x && blockElement->position.y == y + 40 ) {
+            breakBlock(blocks, blockElement);
+            break;
+        }
+    }
+    // DOL
+    for (Block* blockElement = *blocks; blockElement != NULL; blockElement = blockElement->next) {
+        if (blockElement->position.x == x  && blockElement->position.y == y - 40) {
+            breakBlock(blocks, blockElement);
+            break;
+        }
+    }
 }

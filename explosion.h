@@ -7,7 +7,7 @@
 
 // FUKCJE
 
-void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber);
+void explosion(Bomb* bomb, Block** blocks);
 
 
 #endif /* EXPLODE_H */
