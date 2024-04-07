@@ -6,7 +6,7 @@
 #define TILE 40
 
 typedef struct {
-    float x, y;
+    int x, y;
 } Position;
 
 #endif /* POSITION_H */
