@@ -1,8 +1,13 @@
 // DO ZROBIENIA:
-wybuchy === kolizja z block + kolizja z player (player->health -= 1);
 RYSOWANIE MAPY
 
 
 Panel INFO 
 
 ladne poruszanie sie
+
+
+WYBUCHY =====
+
+player tylko w kierunku;
+atakuje przez bloki;

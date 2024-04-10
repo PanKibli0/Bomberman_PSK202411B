@@ -23,8 +23,15 @@ void displayRefreshing(ALLEGRO_DISPLAY* display, ALLEGRO_BITMAP* map, Block* blo
 	drawBombs(bombs, display);
 	drawPlayer(players, playerNumber, display);
 
-	al_flip_display();
-
+	/*
+	for (int i = 20; i<540; i += 40) {
+		al_set_target_bitmap(al_get_backbuffer(display));
+		if (i == 180 || i==220) al_draw_line(0, i-20, 960, i-20, al_map_rgb(255, 0, 255), 5);
+		else al_draw_line(0, i-20, 960, i-20, al_map_rgb(255, 0, 255), 1);
+		if (i==220) al_draw_line(0, i, 960, i, al_map_rgb(0, 0, 255), 2);
+		else al_draw_line(0, i, 960, i, al_map_rgb(0, 0, 255), 1);
+	}
+	*/
 };
 
 // USUNAC DO CZEGOS INNEGO POTRZEBNE
@@ -41,15 +48,16 @@ void Blocks(Block** blocks) {
 		addBlock(blocks, 920, i, -1);
 	}
 
-	
+	/*
 	for (int i = 80; i < 960; i += 80) {
 		for (int j = 80; j < 480; j += 80) {
 
 			addBlock(blocks, i, j, -1);
 		};
 	};
-	
+	*/
 
+	
 	for (int i = 80; i < 920; i += 40) {
 		for (int j = 80; j < 460; j += 40) {
 			if ((i / 40) % 2 == 0 && (j / 40) % 2 == 0) {
@@ -95,7 +103,7 @@ int main() {
 	// INICJACJA GRY
 		// GRACZ
 	//int playerNumber = rand() % 2 + 2;
-	int playerNumber = 2;
+	int playerNumber = PLAYERS;
 	printf("PLAYER NUMBERS: %d \n", playerNumber);
 	Player* players = malloc(playerNumber * sizeof(Player));
 
@@ -115,6 +123,9 @@ int main() {
 
 	Blocks(&blocks);
 
+	for(int i = 80; i <= 960; i += 40) printf("%d ", i);
+
+
 	// PETLA GRY
 	while (run) {
 		ALLEGRO_EVENT event;
@@ -124,13 +135,14 @@ int main() {
 		if (event.type == ALLEGRO_EVENT_TIMER) {
 
 			movePlayer(players, playerNumber, &keyState, blocks, bombs);
-			placeBomb(players, playerNumber, &bombs, &keyState);
+			placeBomb(players, playerNumber, &bombs, &keyState, display);
 
 			timerBomb(&bombs, blocks, players, playerNumber);
 
-			if (al_key_down(&keyState, ALLEGRO_KEY_ESCAPE)) run = false;
+			if (al_key_down(&keyState, ALLEGRO_KEY_ESCAPE)) players[0].health+=10;
 
 			displayRefreshing(display, map, blocks, bombs, players, playerNumber);
+			al_flip_display();
 		}
 	}
 

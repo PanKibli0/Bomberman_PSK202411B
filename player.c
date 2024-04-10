@@ -32,6 +32,7 @@ void drawPlayer(Player* players,int playerNumber ,ALLEGRO_DISPLAY* display) {
 		if (players[i].health > 0) {
 			al_set_target_bitmap(al_get_backbuffer(display));
 			al_draw_bitmap(players[i].graphic, players[i].position.x, players[i].position.y, 0);
+			
 		}
 	}
 }
@@ -68,6 +69,7 @@ void movePlayer(Player* players, int playerNumber, ALLEGRO_KEYBOARD_STATE* keySt
 					players[i].position.y = newY;
 				}
 			}
+			
 		}
 	}
 }

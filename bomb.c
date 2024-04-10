@@ -16,8 +16,7 @@ void initBomb(Bomb* bomb, int x, int y, int power, float time, Player* owner) {
 
     bomb->graphic = al_create_bitmap(40, 40);
     al_set_target_bitmap(bomb->graphic);
-    al_draw_rectangle(0, 0, 40, 40, al_map_rgb(255, 255, 255), 40);
-    ;
+    al_draw_filled_circle(20, 20, 20, al_map_rgb(0,0,0));
 }
 
 bool addBomb(Bomb** bomb, int x, int y, int power, float time, Player* owner) {

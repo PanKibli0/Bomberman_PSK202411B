@@ -1,16 +1,22 @@
-#include "explosion.h"
+ï»¿#include "explosion.h"
+#include <allegro5/allegro.h>
+#include <allegro5/allegro_primitives.h>
 
+// RYSOWANIE 
+
+
+
+
+    // DZIALANIE
+// EKSPPLOZJA - BLOKI
 void explosionBlock(Bomb* bomb, Block** blocks) {
     int x = bomb->position.x;
     int y = bomb->position.y;
     int power = bomb->power;
 
-    ALLEGRO_BITMAP* explodeCenter = al_create_bitmap(40, 40);
-    ALLEGRO_BITMAP* explodeBeam = al_create_bitmap(40, 40);
+    bool destroyed = false; // flaga czy bylo zniszczenie
 
-    bool destroyed = false;
-
-    // Œrodek
+    // Åšrodek
     for (Block* blockElement = *blocks; blockElement != NULL && !destroyed; blockElement = blockElement->next) {
         if (blockElement->position.x == x && blockElement->position.y == y) {
             blockElement->health -= 1;
@@ -18,9 +24,11 @@ void explosionBlock(Bomb* bomb, Block** blocks) {
                 breakBlock(blocks, blockElement);
             }
             destroyed = true;
-
+            
         }
     }
+
+
 
     destroyed = false;
     // Prawo
@@ -52,7 +60,7 @@ void explosionBlock(Bomb* bomb, Block** blocks) {
         }
     }
 
-    // Góra
+    // GÃ³ra
     destroyed = false;
     for (int i = 1; i <= power && !destroyed; i++) {
         for (Block* blockElement = *blocks; blockElement != NULL; blockElement = blockElement->next) {
@@ -67,7 +75,7 @@ void explosionBlock(Bomb* bomb, Block** blocks) {
         }
     }
 
-    // Dó³
+    // DÃ³Å‚
     destroyed = false;
     for (int i = 1; i <= power && !destroyed; i++) {
         for (Block* blockElement = *blocks; blockElement != NULL; blockElement = blockElement->next) {
@@ -83,6 +91,8 @@ void explosionBlock(Bomb* bomb, Block** blocks) {
     }
 };
 
+// EKSPLOZJA - GRACZ
+
 
 void explosionPlayer(Bomb* bomb, Player* players, int playerNumber) {
     int x = bomb->position.x;
@@ -91,18 +101,24 @@ void explosionPlayer(Bomb* bomb, Player* players, int playerNumber) {
 
     bool damaged = false;
 
-    // Œrodek
+    printf("%d %d\n", players[0].position.x, players[0].position.y);
+    // Srodek
+    
     for (int i = 0; i < playerNumber; i++) {
-        if (players[i].position.x == x && players[i].position.y == y) {
+        if (!damaged && players[i].position.x >= x - 20 && players[i].position.x <= x + 20 &&
+            players[i].position.y >= y - 20 && players[i].position.y <= y + 20) {
+            printf("\tSRODEK\n");
             players[i].health -= 1;
+            damaged = true;
+            break;
         }
     }
-
+    
     // Prawo
     damaged = false;
     for (int i = 1; i <= power; i++) {
         for (int j = 0; j < playerNumber; j++) {
-            if (players[j].position.x == x + 40 * i && players[j].position.y == y) {
+            if (!damaged && players[j].position.y == y && players[j].position.x > x && players[j].position.x <= x + 40 * i + 60) {
                 players[j].health -= 1;
                 damaged = true;
                 break;
@@ -114,7 +130,7 @@ void explosionPlayer(Bomb* bomb, Player* players, int playerNumber) {
     damaged = false;
     for (int i = 1; i <= power; i++) {
         for (int j = 0; j < playerNumber; j++) {
-            if (players[j].position.x == x - 40 * i && players[j].position.y == y) {
+            if (!damaged && players[j].position.y == y && players[j].position.x < x && players[j].position.x >= x - 40 * i - 60) {
                 players[j].health -= 1;
                 damaged = true;
                 break;
@@ -122,23 +138,23 @@ void explosionPlayer(Bomb* bomb, Player* players, int playerNumber) {
         }
     }
 
-    // Góra
+    // DOL
     damaged = false;
     for (int i = 1; i <= power; i++) {
         for (int j = 0; j < playerNumber; j++) {
-            if (players[j].position.x == x && players[j].position.y == y + 40 * i) {
+            if (!damaged && players[j].position.x == x && players[j].position.y > y && players[j].position.y <= y + 40 * i + 60) {            
                 players[j].health -= 1;
-                damaged = true;
-                break;
+            damaged = true;
+            break;
             }
         }
     }
 
-    // Dó³
+    // GORA
     damaged = false;
     for (int i = 1; i <= power; i++) {
         for (int j = 0; j < playerNumber; j++) {
-            if (players[j].position.x == x && players[j].position.y == y - 40 * i) {
+            if (!damaged && players[j].position.x == x && players[j].position.y < y && players[j].position.y >= y - 40 * i - 60) {
                 players[j].health -= 1;
                 damaged = true;
                 break;
@@ -148,7 +164,10 @@ void explosionPlayer(Bomb* bomb, Player* players, int playerNumber) {
 }
 
 
+
 void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber) {
     explosionBlock(bomb, blocks);
     explosionPlayer(bomb, players, playerNumber);
+
+    
 }
