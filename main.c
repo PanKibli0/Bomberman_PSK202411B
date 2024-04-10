@@ -79,9 +79,12 @@ int main() {
 	al_init_primitives_addon();
 	al_install_keyboard();
 
-	ALLEGRO_DISPLAY* display = al_create_display(960, 540);
-
+	ALLEGRO_DISPLAY* display = NULL;
+	al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
+	display = al_create_display(960, 540);
 	ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
+
+	
 
 	// KLAWIATURA
 	ALLEGRO_KEYBOARD_STATE keyState;
@@ -139,7 +142,7 @@ int main() {
 
 			timerBomb(&bombs, blocks, players, playerNumber);
 
-			if (al_key_down(&keyState, ALLEGRO_KEY_ESCAPE)) players[0].health+=10;
+			if (al_key_down(&keyState, ALLEGRO_KEY_ESCAPE)) run = false;
 
 			displayRefreshing(display, map, blocks, bombs, players, playerNumber);
 			al_flip_display();

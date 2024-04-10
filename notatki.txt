@@ -1,13 +1,11 @@
 // DO ZROBIENIA:
-RYSOWANIE MAPY
+RYSOWANIE MAPY przenisesc
 
 
 Panel INFO 
 
 ladne poruszanie sie
 
+rysowanie bomb nie ma wogole
 
-WYBUCHY =====
-
-player tylko w kierunku;
-atakuje przez bloki;
+FULL SCREEN = 1920x1080
