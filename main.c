@@ -1,4 +1,4 @@
-#include <stdio.h>
+ï»¿#include <stdio.h>
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 #include <time.h>
@@ -23,44 +23,35 @@ void displayRefreshing(ALLEGRO_DISPLAY* display, ALLEGRO_BITMAP* map, Block* blo
 	drawBombs(bombs, display);
 	drawPlayer(players, playerNumber, display);
 
-	/*
-	for (int i = 20; i<540; i += 40) {
-		al_set_target_bitmap(al_get_backbuffer(display));
-		if (i == 180 || i==220) al_draw_line(0, i-20, 960, i-20, al_map_rgb(255, 0, 255), 5);
-		else al_draw_line(0, i-20, 960, i-20, al_map_rgb(255, 0, 255), 1);
-		if (i==220) al_draw_line(0, i, 960, i, al_map_rgb(0, 0, 255), 2);
-		else al_draw_line(0, i, 960, i, al_map_rgb(0, 0, 255), 1);
-	}
-	*/
 };
 
 // USUNAC DO CZEGOS INNEGO POTRZEBNE
 void Blocks(Block** blocks) {
 
-	
-	for (int i = 0; i < 960; i += 40) {
+
+	for (int i = 0; i < 1920; i += TILE) {
 		addBlock(blocks, i, 0, -1);
-		addBlock(blocks, i, 480, -1);
+		addBlock(blocks, i, 1080-22, -1);
 	}
 
-	for (int i = 0; i < 500; i += 40) {
+	for (int i = 0; i < 1080-TILE; i += TILE) {
 		addBlock(blocks, 0, i, -1);
-		addBlock(blocks, 920, i, -1);
+		addBlock(blocks, 1920-TILE, i, -1);
 	}
 
-	/*
-	for (int i = 80; i < 960; i += 80) {
-		for (int j = 80; j < 480; j += 80) {
+	
+	for (int i = TILE * 2; i < 1920; i += TILE*2) {
+		for (int j = TILE * 2; j < 1080- TILE; j += TILE * 2) {
 
 			addBlock(blocks, i, j, -1);
 		};
 	};
-	*/
-
 	
-	for (int i = 80; i < 920; i += 40) {
-		for (int j = 80; j < 460; j += 40) {
-			if ((i / 40) % 2 == 0 && (j / 40) % 2 == 0) {
+
+
+	for (int i = TILE * 2; i < 1920- TILE; i += TILE) {
+		for (int j = TILE * 2; j < 1080-TILE; j += TILE) {
+			if ((i / TILE) % 2 == 0 && (j / TILE) % 2 == 0) {
 				continue;
 			}
 			addBlock(blocks, i, j, 1);
@@ -71,7 +62,7 @@ void Blocks(Block** blocks) {
 
 // /\ USUNAC
 
-// G³ówna pêtla gry
+// GÂ³Ã³wna pÃªtla gry
 int main() {
 	srand(time(0));
 	// ZMIENNE ALLEGRO
@@ -81,10 +72,10 @@ int main() {
 
 	ALLEGRO_DISPLAY* display = NULL;
 	al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
-	display = al_create_display(960, 540);
+	display = al_create_display(1920, 1080);
 	ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
 
-	
+
 
 	// KLAWIATURA
 	ALLEGRO_KEYBOARD_STATE keyState;
@@ -99,7 +90,7 @@ int main() {
 
 	// BITMAP DLA ALL
 
-	ALLEGRO_BITMAP* map = al_create_bitmap(960, 540);
+	ALLEGRO_BITMAP* map = al_create_bitmap(1920, 1080);
 	al_set_target_bitmap(map);
 	al_clear_to_color(al_map_rgb(128, 128, 128));
 
@@ -114,8 +105,8 @@ int main() {
 		//	void initPlayer(Player* player, unsigned int health, int x, int y, float velocity, int bombAmount, float bombTime, int bombPower, ALLEGRO_COLOR color, int controlKeys[5]);
 	case 4: initPlayer(&players[3], 3, rand() % 770, rand() % 420, 5, 3, 5, 3, al_map_rgb(rand() % 256, rand() % 256, rand() % 256), (int[]) { ALLEGRO_KEY_PAD_8, ALLEGRO_KEY_PAD_5, ALLEGRO_KEY_PAD_6, ALLEGRO_KEY_PAD_4, ALLEGRO_KEY_PAD_9 });
 	case 3: initPlayer(&players[2], 3, rand() % 770, rand() % 420, 3, 3, 5, 3, al_map_rgb(rand() % 256, rand() % 256, rand() % 256), (int[]) { ALLEGRO_KEY_I, ALLEGRO_KEY_K, ALLEGRO_KEY_L, ALLEGRO_KEY_J, ALLEGRO_KEY_O });
-	case 2: initPlayer(&players[1], 3, 40, 440, 2, 3, 5, 3, al_map_rgb(rand() % 256, rand() % 256, rand() % 256), (int[]) { ALLEGRO_KEY_UP, ALLEGRO_KEY_DOWN, ALLEGRO_KEY_RIGHT, ALLEGRO_KEY_LEFT, ALLEGRO_KEY_PAD_0 });
-	case 1: initPlayer(&players[0], 3, 40, 40, 4, 3, 2, 3, al_map_rgb(rand() % 256, rand() % 256, rand() % 256), (int[]) { ALLEGRO_KEY_W, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_A, ALLEGRO_KEY_Q });
+	case 2: initPlayer(&players[1], 3, TILE, 9*TILE, 2, 3, 5, 3, al_map_rgb(rand() % 256, rand() % 256, rand() % 256), (int[]) { ALLEGRO_KEY_UP, ALLEGRO_KEY_DOWN, ALLEGRO_KEY_RIGHT, ALLEGRO_KEY_LEFT, ALLEGRO_KEY_PAD_0 });
+	case 1: initPlayer(&players[0], 3, TILE, TILE, 4, 3, 2, 3, al_map_rgb(rand() % 256, rand() % 256, rand() % 256), (int[]) { ALLEGRO_KEY_W, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_A, ALLEGRO_KEY_Q });
 	}
 
 	// BOMBY
@@ -125,8 +116,6 @@ int main() {
 	Block* blocks = NULL;
 
 	Blocks(&blocks);
-
-	for(int i = 80; i <= 960; i += 40) printf("%d ", i);
 
 
 	// PETLA GRY

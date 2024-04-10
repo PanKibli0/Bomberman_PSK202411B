@@ -28,8 +28,8 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber) {
 
     if (!destroyed) {
         for (int i = 0; i < playerNumber; i++) {
-            if (players[i].position.x >= x - 20 && players[i].position.x <= x + 20 &&
-                players[i].position.y >= y - 20 && players[i].position.y <= y + 20) {
+            if (players[i].position.x >= x - TILE/2 && players[i].position.x <= x + TILE/2 &&
+                players[i].position.y >= y - TILE/2 && players[i].position.y <= y + TILE/2) {
                 printf("\tSRODEK\n");
                 if (!damaged) { 
                     players[i].health -= 1;
@@ -44,7 +44,7 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber) {
     damaged = false;
 
     for (int i = 1; i <= power && !destroyed; i++) {
-        int newX = x + 40 * i;
+        int newX = x + TILE * i;
         for (Block* blockElement = *blocks; blockElement != NULL && !destroyed; blockElement = blockElement->next) {
             if (blockElement->position.x == newX && blockElement->position.y == y) {
                 blockElement->health -= 1;
@@ -56,7 +56,7 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber) {
         }
         if (!destroyed) {
             for (int j = 0; j < playerNumber; j++) {
-                if (!damaged && players[j].position.y == y && players[j].position.x > x && players[j].position.x <= newX + 60) {
+                if (!damaged && players[j].position.y == y && players[j].position.x > x && players[j].position.x <= newX + TILE+TILE/2) {
                     players[j].health--;
                     damaged = true;
                     break;
@@ -70,7 +70,7 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber) {
     damaged = false;
 
     for (int i = 1; i <= power && !destroyed; i++) {
-        int newX = x - 40 * i;
+        int newX = x - TILE * i;
         for (Block* blockElement = *blocks; blockElement != NULL && !destroyed; blockElement = blockElement->next) {
             if (blockElement->position.x == newX && blockElement->position.y == y) {
                 blockElement->health -= 1;
@@ -82,7 +82,7 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber) {
         }
         if (!destroyed) {
             for (int j = 0; j < playerNumber; j++) {
-                if (!damaged && players[j].position.y == y && players[j].position.x < x && players[j].position.x >= newX - 60) {
+                if (!damaged && players[j].position.y == y && players[j].position.x < x && players[j].position.x >= newX - TILE+TILE/2) {
                     players[j].health--;
                     damaged = true;
                     break;
@@ -96,7 +96,7 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber) {
     damaged = false;
 
     for (int i = 1; i <= power && !destroyed; i++) {
-        int newY = y - 40 * i;
+        int newY = y - TILE * i;
         for (Block* blockElement = *blocks; blockElement != NULL && !destroyed; blockElement = blockElement->next) {
             if (blockElement->position.x == x && blockElement->position.y == newY) {
                 blockElement->health -= 1;
@@ -108,7 +108,7 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber) {
         }
         if (!destroyed) {
             for (int j = 0; j < playerNumber; j++) {
-                if (!damaged && players[j].position.x == x && players[j].position.y < y && players[j].position.y >= newY - 60) {
+                if (!damaged && players[j].position.x == x && players[j].position.y < y && players[j].position.y >= newY - TILE+TILE/2) {
                     players[j].health--;
                     damaged = true;
                     break;
@@ -122,7 +122,7 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber) {
     damaged = false;
 
     for (int i = 1; i <= power && !destroyed; i++) {
-        int newY = y + 40 * i;
+        int newY = y + TILE * i;
         for (Block* blockElement = *blocks; blockElement != NULL && !destroyed; blockElement = blockElement->next) {
             if (blockElement->position.x == x && blockElement->position.y == newY) {
                 blockElement->health -= 1;
@@ -134,7 +134,7 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber) {
         }
         if (!destroyed) {
             for (int j = 0; j < playerNumber; j++) {
-                if (!damaged && players[j].position.x == x && players[j].position.y > y && players[j].position.y <= newY + 60) {
+                if (!damaged && players[j].position.x == x && players[j].position.y > y && players[j].position.y <= newY + TILE+TILE/2) {
                     players[j].health--;
                     damaged = true;
                     break;

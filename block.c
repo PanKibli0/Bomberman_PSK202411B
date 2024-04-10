@@ -10,15 +10,15 @@ void initBlock(Block* block, int x, int y, int health) {
 	block->position.y = y;
 	block->health = health;
 
-	block->graphic = al_create_bitmap(40, 40);
+	block->graphic = al_create_bitmap(TILE, TILE);
 	al_set_target_bitmap(block->graphic);
 	if (block->health < 0) {
-		al_draw_filled_rectangle(0, 0, 40, 40, al_map_rgb(192, 192, 192));
+		al_draw_filled_rectangle(0, 0, TILE, TILE, al_map_rgb(192, 192, 192));
 	}
 	else {
-		al_draw_filled_rectangle(0, 0, 40, 40, al_map_rgb(192, 128, 0));
-		al_draw_rectangle(0, 0, 40, 40, al_map_rgb(192, 64, 0), 10);
-		al_draw_line(0, 0, 40, 40, al_map_rgb(192, 64, 0), 5);
+		al_draw_filled_rectangle(0, 0, TILE, TILE, al_map_rgb(192, 128, 0));
+		al_draw_rectangle(0, 0, TILE, TILE, al_map_rgb(192, 64, 0), 10);
+		al_draw_line(0, 0, TILE, TILE, al_map_rgb(192, 64, 0), 5);
 	};
 }
 
@@ -26,7 +26,7 @@ bool addBlock(Block** block, int x, int y, int health) {
 	for (Block* blockElement = *block; blockElement != NULL; blockElement = blockElement->next) {
 		int dx = abs(blockElement->position.x - x);
 		int dy = abs(blockElement->position.y - y);
-		if (dx < 40 && dy < 40) {
+		if (dx < TILE && dy < TILE) {
 			return false;
 		}
 	}

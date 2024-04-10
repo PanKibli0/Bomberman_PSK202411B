@@ -14,16 +14,16 @@ void initBomb(Bomb* bomb, int x, int y, int power, float time, Player* owner) {
     bomb->time = time;
     bomb->owner = owner;
 
-    bomb->graphic = al_create_bitmap(40, 40);
+    bomb->graphic = al_create_bitmap(TILE, TILE);
     al_set_target_bitmap(bomb->graphic);
-    al_draw_filled_circle(20, 20, 20, al_map_rgb(0,0,0));
+    al_draw_filled_circle(TILE/2, TILE / 2, TILE / 2, al_map_rgb(0,0,0));
 }
 
 bool addBomb(Bomb** bomb, int x, int y, int power, float time, Player* owner) {
     for (Bomb* bombElement = *bomb; bombElement != NULL; bombElement = bombElement->next) {
         int dx = abs(bombElement->position.x - x);
         int dy = abs(bombElement->position.y - y);
-        if (dx < 40 && dy < 40) {
+        if (dx < TILE && dy < TILE) {
             return false;
         }
     }

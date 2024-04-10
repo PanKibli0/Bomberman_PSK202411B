@@ -22,9 +22,9 @@ void initPlayer(Player* player, unsigned int health, int x, int y, float velocit
 		player->controlKeys[i] = controlKeys[i];
 	};
 
-	player->graphic = al_create_bitmap(40, 40);
+	player->graphic = al_create_bitmap(TILE, TILE);
 	al_set_target_bitmap(player->graphic);
-	al_draw_rectangle(0, 0, 40, 40, player->color, 10);
+	al_draw_rectangle(0, 0, TILE, TILE, player->color, 10);
 }
 
 void drawPlayer(Player* players,int playerNumber ,ALLEGRO_DISPLAY* display) {
@@ -79,8 +79,8 @@ void placeBomb(Player* players, int playerNumber, Bomb** bomb, ALLEGRO_KEYBOARD_
 	for (int i = 0; i < playerNumber; ++i) {
 		if (al_key_down(keyState, players[i].controlKeys[4]) && players[i].bombs.bombAmount > 0 && players[i].health > 0) {
 			// Obliczanie pozycji bomby na podstawie pozycji gracza
-			int bombX = ((int)(players[i].position.x + 20) / 40) * 40; 
-			int bombY = ((int)(players[i].position.y + 20) / 40) * 40; 
+			int bombX = ((int)(players[i].position.x + TILE/2) / TILE) * TILE;
+			int bombY = ((int)(players[i].position.y + TILE/2) / TILE) * TILE;
 
 			if (addBomb(bomb, bombX, bombY, players[i].bombs.BombPower, players[i].bombs.bombTime, &players[i])) {
 				players[i].bombs.bombAmount -= 1;
