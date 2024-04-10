@@ -5,6 +5,9 @@ void explosionBlock(Bomb* bomb, Block** blocks) {
     int y = bomb->position.y;
     int power = bomb->power;
 
+    ALLEGRO_BITMAP* explodeCenter = al_create_bitmap(40, 40);
+    ALLEGRO_BITMAP* explodeBeam = al_create_bitmap(40, 40);
+
     bool destroyed = false;
 
     // Œrodek
@@ -15,6 +18,7 @@ void explosionBlock(Bomb* bomb, Block** blocks) {
                 breakBlock(blocks, blockElement);
             }
             destroyed = true;
+
         }
     }
 

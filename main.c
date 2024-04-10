@@ -41,14 +41,14 @@ void Blocks(Block** blocks) {
 		addBlock(blocks, 920, i, -1);
 	}
 
-	/*
+	
 	for (int i = 80; i < 960; i += 80) {
 		for (int j = 80; j < 480; j += 80) {
 
 			addBlock(blocks, i, j, -1);
 		};
 	};
-	*/
+	
 
 	for (int i = 80; i < 920; i += 40) {
 		for (int j = 80; j < 460; j += 40) {
@@ -104,7 +104,7 @@ int main() {
 	case 4: initPlayer(&players[3], 3, rand() % 770, rand() % 420, 5, 3, 5, 3, al_map_rgb(rand() % 256, rand() % 256, rand() % 256), (int[]) { ALLEGRO_KEY_PAD_8, ALLEGRO_KEY_PAD_5, ALLEGRO_KEY_PAD_6, ALLEGRO_KEY_PAD_4, ALLEGRO_KEY_PAD_9 });
 	case 3: initPlayer(&players[2], 3, rand() % 770, rand() % 420, 3, 3, 5, 3, al_map_rgb(rand() % 256, rand() % 256, rand() % 256), (int[]) { ALLEGRO_KEY_I, ALLEGRO_KEY_K, ALLEGRO_KEY_L, ALLEGRO_KEY_J, ALLEGRO_KEY_O });
 	case 2: initPlayer(&players[1], 3, 40, 440, 2, 3, 5, 3, al_map_rgb(rand() % 256, rand() % 256, rand() % 256), (int[]) { ALLEGRO_KEY_UP, ALLEGRO_KEY_DOWN, ALLEGRO_KEY_RIGHT, ALLEGRO_KEY_LEFT, ALLEGRO_KEY_PAD_0 });
-	case 1: initPlayer(&players[0], 3, 120, 120, 4, 3, 2, 3, al_map_rgb(rand() % 256, rand() % 256, rand() % 256), (int[]) { ALLEGRO_KEY_W, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_A, ALLEGRO_KEY_Q });
+	case 1: initPlayer(&players[0], 3, 40, 40, 4, 3, 2, 3, al_map_rgb(rand() % 256, rand() % 256, rand() % 256), (int[]) { ALLEGRO_KEY_W, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_A, ALLEGRO_KEY_Q });
 	}
 
 	// BOMBY
@@ -137,7 +137,9 @@ int main() {
 	al_destroy_bitmap(map);
 	al_destroy_display(display);
 	al_destroy_event_queue(event_queue);
+	al_destroy_timer(timer);
 	free(players);
+
 	while (blocks != NULL) {
 		breakBlock(&blocks, blocks);
 	}

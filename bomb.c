@@ -68,6 +68,7 @@ void timerBomb(Bomb** bomb, Block* blocks, Player* players, int playerNumber) {
             
             explosion(bombElement, &blocks, players, playerNumber);
             bombElement->owner->bombs.bombAmount++;
+            al_destroy_bitmap(bombElement->graphic);
             explodedBomb(bomb, bombElement);
             break;
         }    

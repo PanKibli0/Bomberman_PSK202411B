@@ -56,6 +56,7 @@ void breakBlock(Block** block, Block* breakBlock) {
 			}
 		}
 	}
+	al_destroy_bitmap(breakBlock->graphic);
 	free(breakBlock);
 }
 
