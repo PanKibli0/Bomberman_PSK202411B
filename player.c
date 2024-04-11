@@ -27,7 +27,7 @@ void initPlayer(Player* player, unsigned int health, int x, int y, float velocit
 	al_draw_rectangle(0, 0, TILE, TILE, player->color, 10);
 }
 
-void drawPlayer(Player* players,int playerNumber ,ALLEGRO_DISPLAY* display) {
+void drawPlayer(Player* players, int playerNumber ,ALLEGRO_DISPLAY* display) {
 	for (int i = 0; i < playerNumber; i++) {
 		if (players[i].health > 0) {
 			al_set_target_bitmap(al_get_backbuffer(display));
@@ -45,11 +45,11 @@ void movePlayer(Player* players, int playerNumber, ALLEGRO_KEYBOARD_STATE* keySt
 
 			if (al_key_down(keyState, players[i].controlKeys[0]))
 				dy -= players[i].velocity;
-			if (al_key_down(keyState, players[i].controlKeys[1]))
+			else if (al_key_down(keyState, players[i].controlKeys[1]))
 				dy += players[i].velocity;
-			if (al_key_down(keyState, players[i].controlKeys[2]))
+			else if (al_key_down(keyState, players[i].controlKeys[2]))
 				dx += players[i].velocity;
-			if (al_key_down(keyState, players[i].controlKeys[3]))
+			else if (al_key_down(keyState, players[i].controlKeys[3]))
 				dx -= players[i].velocity;
 
 			float newX = players[i].position.x + dx;
@@ -79,7 +79,7 @@ void placeBomb(Player* players, int playerNumber, Bomb** bomb, ALLEGRO_KEYBOARD_
 	for (int i = 0; i < playerNumber; ++i) {
 		if (al_key_down(keyState, players[i].controlKeys[4]) && players[i].bombs.bombAmount > 0 && players[i].health > 0) {
 			// Obliczanie pozycji bomby na podstawie pozycji gracza
-			int bombX = ((int)(players[i].position.x + TILE/2) / TILE) * TILE;
+			int bombX = ((int)(players[i].position.x + TILE/2) / TILE) * TILE - TILE/2;
 			int bombY = ((int)(players[i].position.y + TILE/2) / TILE) * TILE;
 
 			if (addBomb(bomb, bombX, bombY, players[i].bombs.BombPower, players[i].bombs.bombTime, &players[i])) {

@@ -1,7 +1,7 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 
-#include "position.h"
+
 #include "block.h"
 
 
@@ -13,7 +13,8 @@ void initBlock(Block* block, int x, int y, int health) {
 	block->graphic = al_create_bitmap(TILE, TILE);
 	al_set_target_bitmap(block->graphic);
 	if (block->health < 0) {
-		al_draw_filled_rectangle(0, 0, TILE, TILE, al_map_rgb(192, 192, 192));
+		al_draw_filled_rectangle(0, 0, TILE, TILE, al_map_rgb(196, 196, 196));
+		al_draw_rectangle(0, 0, TILE, TILE, al_map_rgb(64, 64, 64), 10);
 	}
 	else {
 		al_draw_filled_rectangle(0, 0, TILE, TILE, al_map_rgb(192, 128, 0));

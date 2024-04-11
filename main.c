@@ -9,6 +9,7 @@
 #include "block.h"
 #include "collision.h"
 #include "explosion.h"
+#include "map.h"
 
 bool run = true;
 
@@ -26,39 +27,6 @@ void displayRefreshing(ALLEGRO_DISPLAY* display, ALLEGRO_BITMAP* map, Block* blo
 };
 
 // USUNAC DO CZEGOS INNEGO POTRZEBNE
-void Blocks(Block** blocks) {
-
-
-	for (int i = 0; i < 1920; i += TILE) {
-		addBlock(blocks, i, 0, -1);
-		addBlock(blocks, i, 1080-22, -1);
-	}
-
-	for (int i = 0; i < 1080-TILE; i += TILE) {
-		addBlock(blocks, 0, i, -1);
-		addBlock(blocks, 1920-TILE, i, -1);
-	}
-
-	
-	for (int i = TILE * 2; i < 1920; i += TILE*2) {
-		for (int j = TILE * 2; j < 1080- TILE; j += TILE * 2) {
-
-			addBlock(blocks, i, j, -1);
-		};
-	};
-	
-
-
-	for (int i = TILE * 2; i < 1920- TILE; i += TILE) {
-		for (int j = TILE * 2; j < 1080-TILE; j += TILE) {
-			if ((i / TILE) % 2 == 0 && (j / TILE) % 2 == 0) {
-				continue;
-			}
-			addBlock(blocks, i, j, 1);
-		};
-	};
-
-}
 
 // /\ USUNAC
 
@@ -70,14 +38,15 @@ int main() {
 	al_init_primitives_addon();
 	al_install_keyboard();
 
-	ALLEGRO_DISPLAY* display = NULL;
-	al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
+	// EKRAN
+	al_set_new_display_flags(ALLEGRO_FULLSCREEN);
+	ALLEGRO_DISPLAY* display = NULL;;
 	display = al_create_display(1920, 1080);
-	ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
-
-
+	
 
 	// KLAWIATURA
+	ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
+
 	ALLEGRO_KEYBOARD_STATE keyState;
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	bool key[ALLEGRO_KEY_MAX] = { false };
@@ -105,8 +74,8 @@ int main() {
 		//	void initPlayer(Player* player, unsigned int health, int x, int y, float velocity, int bombAmount, float bombTime, int bombPower, ALLEGRO_COLOR color, int controlKeys[5]);
 	case 4: initPlayer(&players[3], 3, rand() % 770, rand() % 420, 5, 3, 5, 3, al_map_rgb(rand() % 256, rand() % 256, rand() % 256), (int[]) { ALLEGRO_KEY_PAD_8, ALLEGRO_KEY_PAD_5, ALLEGRO_KEY_PAD_6, ALLEGRO_KEY_PAD_4, ALLEGRO_KEY_PAD_9 });
 	case 3: initPlayer(&players[2], 3, rand() % 770, rand() % 420, 3, 3, 5, 3, al_map_rgb(rand() % 256, rand() % 256, rand() % 256), (int[]) { ALLEGRO_KEY_I, ALLEGRO_KEY_K, ALLEGRO_KEY_L, ALLEGRO_KEY_J, ALLEGRO_KEY_O });
-	case 2: initPlayer(&players[1], 3, TILE, 9*TILE, 2, 3, 5, 3, al_map_rgb(rand() % 256, rand() % 256, rand() % 256), (int[]) { ALLEGRO_KEY_UP, ALLEGRO_KEY_DOWN, ALLEGRO_KEY_RIGHT, ALLEGRO_KEY_LEFT, ALLEGRO_KEY_PAD_0 });
-	case 1: initPlayer(&players[0], 3, TILE, TILE, 4, 3, 2, 3, al_map_rgb(rand() % 256, rand() % 256, rand() % 256), (int[]) { ALLEGRO_KEY_W, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_A, ALLEGRO_KEY_Q });
+	case 2: initPlayer(&players[1], 3, TILE+TILE/2, 9*TILE, 2, 3, 5, 3, al_map_rgb(rand() % 256, rand() % 256, rand() % 256), (int[]) { ALLEGRO_KEY_UP, ALLEGRO_KEY_DOWN, ALLEGRO_KEY_RIGHT, ALLEGRO_KEY_LEFT, ALLEGRO_KEY_PAD_0 });
+	case 1: initPlayer(&players[0], 3, TILE+TILE/2, TILE, 4, 3, 2, 3, al_map_rgb(rand() % 256, rand() % 256, rand() % 256), (int[]) { ALLEGRO_KEY_W, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_A, ALLEGRO_KEY_Q });
 	}
 
 	// BOMBY
@@ -115,7 +84,7 @@ int main() {
 	// BLOKI
 	Block* blocks = NULL;
 
-	Blocks(&blocks);
+	createMap(&blocks);
 
 
 	// PETLA GRY
@@ -131,6 +100,7 @@ int main() {
 
 			timerBomb(&bombs, blocks, players, playerNumber);
 
+			if (al_key_down(&keyState, ALLEGRO_KEY_E)) players[0].health += 10;
 			if (al_key_down(&keyState, ALLEGRO_KEY_ESCAPE)) run = false;
 
 			displayRefreshing(display, map, blocks, bombs, players, playerNumber);
