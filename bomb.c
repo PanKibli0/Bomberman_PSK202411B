@@ -7,17 +7,6 @@
 #include "player.h"
 
 
-void initBomb(Bomb* bomb, int x, int y, int power, float time, Player* owner) {
-    bomb->position.x = x;
-    bomb->position.y = y;
-    bomb->power = power;
-    bomb->time = time;
-    bomb->owner = owner;
-
-    bomb->graphic = al_create_bitmap(TILE, TILE);
-    al_set_target_bitmap(bomb->graphic);
-    al_draw_filled_circle(TILE/2, TILE / 2, TILE / 2, al_map_rgb(0,0,0));
-}
 
 bool addBomb(Bomb** bomb, int x, int y, int power, float time, Player* owner) {
     for (Bomb* bombElement = *bomb; bombElement != NULL; bombElement = bombElement->next) {
@@ -29,9 +18,20 @@ bool addBomb(Bomb** bomb, int x, int y, int power, float time, Player* owner) {
     }
 
     Bomb* newBomb = malloc(sizeof(Bomb));
-    initBomb(newBomb, x, y, power, time, owner);
+    
+    newBomb->position.x = x;
+    newBomb->position.y = y;
+    newBomb->power = power;
+    newBomb->time = time;
+    newBomb->owner = owner;
+
+    newBomb->graphic = al_create_bitmap(TILE, TILE);
+    al_set_target_bitmap(newBomb->graphic);
+    al_draw_filled_circle(TILE / 2, TILE / 2, TILE / 2, al_map_rgb(0, 0, 0));
+
     newBomb->next = *bomb;
     *bomb = newBomb;
+
     return true;
 }
 
@@ -59,13 +59,13 @@ void explodedBomb(Bomb** bomb, Bomb* explodedBomb) {
     free(explodedBomb);
 }
 
-void timerBomb(Bomb** bomb, Block* blocks, Player* players, int playerNumber) {
+void timerBomb(Bomb** bomb, Block* blocks, Player* players, int playerNumber, Explosion** explosions) {
     for (Bomb* bombElement = *bomb; bombElement != NULL; bombElement = bombElement->next) {
         bombElement->time -= 1.0 / FPS;
 
         if (bombElement->time <= 0) {
             
-            explosion(bombElement, &blocks, players, playerNumber);
+            explosion(bombElement, &blocks, players, playerNumber, explosions);
             bombElement->owner->bombs.bombAmount++;
             al_destroy_bitmap(bombElement->graphic);
             explodedBomb(bomb, bombElement);

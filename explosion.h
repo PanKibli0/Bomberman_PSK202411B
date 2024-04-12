@@ -1,21 +1,21 @@
-#ifndef EXPLODE_H
-#define EXPLODE_H
+#ifndef EXPLOSION_H
+#define EXPLOSION_H
 
 #include "position.h"
 #include "player.h"
-#include "bomb.h"
 #include "block.h"
 
 typedef struct Explosion {
 	Position position;
-	struct Explosion* next;
 	int direction;
+	float time;
 	ALLEGRO_BITMAP* graphic;
+	struct Explosion* next;
 } Explosion;
 
 // FUKCJE
 
-void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber);
-//void drawExplosion();
-
-#endif /* EXPLODE_H */
+void explosion(struct Bomb* bomb, Block** blocks, Player* players, int playerNumber, Explosion** explosions);
+void drawExplosion(Explosion** explosions, ALLEGRO_DISPLAY* display);
+void endExplosions(Explosion** explosions);
+#endif /* EXPLOSION_H */

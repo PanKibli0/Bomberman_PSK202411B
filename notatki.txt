@@ -1,11 +1,21 @@
 // DO ZROBIENIA:
-RYSOWANIE MAPY przenisesc
+
+! (WYBUCH NA BLOKI HEALTH -1)
+
 
 
 Panel INFO 
 
 ladne poruszanie sie
 
-rysowanie bomb nie ma wogole
 
+----------------------------
 FULL SCREEN = 1920x1080
+----------------------------
+
+nie rysowac od razu na display tylko na bitmap map i panel osobno 
+iwtedy na display wyslac: MAP AND INFOPANEL
+
+
+
+-------------------------------

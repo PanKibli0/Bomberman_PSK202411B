@@ -35,15 +35,15 @@ void createMap(Block** blocks) {
                 ))
             {
                 // Sprawdzenie, czy na danej pozycji nie ma ju¿ bloku
-                bool positionIsEmpty = true;
+                bool empty = true;
                 for (Block* blockElement = *blocks; blockElement != NULL; blockElement = blockElement->next) {
                     if (blockElement->position.x == i + TILE / 2 && blockElement->position.y == j) {
-                        positionIsEmpty = false;
+                        empty = false;
                         break;
                     }
                 }
                 // Dodanie bloku tylko jeœli pozycja jest wolna
-                if (positionIsEmpty) {
+                if (empty) {
                     addBlock(blocks, i + TILE / 2, j, 1);
                 }
             }

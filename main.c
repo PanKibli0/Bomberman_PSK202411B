@@ -18,12 +18,12 @@ void drawMap(ALLEGRO_BITMAP* map, ALLEGRO_DISPLAY* display) {
 	al_draw_bitmap(map, 0, 0, 0);
 };
 
-void displayRefreshing(ALLEGRO_DISPLAY* display, ALLEGRO_BITMAP* map, Block* blocks, Bomb* bombs, Player* players, int playerNumber) {
+void displayRefreshing(ALLEGRO_DISPLAY* display, ALLEGRO_BITMAP* map, Block* blocks, Bomb* bombs, Player* players, int playerNumber, Explosion* explosions) {
 	drawMap(map, display);
 	drawBlocks(blocks, display);
 	drawBombs(bombs, display);
 	drawPlayer(players, playerNumber, display);
-
+	drawExplosion(explosions, display);
 };
 
 // USUNAC DO CZEGOS INNEGO POTRZEBNE
@@ -39,7 +39,8 @@ int main() {
 	al_install_keyboard();
 
 	// EKRAN
-	al_set_new_display_flags(ALLEGRO_FULLSCREEN);
+	//al_set_new_display_flags(ALLEGRO_FULLSCREEN);
+	//al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
 	ALLEGRO_DISPLAY* display = NULL;;
 	display = al_create_display(1920, 1080);
 	
@@ -80,9 +81,8 @@ int main() {
 
 	// BOMBY
 	Bomb* bombs = NULL;
-
-	// BLOKI
 	Block* blocks = NULL;
+	Explosion* explosions = NULL;
 
 	createMap(&blocks);
 
@@ -98,12 +98,13 @@ int main() {
 			movePlayer(players, playerNumber, &keyState, blocks, bombs);
 			placeBomb(players, playerNumber, &bombs, &keyState, display);
 
-			timerBomb(&bombs, blocks, players, playerNumber);
+			timerBomb(&bombs, blocks, players, playerNumber, &explosions);
+			endExplosions(&explosions);
 
 			if (al_key_down(&keyState, ALLEGRO_KEY_E)) players[0].health += 10;
 			if (al_key_down(&keyState, ALLEGRO_KEY_ESCAPE)) run = false;
 
-			displayRefreshing(display, map, blocks, bombs, players, playerNumber);
+			displayRefreshing(display, map, blocks, bombs, players, playerNumber, explosions);
 			al_flip_display();
 		}
 	}

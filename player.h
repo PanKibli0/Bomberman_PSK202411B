@@ -14,7 +14,7 @@ typedef struct {
 
 
 typedef struct {
-    unsigned int health;
+    int health;
     Position position;
     ALLEGRO_BITMAP* graphic;
     float velocity;

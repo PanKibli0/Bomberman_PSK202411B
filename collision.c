@@ -26,9 +26,11 @@ bool checkBombCollision(float x, float y, Bomb* bomb) {
 bool checkPlayerCollision(float x, float y, Player* players, int playerNumber, int currentPlayerIndex) {
     for (int i = 0; i < playerNumber; ++i) {
         if (i != currentPlayerIndex) {
-            if (x + TILE > players[i].position.x && x < players[i].position.x + TILE &&
-                y + TILE > players[i].position.y && y < players[i].position.y + TILE) {
-                return true;
+            if (players[i].health > 0) {
+                if (x + TILE > players[i].position.x && x < players[i].position.x + TILE &&
+                    y + TILE > players[i].position.y && y < players[i].position.y + TILE) {
+                    return true;
+                }
             }
         }
     }

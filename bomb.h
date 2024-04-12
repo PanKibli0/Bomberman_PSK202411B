@@ -3,6 +3,7 @@
 
 #include "block.h"
 #include "player.h"
+#include "explosion.h"
 
 
 
@@ -17,10 +18,8 @@ typedef struct Bomb {
 
 
 // FUKCJE
-void initBomb(Bomb* bomb, int x, int y, int power, float time,  Player* owner);
 bool addBomb(Bomb** head, int x, int y, int power, float time,  Player* owner);
 void drawBombs(Bomb* head, ALLEGRO_DISPLAY* display);
-void timerBomb(Bomb** bomb, Block* blocks, Player* players, int playerNumber);
-
+void timerBomb(Bomb** bomb, Block* blocks, Player* players, int playerNumber, Explosion** explosions);
 
 #endif /* BOMB_H */
