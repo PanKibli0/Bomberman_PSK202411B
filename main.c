@@ -10,27 +10,29 @@
 #include "collision.h"
 #include "explosion.h"
 #include "map.h"
+#include "infoPanel.h"
 
 
+void gameRefresh(ALLEGRO_BITMAP* gameDisplay, Block* blocks, Bomb* bombs, Player* players, int playerNumber, Explosion* explosions) {
+	al_set_target_bitmap(gameDisplay);
+	al_clear_to_color(al_map_rgb(128, 128, 128));
+		
+	drawBlocks(blocks, gameDisplay);	
+	drawBombs(bombs, gameDisplay);	
+	drawPlayer(players, playerNumber, gameDisplay);
+	drawExplosion(explosions, gameDisplay);	
+}
 
-
-void displayRefreshing(ALLEGRO_DISPLAY* display, Block* blocks, Bomb* bombs, Player* players, int playerNumber, Explosion* explosions) {
+void displayRefreshing(ALLEGRO_DISPLAY* display, ALLEGRO_BITMAP* gameDisplay, ALLEGRO_BITMAP* infoPanel ) {
 	al_set_target_bitmap(al_get_backbuffer(display));
 	al_clear_to_color(al_map_rgb(128, 128, 128));
+	al_draw_bitmap(gameDisplay, (1920-TILE*19)/2, 0, 0);
+	al_draw_bitmap(infoPanel, 0, 11 * TILE, 0);
+	al_flip_display();
+}
 
-	drawBlocks(blocks, display);
-	drawBombs(bombs, display);
-	drawPlayer(players, playerNumber, display);
-	drawExplosion(explosions, display);
-};
 
-//void displayRefreshing(ALLEGRO_DISPLAY* display, ALLEGRO_BITMAP* gameDisplay, ALLEGRO_BITMAP* infoDisplay) { };
-
-// USUNAC DO CZEGOS INNEGO POTRZEBNE
-
-// /\ USUNAC
-
-// G³ówna pêtla gry
+// Glowna petla gry
 int main() {
 	srand(time(0));
 	// ZMIENNE ALLEGRO
@@ -60,6 +62,9 @@ int main() {
 	al_start_timer(timer);
 
 	// BITMAP DLA ALL
+
+	ALLEGRO_BITMAP* gameDisplay = al_create_bitmap(XNUMBER*TILE, YNUMBER*TILE);
+	ALLEGRO_BITMAP* infoPanel = al_create_bitmap(1920,1080-YNUMBER*TILE);
 
 	// INICJACJA GRY
 		// GRACZ
@@ -101,11 +106,13 @@ int main() {
 			if (al_key_down(&keyState, ALLEGRO_KEY_E)) players[0].health += 10;
 			if (al_key_down(&keyState, ALLEGRO_KEY_ESCAPE)) run = false;
 
-			displayRefreshing(display, blocks, bombs, players, playerNumber, explosions);
-			al_flip_display();
+			gameRefresh(gameDisplay, blocks, bombs, players, playerNumber, explosions);
+			drawInfoPanel(infoPanel);
+			displayRefreshing(display, gameDisplay, infoPanel);
 		}
 	}
 
+	al_destroy_bitmap(gameDisplay);
 	al_destroy_display(display);
 	al_destroy_event_queue(event_queue);
 	al_destroy_timer(timer);

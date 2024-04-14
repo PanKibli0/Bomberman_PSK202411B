@@ -139,6 +139,7 @@
     <ClCompile Include="explosion.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="map.c" />
+    <ClCompile Include="infoPanel.c" />
     <ClCompile Include="player.c" />
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +148,7 @@
     <ClInclude Include="collision.h" />
     <ClInclude Include="explosion.h" />
     <ClInclude Include="map.h" />
+    <ClInclude Include="infoPanel.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="position.h" />
   </ItemGroup>

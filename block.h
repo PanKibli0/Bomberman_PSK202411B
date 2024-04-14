@@ -1,6 +1,7 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 
+#include <allegro5/allegro.h>
 #include "position.h"
 
 typedef struct Block {
@@ -11,6 +12,6 @@ typedef struct Block {
 } Block;
 
 void addBlock(Block** block, int x, int y, int health);
-void drawBlocks(Block* block, ALLEGRO_DISPLAY* display);
+void drawBlocks(Block* block, ALLEGRO_BITMAP* gameDisplay);
 
 #endif /* BLOCK_H */

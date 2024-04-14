@@ -24,9 +24,9 @@ void createExplosion(Explosion** explosions, int x, int y) {
 };
 
 
-void drawExplosion(Explosion* explosions, ALLEGRO_DISPLAY* display) {
+void drawExplosion(Explosion* explosions, ALLEGRO_BITMAP* gameDisplay) {
+    al_set_target_bitmap(gameDisplay);
     for (Explosion* explosion = explosions; explosion != NULL; explosion = explosion->next) {
-        al_set_target_bitmap(al_get_backbuffer(display));
         al_draw_bitmap(explosion->graphic, explosion->position.x, explosion->position.y, 0);
     }
 }
@@ -84,9 +84,8 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber, Ex
 
     if (!destroyed) {
         for (int i = 0; i < playerNumber; i++) {
-            if (players[i].position.x >= x - TILE / 2 && players[i].position.x <= x + TILE / 2 &&
-                players[i].position.y >= y - TILE / 2 && players[i].position.y <= y + TILE / 2) {
-                //printf("\tSRODEK\n");
+            if (players[i].position.x >= x - TILE / 2-2 && players[i].position.x <= x + TILE / 2-2 &&
+                players[i].position.y >= y - TILE / 2-2 && players[i].position.y <= y + TILE / 2-2) {
                 if (!damaged) {
                     if (players[i].health > 0)
                         players[i].health -= 1;

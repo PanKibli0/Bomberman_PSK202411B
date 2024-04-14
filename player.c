@@ -27,12 +27,11 @@ void initPlayer(Player* player, unsigned int health, int x, int y, float velocit
 	al_draw_rectangle(0, 0, TILE, TILE, player->color, 10);
 }
 
-void drawPlayer(Player* players, int playerNumber ,ALLEGRO_DISPLAY* display) {
+void drawPlayer(Player* players, int playerNumber, ALLEGRO_BITMAP* gameDisplay) {
+	al_set_target_bitmap(gameDisplay);
 	for (int i = 0; i < playerNumber; i++) {
 		if (players[i].health > 0) {
-			al_set_target_bitmap(al_get_backbuffer(display));
-			al_draw_bitmap(players[i].graphic, players[i].position.x, players[i].position.y, 0);
-			
+			al_draw_bitmap(players[i].graphic, players[i].position.x, players[i].position.y, 0);	
 		}
 	}
 }

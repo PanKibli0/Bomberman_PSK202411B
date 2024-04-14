@@ -37,9 +37,9 @@ bool addBomb(Bomb** bomb, int x, int y, int power, float time, Player* owner) {
 
 
 
-void drawBombs(Bomb* bomb, ALLEGRO_DISPLAY* display) {
+void drawBombs(Bomb* bomb, ALLEGRO_BITMAP* gameDisplay) {
+    al_set_target_bitmap(gameDisplay);
     for (Bomb* bombElement = bomb; bombElement != NULL; bombElement = bombElement->next) {
-        al_set_target_bitmap(al_get_backbuffer(display));
         al_draw_bitmap(bombElement->graphic, bombElement->position.x, bombElement->position.y, 0);
     }
 }

@@ -1,6 +1,5 @@
-#include <allegro5/allegro.h>
-#include <allegro5/allegro_primitives.h>
 
+#include <allegro5/allegro_primitives.h>
 
 #include "block.h"
 
@@ -27,9 +26,9 @@ void addBlock(Block** block, int x, int y, int health) {
 	*block = newBlock;
 }
 
-void drawBlocks(Block* block, ALLEGRO_DISPLAY* display) {
+void drawBlocks(Block* block, ALLEGRO_BITMAP* gameDisplay) {
+	al_set_target_bitmap(gameDisplay);
 	for (Block* blockElement = block; blockElement != NULL; blockElement = blockElement->next) {
-		al_set_target_bitmap(al_get_backbuffer(display));
 		al_draw_bitmap(blockElement->graphic, blockElement->position.x, blockElement->position.y, 0);
 	}
 }

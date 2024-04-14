@@ -16,6 +16,6 @@ typedef struct Explosion {
 // FUKCJE
 
 void explosion(struct Bomb* bomb, Block** blocks, Player* players, int playerNumber, Explosion** explosions);
-void drawExplosion(Explosion** explosions, ALLEGRO_DISPLAY* display);
+void drawExplosion(Explosion** explosions, ALLEGRO_BITMAP* gameDisplay);
 void endExplosions(Explosion** explosions);
 #endif /* EXPLOSION_H */

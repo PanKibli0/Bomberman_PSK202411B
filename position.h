@@ -3,7 +3,9 @@
 
 #include <allegro5/allegro.h>
 #define FPS 60
-#define TILE 96
+#define TILE 80
+#define XNUMBER 19
+#define YNUMBER 11
 #define PLAYERS 2
 
 typedef struct {
