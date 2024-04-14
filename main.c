@@ -25,9 +25,12 @@ void gameRefresh(ALLEGRO_BITMAP* gameDisplay, Block* blocks, Bomb* bombs, Player
 
 void displayRefreshing(ALLEGRO_DISPLAY* display, ALLEGRO_BITMAP* gameDisplay, ALLEGRO_BITMAP* infoPanel ) {
 	al_set_target_bitmap(al_get_backbuffer(display));
-	al_clear_to_color(al_map_rgb(128, 128, 128));
-	al_draw_bitmap(gameDisplay, (1920-TILE*19)/2, 0, 0);
-	al_draw_bitmap(infoPanel, 0, 11 * TILE, 0);
+	
+	al_draw_filled_rectangle(0, 0, XSCREEN, al_get_bitmap_height(gameDisplay), al_map_rgb(128, 128, 128));
+	al_draw_bitmap(gameDisplay, (XSCREEN-TILE*19)/2, 0, 0);
+	al_draw_filled_rectangle(0, al_get_bitmap_height(gameDisplay), XSCREEN, YSCREEN, al_map_rgb(255, 252, 171));
+	al_draw_bitmap(infoPanel, (XSCREEN - TILE * 19) / 2, 11 * TILE, 0);
+
 	al_flip_display();
 }
 
@@ -42,10 +45,10 @@ int main() {
 	bool run = true;
 
 	// EKRAN
-	//al_set_new_display_flags(ALLEGRO_FULLSCREEN);
+	al_set_new_display_flags(ALLEGRO_FULLSCREEN);
 	//al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
 	ALLEGRO_DISPLAY* display = NULL;;
-	display = al_create_display(1920, 1080);
+	display = al_create_display(XSCREEN, YSCREEN);
 	
 
 	// KLAWIATURA
@@ -64,30 +67,19 @@ int main() {
 	// BITMAP DLA ALL
 
 	ALLEGRO_BITMAP* gameDisplay = al_create_bitmap(XNUMBER*TILE, YNUMBER*TILE);
-	ALLEGRO_BITMAP* infoPanel = al_create_bitmap(1920,1080-YNUMBER*TILE);
+	ALLEGRO_BITMAP* infoPanel = al_create_bitmap(XNUMBER*TILE,YSCREEN-YNUMBER*TILE);
 
 	// INICJACJA GRY
-		// GRACZ
-	//int playerNumber = rand() % 2 + 2;
-	int playerNumber = PLAYERS;
+	
+
+	int playerNumber = 4;
 	printf("PLAYER NUMBERS: %d \n", playerNumber);
 	Player* players = malloc(playerNumber * sizeof(Player));
-
-	switch (playerNumber) { // STRZALKI STEROWANIE	
-		//	void initPlayer(Player* player, unsigned int health, int x, int y, float velocity, int bombAmount, float bombTime, int bombPower, ALLEGRO_COLOR color, int controlKeys[5]);
-	case 4: initPlayer(&players[3], 3, rand() % 770, rand() % 420, 5, 3, 5, 3, al_map_rgb(rand() % 256, rand() % 256, rand() % 256), (int[]) { ALLEGRO_KEY_PAD_8, ALLEGRO_KEY_PAD_5, ALLEGRO_KEY_PAD_6, ALLEGRO_KEY_PAD_4, ALLEGRO_KEY_PAD_9 });
-	case 3: initPlayer(&players[2], 3, rand() % 770, rand() % 420, 3, 3, 5, 3, al_map_rgb(rand() % 256, rand() % 256, rand() % 256), (int[]) { ALLEGRO_KEY_I, ALLEGRO_KEY_K, ALLEGRO_KEY_L, ALLEGRO_KEY_J, ALLEGRO_KEY_O });
-	case 2: initPlayer(&players[1], 3, TILE, 9*TILE, 2, 3, 5, 3, al_map_rgb(rand() % 256, rand() % 256, rand() % 256), (int[]) { ALLEGRO_KEY_UP, ALLEGRO_KEY_DOWN, ALLEGRO_KEY_RIGHT, ALLEGRO_KEY_LEFT, ALLEGRO_KEY_PAD_0 });
-	case 1: initPlayer(&players[0], 3, TILE, TILE, 4, 3, 2, 3, al_map_rgb(rand() % 256, rand() % 256, rand() % 256), (int[]) { ALLEGRO_KEY_W, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_A, ALLEGRO_KEY_Q });
-	}
-
-	// BOMBY
 	Bomb* bombs = NULL;
 	Block* blocks = NULL;
 	Explosion* explosions = NULL;
 
-	createMap(&blocks);
-
+	createMap(&blocks,players, playerNumber);
 
 	// PETLA GRY
 	while (run) {
@@ -103,11 +95,11 @@ int main() {
 			timerBomb(&bombs, blocks, players, playerNumber, &explosions);
 			endExplosions(&explosions);
 
-			if (al_key_down(&keyState, ALLEGRO_KEY_E)) players[0].health += 10;
+			//if (al_key_down(&keyState, ALLEGRO_KEY_E)) players[0].health += 10;
 			if (al_key_down(&keyState, ALLEGRO_KEY_ESCAPE)) run = false;
 
 			gameRefresh(gameDisplay, blocks, bombs, players, playerNumber, explosions);
-			drawInfoPanel(infoPanel);
+			drawInfoPanel(infoPanel, players, playerNumber);
 			displayRefreshing(display, gameDisplay, infoPanel);
 		}
 	}

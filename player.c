@@ -77,7 +77,7 @@ void placeBomb(Player* players, int playerNumber, Bomb** bomb, ALLEGRO_KEYBOARD_
 	for (int i = 0; i < playerNumber; ++i) {
 		if (al_key_down(keyState, players[i].controlKeys[4]) && players[i].bombs.bombAmount > 0 && players[i].health > 0) {
 			// Obliczanie pozycji bomby na podstawie pozycji gracza
-			int bombX = ((int)(players[i].position.x) / TILE) * TILE  ;
+			int bombX = ((int)(players[i].position.x + TILE / 2) / TILE) * TILE  ;
 			int bombY = ((int)(players[i].position.y + TILE/2) / TILE) * TILE;
 
 			if (addBomb(bomb, bombX, bombY, players[i].bombs.BombPower, players[i].bombs.bombTime, &players[i])) {
