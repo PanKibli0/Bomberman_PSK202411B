@@ -1,8 +1,5 @@
 // DO ZROBIENIA:
 
-! (WYBUCH NA BLOKI HEALTH -1)
-
-
 
 Panel INFO 
 
@@ -14,8 +11,6 @@ FULL SCREEN = 1920x1080
 ----------------------------
 
 nie rysowac od razu na display tylko na bitmap map i panel osobno 
-iwtedy na display wyslac: MAP AND INFOPANEL
-
-
+i wtedy na display wyslac: MAP AND INFOPANEL
 
 -------------------------------

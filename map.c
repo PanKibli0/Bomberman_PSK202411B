@@ -4,21 +4,21 @@ void createMap(Block** blocks) {
     
 	// lewo prawo
 	for (int i = 0; i < TILE * 19; i += TILE) {
-		addBlock(blocks, i + TILE / 2, 0, -1);
-		addBlock(blocks, i + TILE / 2, TILE * 10, -1);
+		addBlock(blocks, i , 0, -1);
+		addBlock(blocks, i, TILE * 10, -1);
 	}
 
 	// gora dol
 	for (int i = TILE; i < TILE * 10; i += TILE) {
-		addBlock(blocks, 0 + TILE / 2, i, -1);
-		addBlock(blocks, TILE * 18 + TILE / 2, i, -1);
+		addBlock(blocks, 0 , i, -1);
+		addBlock(blocks, TILE * 18 , i, -1);
 	}
 
-
+    
 	// siatka
 	for (int i = TILE * 2; i < TILE * 19; i += TILE * 2) {
 		for (int j = TILE * 2; j < TILE * 10; j += TILE * 2) {
-			addBlock(blocks, i + TILE / 2, j, -1);
+			addBlock(blocks, i , j, -1);
 		};
 	};
     
@@ -37,14 +37,14 @@ void createMap(Block** blocks) {
                 // Sprawdzenie, czy na danej pozycji nie ma ju¿ bloku
                 bool empty = true;
                 for (Block* blockElement = *blocks; blockElement != NULL; blockElement = blockElement->next) {
-                    if (blockElement->position.x == i + TILE / 2 && blockElement->position.y == j) {
+                    if (blockElement->position.x == i  && blockElement->position.y == j) {
                         empty = false;
                         break;
                     }
                 }
                 // Dodanie bloku tylko jeœli pozycja jest wolna
                 if (empty) {
-                    addBlock(blocks, i + TILE / 2, j, 1);
+                    addBlock(blocks, i , j, 1);
                 }
             }
         }
