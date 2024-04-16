@@ -16,7 +16,7 @@ void createExplosion(Explosion** explosions, int x, int y) {
 
     newExplosion->graphic = al_create_bitmap(TILE, TILE);
     al_set_target_bitmap(newExplosion->graphic);
-    al_draw_filled_rectangle(0, 0, TILE, TILE, al_map_rgba(255, 0, 0, 50));
+    al_draw_filled_rectangle(0, 0, TILE, TILE, al_map_rgba(255, 0,0, 50));
 
 
     newExplosion->next = *explosions;

@@ -2,8 +2,11 @@
 #define INFO_H
 
 #include <allegro5/allegro.h>
+#include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 #include "player.h"
 
-void drawInfoPanel(ALLEGRO_BITMAP* infoPanel, Player* players, int playerNumber);
+void drawInfoPanel(ALLEGRO_BITMAP* infoPanel, Player* players, int playerNumber, ALLEGRO_FONT* font);
 
 #endif /* INFO_H */

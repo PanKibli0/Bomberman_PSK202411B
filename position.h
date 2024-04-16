@@ -3,7 +3,7 @@
 
 #include <allegro5/allegro.h>
 #define FPS 120
-#define TILE 80
+#define TILE 85
 #define XNUMBER 19
 #define YNUMBER 11
 #define PLAYERS 2

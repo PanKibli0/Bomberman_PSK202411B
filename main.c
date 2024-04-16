@@ -1,7 +1,11 @@
 ﻿#include <stdio.h>
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 #include <time.h>
+
+
 
 #include "player.h"
 #include "position.h"
@@ -42,6 +46,8 @@ int main() {
 	al_init();
 	al_init_primitives_addon();
 	al_install_keyboard();
+	al_init_font_addon();
+	al_init_ttf_addon();
 	bool run = true;
 
 	// EKRAN
@@ -68,6 +74,7 @@ int main() {
 
 	ALLEGRO_BITMAP* gameDisplay = al_create_bitmap(XNUMBER*TILE, YNUMBER*TILE);
 	ALLEGRO_BITMAP* infoPanel = al_create_bitmap(XNUMBER*TILE,YSCREEN-YNUMBER*TILE);
+	ALLEGRO_FONT* font = al_load_font("graphics/minecraft.ttf", 40, 0);
 
 	// INICJACJA GRY
 	
@@ -99,7 +106,7 @@ int main() {
 			if (al_key_down(&keyState, ALLEGRO_KEY_ESCAPE)) run = false;
 
 			gameRefresh(gameDisplay, blocks, bombs, players, playerNumber, explosions);
-			drawInfoPanel(infoPanel, players, playerNumber);
+			drawInfoPanel(infoPanel, players, playerNumber, font);
 			displayRefreshing(display, gameDisplay, infoPanel);
 		}
 	}
