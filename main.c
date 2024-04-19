@@ -3,6 +3,7 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
+#include <allegro5/allegro_image.h>
 #include <time.h>
 
 
@@ -15,11 +16,12 @@
 #include "explosion.h"
 #include "map.h"
 #include "infoPanel.h"
+#include "graphics.h"
 
 
 void gameRefresh(ALLEGRO_BITMAP* gameDisplay, Block* blocks, Bomb* bombs, Player* players, int playerNumber, Explosion* explosions) {
 	al_set_target_bitmap(gameDisplay);
-	al_clear_to_color(al_map_rgb(128, 128, 128));
+	al_clear_to_color(al_map_rgb(96, 96, 96));
 		
 	drawBlocks(blocks, gameDisplay);	
 	drawBombs(bombs, gameDisplay);	
@@ -30,7 +32,7 @@ void gameRefresh(ALLEGRO_BITMAP* gameDisplay, Block* blocks, Bomb* bombs, Player
 void displayRefreshing(ALLEGRO_DISPLAY* display, ALLEGRO_BITMAP* gameDisplay, ALLEGRO_BITMAP* infoPanel ) {
 	al_set_target_bitmap(al_get_backbuffer(display));
 	
-	al_draw_filled_rectangle(0, 0, XSCREEN, al_get_bitmap_height(gameDisplay), al_map_rgb(128, 128, 128));
+	al_draw_filled_rectangle(0, 0, XSCREEN, al_get_bitmap_height(gameDisplay), al_map_rgb(96, 96, 96));
 	al_draw_bitmap(gameDisplay, (XSCREEN-TILE*19)/2, 0, 0);
 	al_draw_filled_rectangle(0, al_get_bitmap_height(gameDisplay), XSCREEN, YSCREEN, al_map_rgb(255, 252, 171));
 	al_draw_bitmap(infoPanel, (XSCREEN - TILE * 19) / 2, 11 * TILE, 0);
@@ -48,6 +50,7 @@ int main() {
 	al_install_keyboard();
 	al_init_font_addon();
 	al_init_ttf_addon();
+	al_init_image_addon();
 	bool run = true;
 
 	// EKRAN
@@ -86,6 +89,7 @@ int main() {
 	Block* blocks = NULL;
 	Explosion* explosions = NULL;
 
+	loadGraphics();
 	createMap(&blocks,players, playerNumber);
 
 	// PETLA GRY
@@ -102,7 +106,7 @@ int main() {
 			timerBomb(&bombs, blocks, players, playerNumber, &explosions);
 			endExplosions(&explosions);
 
-			//if (al_key_down(&keyState, ALLEGRO_KEY_E)) players[0].health += 10;
+			if (al_key_down(&keyState, ALLEGRO_KEY_F5)) players[0].health += 1;
 			if (al_key_down(&keyState, ALLEGRO_KEY_ESCAPE)) run = false;
 
 			gameRefresh(gameDisplay, blocks, bombs, players, playerNumber, explosions);

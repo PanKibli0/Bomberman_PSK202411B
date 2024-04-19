@@ -5,7 +5,7 @@
 #include "bomb.h"
 #include "explosion.h"
 #include "player.h"
-
+#include "graphics.h"
 
 
 bool addBomb(Bomb** bomb, int x, int y, int power, float time, Player* owner) {
@@ -27,7 +27,9 @@ bool addBomb(Bomb** bomb, int x, int y, int power, float time, Player* owner) {
 
     newBomb->graphic = al_create_bitmap(TILE, TILE);
     al_set_target_bitmap(newBomb->graphic);
-    al_draw_filled_circle(TILE / 2, TILE / 2, TILE / 2, al_map_rgb(0, 0, 0));
+    al_draw_scaled_bitmap(bombGraphic, 0, 0, al_get_bitmap_width(bombGraphic), al_get_bitmap_height(bombGraphic), 0,0, TILE, TILE, 0);
+
+    printf("RYSUJE ALE COS ZJEBALEM\n");
 
     newBomb->next = *bomb;
     *bomb = newBomb;

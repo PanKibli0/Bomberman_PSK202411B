@@ -16,7 +16,7 @@ void createExplosion(Explosion** explosions, int x, int y) {
 
     newExplosion->graphic = al_create_bitmap(TILE, TILE);
     al_set_target_bitmap(newExplosion->graphic);
-    al_draw_filled_rectangle(0, 0, TILE, TILE, al_map_rgba(255, 0,0, 50));
+    al_draw_filled_rectangle(0, 0, TILE, TILE, al_map_rgba(255, 0, 0, 50));
 
 
     newExplosion->next = *explosions;
@@ -84,8 +84,7 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber, Ex
 
     if (!destroyed) {
         for (int i = 0; i < playerNumber; i++) {
-            if (players[i].position.x >= x - TILE / 2-2 && players[i].position.x <= x + TILE / 2-2 &&
-                players[i].position.y >= y - TILE / 2-2 && players[i].position.y <= y + TILE / 2-2) {
+            if (players[i].position.x == x  && players[i].position.y == y ) {
                 if (!damaged) {
                     if (players[i].health > 0)
                         players[i].health -= 1;
@@ -116,7 +115,7 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber, Ex
 
         if (!destroyed) {
             for (int j = 0; j < playerNumber; j++) {
-                if (!damaged && players[j].position.y == y && players[j].position.x > x && players[j].position.x <= newX + TILE + TILE / 2) {
+                if (!damaged && players[j].position.y == y && players[j].position.x > x && players[j].position.x <= newX + TILE) {
                     if (players[j].health > 0)
                         players[j].health -= 1;
                     damaged = true;
@@ -148,7 +147,7 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber, Ex
 
         if (!destroyed) {
             for (int j = 0; j < playerNumber; j++) {
-                if (!damaged && players[j].position.y == y && players[j].position.x < x && players[j].position.x >= newX - TILE + TILE / 2) {
+                if (!damaged && players[j].position.y == y && players[j].position.x < x && players[j].position.x >= newX - TILE) {
                     if (players[j].health > 0)
                         players[j].health -= 1;
                     damaged = true;
@@ -178,7 +177,7 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber, Ex
 
         if (!destroyed) {
             for (int j = 0; j < playerNumber; j++) {
-                if (!damaged && players[j].position.x == x && players[j].position.y < y && players[j].position.y >= newY - TILE + TILE / 2) {
+                if (!damaged && players[j].position.x == x && players[j].position.y < y && players[j].position.y >= newY - TILE) {
                     if (players[j].health > 0)
                         players[j].health -= 1;
                     damaged = true;
@@ -209,7 +208,7 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber, Ex
 
         if (!destroyed) {
             for (int j = 0; j < playerNumber; j++) {
-                if (!damaged && players[j].position.x == x && players[j].position.y > y && players[j].position.y <= newY + TILE / 2) {
+                if (!damaged && players[j].position.x == x && players[j].position.y > y && players[j].position.y <= newY+TILE) {
                     printf("PLAYER EXP\n");
                     if (players[j].health > 0)
                         players[j].health -= 1;
@@ -223,4 +222,3 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber, Ex
     printf("\tH0: %d\n", players[0].health);
     printf("\tH1: %d\n", players[1].health);
 }
-

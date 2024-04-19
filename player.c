@@ -1,7 +1,6 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 
-
 #include "position.h"
 #include "player.h"
 #include "block.h"
