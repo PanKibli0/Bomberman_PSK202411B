@@ -8,6 +8,7 @@
 #include "graphics.h"
 
 
+
 bool addBomb(Bomb** bomb, int x, int y, int power, float time, Player* owner) {
     for (Bomb* bombElement = *bomb; bombElement != NULL; bombElement = bombElement->next) {
         int dx = abs(bombElement->position.x - x);

@@ -4,8 +4,8 @@
 
 #include "bomb.h"
 
-// RYSOWANIE 
 
+// RYSOWANIE 
 void createExplosion(Explosion** explosions, int x, int y) {
     Explosion* newExplosion = malloc(sizeof(Explosion));
 

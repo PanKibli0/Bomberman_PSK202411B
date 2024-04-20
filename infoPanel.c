@@ -2,6 +2,7 @@
 #include "graphics.h"
 
 
+
 void drawInfoPanel(ALLEGRO_BITMAP* infoPanel, Player* players, int playerNumber, ALLEGRO_FONT* font) {
     int width = 4 * TILE;
     int height = al_get_bitmap_height(infoPanel) * 0.9;

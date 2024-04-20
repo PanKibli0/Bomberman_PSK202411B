@@ -1,6 +1,7 @@
 #include "map.h"
 #include "position.h"
 
+
 void createMap(Block** blocks,Player* players, int playerNumber) {
     //	void initPlayer(Player* player, unsigned int health, int x, int y, float velocity, int bombAmount, float bombTime, int bombPower, ALLEGRO_COLOR color, int controlKeys[5]);
 

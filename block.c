@@ -3,6 +3,7 @@
 #include "block.h"
 #include "graphics.h"
 
+
 void addBlock(Block** block, int x, int y, int health) {
 	Block* newBlock = malloc(sizeof(Block));
 

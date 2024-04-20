@@ -6,6 +6,7 @@
 #include "block.h"
 #include "collision.h"
 
+
 // FUNKCJE GRACZA
 void initPlayer(Player* player, unsigned int health, int x, int y, float velocity, int bombAmount, float bombTime, int bombPower, ALLEGRO_COLOR color, int controlKeys[5]) {
 	player->health = health;

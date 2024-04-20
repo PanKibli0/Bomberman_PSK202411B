@@ -7,7 +7,6 @@ ALLEGRO_BITMAP* idblockGraphic = NULL;
 ALLEGRO_BITMAP* heartGraphic = NULL;
 
 
-
 void loadGraphics() {
 	bombGraphic = al_load_bitmap("graphics/bomb.png");
 	dblockGraphic = al_load_bitmap("graphics/dblock.png");

@@ -2,6 +2,7 @@
 #define POSITION_H
 
 #include <allegro5/allegro.h>
+
 #define FPS 120
 #define TILE 85
 #define XNUMBER 19

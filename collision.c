@@ -4,6 +4,7 @@
 #include "block.h"
 
 
+
 bool checkBlockCollision(float x, float y, Block* block) {
     for (Block* blockElement = block; blockElement != NULL; blockElement = blockElement->next) {
         if (x + TILE > blockElement->position.x && x < blockElement->position.x + TILE &&

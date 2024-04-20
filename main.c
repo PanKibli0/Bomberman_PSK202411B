@@ -7,7 +7,6 @@
 #include <time.h>
 
 
-
 #include "player.h"
 #include "position.h"
 #include "bomb.h"
@@ -17,6 +16,7 @@
 #include "map.h"
 #include "infoPanel.h"
 #include "graphics.h"
+
 
 
 void gameRefresh(ALLEGRO_BITMAP* gameDisplay, Block* blocks, Bomb* bombs, Player* players, int playerNumber, Explosion* explosions) {

@@ -4,6 +4,7 @@
 #include "position.h"
 #include "block.h"
 
+
 struct Bomb;
 
 typedef struct {

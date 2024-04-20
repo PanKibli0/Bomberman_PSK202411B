@@ -3,6 +3,7 @@
 
 #include <allegro5/allegro.h>
 
+
 extern ALLEGRO_BITMAP* bombGraphic;
 extern ALLEGRO_BITMAP* dblockGraphic;
 extern ALLEGRO_BITMAP* idblockGraphic;

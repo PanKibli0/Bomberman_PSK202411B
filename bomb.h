@@ -6,7 +6,6 @@
 #include "explosion.h"
 
 
-
 typedef struct Bomb {
     Position position;
     ALLEGRO_BITMAP* graphic;

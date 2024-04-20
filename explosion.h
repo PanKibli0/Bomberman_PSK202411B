@@ -5,6 +5,7 @@
 #include "player.h"
 #include "block.h"
 
+
 typedef struct Explosion {
 	Position position;
 	int direction;

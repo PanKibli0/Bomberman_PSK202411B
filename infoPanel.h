@@ -7,6 +7,7 @@
 #include <allegro5/allegro_ttf.h>
 #include "player.h"
 
+
 void drawInfoPanel(ALLEGRO_BITMAP* infoPanel, Player* players, int playerNumber, ALLEGRO_FONT* font);
 
 #endif /* INFO_H */

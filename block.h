@@ -4,6 +4,7 @@
 #include <allegro5/allegro.h>
 #include "position.h"
 
+
 typedef struct Block {
     int health;
     Position position;
