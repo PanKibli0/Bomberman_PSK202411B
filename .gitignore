@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/graphics/bomb.png
+/graphics/idblock.png
+/graphics/Minecraft.ttf
