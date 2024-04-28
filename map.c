@@ -5,9 +5,8 @@
 void createMap(Block** blocks,Player* players, int playerNumber) {
     //	void initPlayer(Player* player, unsigned int health, int x, int y, float velocity, int bombAmount, float bombTime, int bombPower, ALLEGRO_COLOR color, int controlKeys[5]);
 
-
     //  GRACZE
-    switch (playerNumber) { // STRZALKI STEROWANIE	
+    switch (playerNumber) { 
     case 4: {
         initPlayer(&players[3], 3, (XNUMBER - 2) * TILE, (YNUMBER - 2) * TILE, 2, 3, 3, 2, al_map_rgb(255,255,0), (int[]) { ALLEGRO_KEY_PAD_8, ALLEGRO_KEY_PAD_5, ALLEGRO_KEY_PAD_6, ALLEGRO_KEY_PAD_4, ALLEGRO_KEY_PAD_9 });
         initPlayer(&players[2], 3, (XNUMBER - 2)*TILE, TILE, 3, 3, 3, 2, al_map_rgb(0, 196, 0), (int[]) { ALLEGRO_KEY_I, ALLEGRO_KEY_K, ALLEGRO_KEY_L, ALLEGRO_KEY_J, ALLEGRO_KEY_O });
