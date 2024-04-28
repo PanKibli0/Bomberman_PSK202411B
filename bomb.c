@@ -19,7 +19,7 @@ bool addBomb(Bomb** bomb, int x, int y, int power, float time, Player* owner) {
     }
 
     Bomb* newBomb = malloc(sizeof(Bomb));
-    
+
     newBomb->position.x = x;
     newBomb->position.y = y;
     newBomb->power = power;
@@ -28,9 +28,8 @@ bool addBomb(Bomb** bomb, int x, int y, int power, float time, Player* owner) {
 
     newBomb->graphic = al_create_bitmap(TILE, TILE);
     al_set_target_bitmap(newBomb->graphic);
-    al_draw_scaled_bitmap(bombGraphic, 0, 0, al_get_bitmap_width(bombGraphic), al_get_bitmap_height(bombGraphic), 0,0, TILE, TILE, 0);
+    al_draw_scaled_bitmap(bombGraphic, 0, 0, al_get_bitmap_width(bombGraphic), al_get_bitmap_height(bombGraphic), 0, 0, TILE, TILE, 0);
 
-    printf("RYSUJE ALE COS ZJEBALEM\n");
 
     newBomb->next = *bomb;
     *bomb = newBomb;
@@ -67,12 +66,12 @@ void timerBomb(Bomb** bomb, Block* blocks, Player* players, int playerNumber, Ex
         bombElement->time -= 1.0 / FPS;
 
         if (bombElement->time <= 0) {
-            
+
             explosion(bombElement, &blocks, players, playerNumber, explosions);
             bombElement->owner->bombs.bombAmount++;
             al_destroy_bitmap(bombElement->graphic);
             explodedBomb(bomb, bombElement);
             break;
-        }    
+        }
     }
 }

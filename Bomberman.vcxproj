@@ -145,6 +145,7 @@
     <ClCompile Include="map.c" />
     <ClCompile Include="infoPanel.c" />
     <ClCompile Include="player.c" />
+    <ClCompile Include="powerup.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="block.h" />
@@ -156,6 +157,7 @@
     <ClInclude Include="infoPanel.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="position.h" />
+    <ClInclude Include="powerup.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="notatki.txt" />

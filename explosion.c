@@ -84,7 +84,7 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber, Ex
 
     if (!destroyed) {
         for (int i = 0; i < playerNumber; i++) {
-            if (players[i].position.x == x  && players[i].position.y == y ) {
+            if (players[i].position.x == x && players[i].position.y == y) {
                 if (!damaged) {
                     if (players[i].health > 0)
                         players[i].health -= 1;
@@ -208,7 +208,7 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber, Ex
 
         if (!destroyed) {
             for (int j = 0; j < playerNumber; j++) {
-                if (!damaged && players[j].position.x == x && players[j].position.y > y && players[j].position.y <= newY+TILE) {
+                if (!damaged && players[j].position.x == x && players[j].position.y > y && players[j].position.y <= newY + TILE) {
                     printf("PLAYER EXP\n");
                     if (players[j].health > 0)
                         players[j].health -= 1;

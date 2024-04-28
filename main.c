@@ -22,18 +22,18 @@
 void gameRefresh(ALLEGRO_BITMAP* gameDisplay, Block* blocks, Bomb* bombs, Player* players, int playerNumber, Explosion* explosions) {
 	al_set_target_bitmap(gameDisplay);
 	al_clear_to_color(al_map_rgb(96, 96, 96));
-		
-	drawBlocks(blocks, gameDisplay);	
-	drawBombs(bombs, gameDisplay);	
+
+	drawBlocks(blocks, gameDisplay);
+	drawBombs(bombs, gameDisplay);
 	drawPlayer(players, playerNumber, gameDisplay);
-	drawExplosion(explosions, gameDisplay);	
+	drawExplosion(explosions, gameDisplay);
 }
 
-void displayRefreshing(ALLEGRO_DISPLAY* display, ALLEGRO_BITMAP* gameDisplay, ALLEGRO_BITMAP* infoPanel ) {
+void displayRefreshing(ALLEGRO_DISPLAY* display, ALLEGRO_BITMAP* gameDisplay, ALLEGRO_BITMAP* infoPanel) {
 	al_set_target_bitmap(al_get_backbuffer(display));
-	
+
 	al_draw_filled_rectangle(0, 0, XSCREEN, al_get_bitmap_height(gameDisplay), al_map_rgb(96, 96, 96));
-	al_draw_bitmap(gameDisplay, (XSCREEN-TILE*19)/2, 0, 0);
+	al_draw_bitmap(gameDisplay, (XSCREEN - TILE * 19) / 2, 0, 0);
 	al_draw_filled_rectangle(0, al_get_bitmap_height(gameDisplay), XSCREEN, YSCREEN, al_map_rgb(255, 252, 171));
 	al_draw_bitmap(infoPanel, (XSCREEN - TILE * 19) / 2, 11 * TILE, 0);
 
@@ -58,7 +58,7 @@ int main() {
 	//al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
 	ALLEGRO_DISPLAY* display = NULL;;
 	display = al_create_display(XSCREEN, YSCREEN);
-	
+
 
 	// KLAWIATURA
 	ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
@@ -75,12 +75,12 @@ int main() {
 
 	// BITMAP DLA ALL
 
-	ALLEGRO_BITMAP* gameDisplay = al_create_bitmap(XNUMBER*TILE, YNUMBER*TILE);
-	ALLEGRO_BITMAP* infoPanel = al_create_bitmap(XNUMBER*TILE,YSCREEN-YNUMBER*TILE);
+	ALLEGRO_BITMAP* gameDisplay = al_create_bitmap(XNUMBER * TILE, YNUMBER * TILE);
+	ALLEGRO_BITMAP* infoPanel = al_create_bitmap(XNUMBER * TILE, YSCREEN - YNUMBER * TILE);
 	ALLEGRO_FONT* font = al_load_font("graphics/minecraft.ttf", 40, 0);
 
 	// INICJACJA GRY
-	
+
 
 	int playerNumber = 4;
 	printf("PLAYER NUMBERS: %d \n", playerNumber);
@@ -90,7 +90,7 @@ int main() {
 	Explosion* explosions = NULL;
 
 	loadGraphics();
-	createMap(&blocks,players, playerNumber);
+	createMap(&blocks, players, playerNumber);
 
 	// PETLA GRY
 	while (run) {
