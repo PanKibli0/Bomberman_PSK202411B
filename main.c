@@ -90,8 +90,8 @@ int main() {
 	PowerUp* powerUps = NULL;
 
 	loadGraphics();
-	//mapLayout(&blocks, players, playerNumber, rand()%12+1);
-	mapLayout(&blocks, players, playerNumber, 3);
+	mapLayout(&blocks, players, playerNumber, rand()%12+1);
+	
 	
 	// PETLA GRY
 	while (run) {
@@ -119,6 +119,19 @@ int main() {
 			gameRefresh(gameDisplay, blocks, bombs, players, playerNumber, explosions, powerUps);
 			drawInfoPanel(infoPanel, players, playerNumber, font);
 			displayRefreshing(display, gameDisplay, infoPanel);
+
+			
+			int alivePlayers = 0;
+			for (int i = 0; i < playerNumber; ++i) {
+				if (players[i].health > 0) {
+					alivePlayers++;
+				}
+				if (alivePlayers > 2) continue;
+			}
+			if (alivePlayers == 1) {
+				//printf("WYGRANA");
+			}
+			
 		}
 	}
 

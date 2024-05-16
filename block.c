@@ -18,7 +18,7 @@ void addBlock(Block** block, int x, int y, int health) {
 	}
 	else if (newBlock->health == 1) {
 		al_draw_scaled_bitmap(DblockGraphic, 0, 0, al_get_bitmap_width(DblockGraphic), al_get_bitmap_height(DblockGraphic), 0, 0, TILE, TILE, 0);
-	} 
+	}
 	else {
 		al_draw_scaled_bitmap(hardDblockGraphic, 0, 0, al_get_bitmap_width(hardDblockGraphic), al_get_bitmap_height(hardDblockGraphic), 0, 0, TILE, TILE, 0);
 	}

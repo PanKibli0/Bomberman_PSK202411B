@@ -27,7 +27,7 @@ void createExplosion(Explosion** explosions, int x, int y) {
 void drawExplosion(Explosion* explosions, ALLEGRO_BITMAP* gameDisplay) {
     al_set_target_bitmap(gameDisplay);
     for (Explosion* explosion = explosions; explosion != NULL; explosion = explosion->next) {
-       // al_draw_bitmap(explosion->graphic, explosion->position.x, explosion->position.y, 0);
+       al_draw_bitmap(explosion->graphic, explosion->position.x, explosion->position.y, 0);
     }
 }
 
@@ -52,9 +52,9 @@ void endExplosions(Explosion** explosions) {
         explosion->time -= 1.0 / FPS;
 
         if (explosion->time <= 0) {
-            endExplosion(explosions, explosion);
+            endExplosion(explosions, explosion);           
             break;
-        }
+        }        
     }
 }
 
@@ -64,7 +64,7 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber, Ex
     int y = bomb->position.y;
     int power = bomb->power;
 
-    
+  
     createExplosion(explosions, x, y);
 
 

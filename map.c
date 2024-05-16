@@ -16,8 +16,6 @@ void createBorder(Block** blocks) {
 }
 
 void createMap(Block** blocks, int map[YNUMBER - 2][XNUMBER - 2], Player* players, int playerNumber) {
-    createBorder(blocks);
-
     for (int i = 0; i < YNUMBER - 2; i++) {
         for (int j = 0; j < XNUMBER - 2; j++) {
             if (map[i][j] != 0) {
@@ -47,7 +45,7 @@ void createMap(Block** blocks, int map[YNUMBER - 2][XNUMBER - 2], Player* player
                     break;
                 default:
                     if (map[i][j] == -1) { addBlock(blocks, (j + 1) * TILE, (i + 1) * TILE, map[i][j]); }
-                    else if (rand() % 10 == 0) { addBlock(blocks, (j + 1) * TILE, (i + 1) * TILE, 2); }
+                    else if (rand() % 100000000 == 0) { addBlock(blocks, (j + 1) * TILE, (i + 1) * TILE, 2); }
                     else if (rand() % 50 == 0) break;
                     else { addBlock(blocks, (j + 1) * TILE, (i + 1) * TILE, map[i][j]); };
                     break;
@@ -55,6 +53,7 @@ void createMap(Block** blocks, int map[YNUMBER - 2][XNUMBER - 2], Player* player
             }
         }
     }
+    createBorder(blocks);
 }
 
 
@@ -249,6 +248,22 @@ void mapLayout(Block** blocks, Player* players, int playerNumber, int mapIndex) 
             {0, 0, -1, 1, 1, -1, 1, -1, 1, -1, 1, -1, 1, 1, -1, 0, 0},
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
             {-1, 1, 1, -1, 1, 1, -1, 1, -1, 1, -1, 1, 1, -1, 1, 1, -1}
+        };
+
+        createMap(blocks, map, players, playerNumber);
+        break;
+    };
+    case 13: {
+        int map[YNUMBER - 2][XNUMBER - 2] = {
+            {10, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40}
         };
 
         createMap(blocks, map, players, playerNumber);
