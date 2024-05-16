@@ -5,8 +5,9 @@
 
 
 extern ALLEGRO_BITMAP* bombGraphic;
-extern ALLEGRO_BITMAP* dblockGraphic;
-extern ALLEGRO_BITMAP* idblockGraphic;
+extern ALLEGRO_BITMAP* DblockGraphic;
+extern ALLEGRO_BITMAP* hardDblockGraphic;
+extern ALLEGRO_BITMAP* IDblockGraphic;
 extern ALLEGRO_BITMAP* heartGraphic;
 
 void loadGraphics();

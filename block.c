@@ -14,11 +14,14 @@ void addBlock(Block** block, int x, int y, int health) {
 	newBlock->graphic = al_create_bitmap(TILE, TILE);
 	al_set_target_bitmap(newBlock->graphic);
 	if (newBlock->health < 0) {
-		al_draw_scaled_bitmap(idblockGraphic, 0, 0, al_get_bitmap_width(idblockGraphic), al_get_bitmap_height(idblockGraphic), 0, 0, TILE, TILE, 0);
+		al_draw_scaled_bitmap(IDblockGraphic, 0, 0, al_get_bitmap_width(IDblockGraphic), al_get_bitmap_height(IDblockGraphic), 0, 0, TILE, TILE, 0);
 	}
+	else if (newBlock->health == 1) {
+		al_draw_scaled_bitmap(DblockGraphic, 0, 0, al_get_bitmap_width(DblockGraphic), al_get_bitmap_height(DblockGraphic), 0, 0, TILE, TILE, 0);
+	} 
 	else {
-		al_draw_scaled_bitmap(dblockGraphic, 0, 0, al_get_bitmap_width(dblockGraphic), al_get_bitmap_height(dblockGraphic), 0, 0, TILE, TILE, 0);
-	};
+		al_draw_scaled_bitmap(hardDblockGraphic, 0, 0, al_get_bitmap_width(hardDblockGraphic), al_get_bitmap_height(hardDblockGraphic), 0, 0, TILE, TILE, 0);
+	}
 
 	newBlock->next = *block;
 	*block = newBlock;

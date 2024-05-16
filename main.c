@@ -90,8 +90,8 @@ int main() {
 	PowerUp* powerUps = NULL;
 
 	loadGraphics();
-	createMap(&blocks, players, playerNumber);
-
+	//mapLayout(&blocks, players, playerNumber, rand()%12+1);
+	mapLayout(&blocks, players, playerNumber, 3);
 	
 	// PETLA GRY
 	while (run) {
