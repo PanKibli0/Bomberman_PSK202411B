@@ -1,7 +1,5 @@
 #include "map.h"
 #include "position.h"
-#include <stdio.h>
-
 
 void createBorder(Block** blocks) {
     // lewo prawo
@@ -48,7 +46,10 @@ void createMap(Block** blocks, int map[YNUMBER - 2][XNUMBER - 2], Player* player
                     }
                     break;
                 default:
-                    addBlock(blocks, (j + 1) * TILE, (i + 1) * TILE, map[i][j]);
+                    if (map[i][j] == -1) { addBlock(blocks, (j + 1) * TILE, (i + 1) * TILE, map[i][j]); }
+                    else if (rand() % 10 == 0) { addBlock(blocks, (j + 1) * TILE, (i + 1) * TILE, 2); }
+                    else if (rand() % 50 == 0) break;
+                    else { addBlock(blocks, (j + 1) * TILE, (i + 1) * TILE, map[i][j]); };
                     break;
                 }
             }
@@ -59,7 +60,7 @@ void createMap(Block** blocks, int map[YNUMBER - 2][XNUMBER - 2], Player* player
 
 
 void mapLayout(Block** blocks, Player* players, int playerNumber, int mapIndex) {
-    printf("%d", mapIndex);
+    
     switch (mapIndex) {
     case 1: {
         int map[YNUMBER - 2][XNUMBER - 2] = {

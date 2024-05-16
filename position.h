@@ -10,7 +10,7 @@
 #define PLAYERS 2
 #define XSCREEN 1920
 #define YSCREEN 1080
-#define CHANCE 20
+#define CHANCE 2000000
 
 typedef struct {
     int x, y;

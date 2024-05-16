@@ -2,8 +2,10 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 
+#include "graphics.h"
 #include "bomb.h"
 
+#include <stdio.h>
 
 // RYSOWANIE 
 void createExplosion(Explosion** explosions, int x, int y) {
@@ -18,19 +20,16 @@ void createExplosion(Explosion** explosions, int x, int y) {
     al_set_target_bitmap(newExplosion->graphic);
     al_draw_filled_rectangle(0, 0, TILE, TILE, al_map_rgba(255, 0, 0, 50));
 
-
     newExplosion->next = *explosions;
     *explosions = newExplosion;
-};
-
+}
 
 void drawExplosion(Explosion* explosions, ALLEGRO_BITMAP* gameDisplay) {
     al_set_target_bitmap(gameDisplay);
     for (Explosion* explosion = explosions; explosion != NULL; explosion = explosion->next) {
-        al_draw_bitmap(explosion->graphic, explosion->position.x, explosion->position.y, 0);
+       // al_draw_bitmap(explosion->graphic, explosion->position.x, explosion->position.y, 0);
     }
 }
-
 
 void endExplosion(Explosion** explosions, Explosion* endExplosion) {
     if (*explosions == endExplosion) {
@@ -77,6 +76,13 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber, Ex
     for (Block* blockElement = *blocks; blockElement != NULL && !destroyed; blockElement = blockElement->next) {
         if (blockElement->position.x == x && blockElement->position.y == y) {
             if (blockElement->health > 0) blockElement->health -= 1;
+            printf("DZIALA??");
+            if (blockElement->health == 1) {
+                al_destroy_bitmap(blockElement->graphic); 
+                blockElement->graphic = al_create_bitmap(TILE, TILE);
+                al_set_target_bitmap(blockElement->graphic); 
+                al_draw_scaled_bitmap(DblockGraphic, 0, 0, al_get_bitmap_width(DblockGraphic), al_get_bitmap_height(DblockGraphic), 0, 0, TILE, TILE, 0); 
+            };
             if (blockElement->health == 0) breakBlock(blocks, blockElement);
             destroyed = true;
         }
@@ -106,6 +112,12 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber, Ex
             if (blockElement->position.x == newX && blockElement->position.y == y) {
                 if (blockElement->health == -1) explode = true;
                 if (blockElement->health > 0) blockElement->health -= 1;
+                if (blockElement->health == 1) {
+                    al_destroy_bitmap(blockElement->graphic);
+                    blockElement->graphic = al_create_bitmap(TILE, TILE);
+                    al_set_target_bitmap(blockElement->graphic); 
+                    al_draw_scaled_bitmap(DblockGraphic, 0, 0, al_get_bitmap_width(DblockGraphic), al_get_bitmap_height(DblockGraphic), 0, 0, TILE, TILE, 0); 
+                };
                 if (blockElement->health == 0) breakBlock(blocks, blockElement);
                 destroyed = true;
             }
@@ -137,6 +149,12 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber, Ex
             if (blockElement->position.x == newX && blockElement->position.y == y) {
                 if (blockElement->health == -1) explode = true;
                 if (blockElement->health > 0) blockElement->health -= 1;
+                if (blockElement->health == 1) {
+                    al_destroy_bitmap(blockElement->graphic); 
+                    blockElement->graphic = al_create_bitmap(TILE, TILE);
+                    al_set_target_bitmap(blockElement->graphic); 
+                    al_draw_scaled_bitmap(DblockGraphic, 0, 0, al_get_bitmap_width(DblockGraphic), al_get_bitmap_height(DblockGraphic), 0, 0, TILE, TILE, 0); 
+                };
                 if (blockElement->health == 0) breakBlock(blocks, blockElement);
                 destroyed = true;
             }
@@ -168,6 +186,12 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber, Ex
             if (blockElement->position.x == x && blockElement->position.y == newY) {
                 if (blockElement->health == -1) explode = true;
                 if (blockElement->health > 0) blockElement->health -= 1;
+                if (blockElement->health == 1) {
+                    al_destroy_bitmap(blockElement->graphic);
+                    blockElement->graphic = al_create_bitmap(TILE, TILE);
+                    al_set_target_bitmap(blockElement->graphic); 
+                    al_draw_scaled_bitmap(DblockGraphic, 0, 0, al_get_bitmap_width(DblockGraphic), al_get_bitmap_height(DblockGraphic), 0, 0, TILE, TILE, 0); 
+                };
                 if (blockElement->health == 0) breakBlock(blocks, blockElement);
                 destroyed = true;
             }
@@ -198,6 +222,12 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber, Ex
             if (blockElement->position.x == x && blockElement->position.y == newY) {
                 if (blockElement->health == -1) explode = true;
                 if (blockElement->health > 0) blockElement->health -= 1;
+                if (blockElement->health == 1) {
+                    al_destroy_bitmap(blockElement->graphic); 
+                    blockElement->graphic = al_create_bitmap(TILE, TILE);
+                    al_set_target_bitmap(blockElement->graphic); 
+                    al_draw_scaled_bitmap(DblockGraphic, 0, 0, al_get_bitmap_width(DblockGraphic), al_get_bitmap_height(DblockGraphic), 0, 0, TILE, TILE, 0); 
+                };
                 if (blockElement->health == 0) breakBlock(blocks, blockElement);
                 destroyed = true;
             }
