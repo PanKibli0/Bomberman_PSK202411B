@@ -15,11 +15,12 @@
 #include "explosion.h"
 #include "map.h"
 #include "infoPanel.h"
+#include "powerup.h"
 #include "graphics.h"
 
 
 
-void gameRefresh(ALLEGRO_BITMAP* gameDisplay, Block* blocks, Bomb* bombs, Player* players, int playerNumber, Explosion* explosions) {
+void gameRefresh(ALLEGRO_BITMAP* gameDisplay, Block* blocks, Bomb* bombs, Player* players, int playerNumber, Explosion* explosions, PowerUp* powerUps) {
 	al_set_target_bitmap(gameDisplay);
 	al_clear_to_color(al_map_rgb(96, 96, 96));
 
@@ -27,6 +28,7 @@ void gameRefresh(ALLEGRO_BITMAP* gameDisplay, Block* blocks, Bomb* bombs, Player
 	drawBombs(bombs, gameDisplay);
 	drawPlayer(players, playerNumber, gameDisplay);
 	drawExplosion(explosions, gameDisplay);
+	drawPowerUps(powerUps, gameDisplay);
 }
 
 void displayRefreshing(ALLEGRO_DISPLAY* display, ALLEGRO_BITMAP* gameDisplay, ALLEGRO_BITMAP* infoPanel) {
@@ -54,15 +56,13 @@ int main() {
 	bool run = true;
 
 	// EKRAN
-	al_set_new_display_flags(ALLEGRO_FULLSCREEN);
-	//al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
-	ALLEGRO_DISPLAY* display = NULL;;
-	display = al_create_display(XSCREEN, YSCREEN);
+	//al_set_new_display_flags(ALLEGRO_FULLSCREEN);
+	al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
+	ALLEGRO_DISPLAY* display = al_create_display(XSCREEN, YSCREEN);
 
 
 	// KLAWIATURA
 	ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
-
 	ALLEGRO_KEYBOARD_STATE keyState;
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	bool key[ALLEGRO_KEY_MAX] = { false };
@@ -70,7 +70,6 @@ int main() {
 	// FPS
 	ALLEGRO_TIMER* timer = al_create_timer(1.0 / FPS);
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));
-
 	al_start_timer(timer);
 
 	// BITMAP DLA ALL
@@ -83,15 +82,17 @@ int main() {
 
 
 	int playerNumber = 4;
-	printf("PLAYER NUMBERS: %d \n", playerNumber);
+
 	Player* players = malloc(playerNumber * sizeof(Player));
 	Bomb* bombs = NULL;
 	Block* blocks = NULL;
 	Explosion* explosions = NULL;
+	PowerUp* powerUps = NULL;
 
 	loadGraphics();
 	createMap(&blocks, players, playerNumber);
 
+	
 	// PETLA GRY
 	while (run) {
 		ALLEGRO_EVENT event;
@@ -99,6 +100,9 @@ int main() {
 		al_get_keyboard_state(&keyState);
 
 		if (event.type == ALLEGRO_EVENT_TIMER) {
+			if (rand()%CHANCE == 0) {
+				createPowerUp(&powerUps, players, playerNumber, blocks, bombs);
+			};
 
 			movePlayer(players, playerNumber, &keyState, blocks, bombs);
 			placeBomb(players, playerNumber, &bombs, &keyState, display);
@@ -106,14 +110,18 @@ int main() {
 			timerBomb(&bombs, blocks, players, playerNumber, &explosions);
 			endExplosions(&explosions);
 
+			
+			collectPowerUp(players, playerNumber, &powerUps);
+
 			if (al_key_down(&keyState, ALLEGRO_KEY_F5)) players[0].health += 1;
 			if (al_key_down(&keyState, ALLEGRO_KEY_ESCAPE)) run = false;
 
-			gameRefresh(gameDisplay, blocks, bombs, players, playerNumber, explosions);
+			gameRefresh(gameDisplay, blocks, bombs, players, playerNumber, explosions, powerUps);
 			drawInfoPanel(infoPanel, players, playerNumber, font);
 			displayRefreshing(display, gameDisplay, infoPanel);
 		}
 	}
+
 
 	al_destroy_bitmap(gameDisplay);
 	al_destroy_display(display);

@@ -82,7 +82,7 @@ void placeBomb(Player* players, int playerNumber, Bomb** bomb, ALLEGRO_KEYBOARD_
 
 			if (addBomb(bomb, bombX, bombY, players[i].bombs.BombPower, players[i].bombs.bombTime, &players[i])) {
 				players[i].bombs.bombAmount -= 1;
-				printf("BOMBS: %d \n", players[i].bombs.bombAmount);
+				
 			}
 		}
 	}
