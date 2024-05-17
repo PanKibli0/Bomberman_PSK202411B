@@ -9,7 +9,7 @@
 
 
 
-bool addBomb(Bomb** bomb, int x, int y, int power, float time, Player* owner) {
+bool addBomb(Bomb** bomb, int x, int y, int power, Player* owner) {
     for (Bomb* bombElement = *bomb; bombElement != NULL; bombElement = bombElement->next) {
         int dx = abs(bombElement->position.x - x);
         int dy = abs(bombElement->position.y - y);
@@ -23,7 +23,7 @@ bool addBomb(Bomb** bomb, int x, int y, int power, float time, Player* owner) {
     newBomb->position.x = x;
     newBomb->position.y = y;
     newBomb->power = power;
-    newBomb->time = time;
+    newBomb->time = 3.0;
     newBomb->owner = owner;
 
     newBomb->graphic = al_create_bitmap(TILE, TILE);
@@ -46,32 +46,49 @@ void drawBombs(Bomb* bomb, ALLEGRO_BITMAP* gameDisplay) {
     }
 }
 
-void explodedBomb(Bomb** bomb, Bomb* explodedBomb) {
-    if (*bomb == explodedBomb) {
-        *bomb = explodedBomb->next;
+void explodedBomb(Bomb** bombs, Bomb* explodedBomb) {
+    if (*bombs == explodedBomb) {
+        *bombs = explodedBomb->next;      
     }
     else {
-        for (Bomb* bombElement = *bomb; bombElement != NULL; bombElement = bombElement->next) {
+        for (Bomb* bombElement = *bombs; bombElement != NULL; bombElement = bombElement->next) {
             if (bombElement->next == explodedBomb) {
                 bombElement->next = explodedBomb->next;
                 break;
             }
         }
     }
-    free(explodedBomb);
+    al_destroy_bitmap(explodedBomb->graphic);
+    free(explodedBomb); 
 }
 
-void timerBomb(Bomb** bomb, Block* blocks, Player* players, int playerNumber, Explosion** explosions) {
-    for (Bomb* bombElement = *bomb; bombElement != NULL; bombElement = bombElement->next) {
+void timerBomb(Bomb** bombs, Block* blocks, Player* players, int playerNumber, Explosion** explosions) {
+    for (Bomb* bombElement = *bombs; bombElement != NULL; bombElement = bombElement->next) {
         bombElement->time -= 1.0 / FPS;
 
         if (bombElement->time <= 0) {
 
             explosion(bombElement, &blocks, players, playerNumber, explosions);
             bombElement->owner->bombs.bombAmount++;
-            al_destroy_bitmap(bombElement->graphic);
-            explodedBomb(bomb, bombElement);
+            explodedBomb(bombs, bombElement);
             break;
+        }
+    }
+}
+
+void placeBomb(Player* players, int playerNumber, Bomb** bomb, ALLEGRO_KEYBOARD_STATE* keyState) {
+    for (int i = 0; i < playerNumber; i++) {
+        if (al_key_down(keyState, players[i].controlKeys[4]) && players[i].bombs.bombAmount > 0 && players[i].health > 0) {
+            bool onBomb = checkBombCollision(players[i].position.x, players[i].position.y, *bomb);
+            if (!onBomb) {
+                // Obliczanie pozycji bomby na podstawie pozycji gracza
+                int bombX = ((int)(players[i].position.x + TILE / 2) / TILE) * TILE;
+                int bombY = ((int)(players[i].position.y + TILE / 2) / TILE) * TILE;
+
+                if (addBomb(bomb, bombX, bombY, players[i].bombs.BombPower, &players[i])) {
+                    players[i].bombs.bombAmount -= 1;
+                }
+            }
         }
     }
 }

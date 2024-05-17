@@ -89,10 +89,14 @@ int main() {
 	Explosion* explosions = NULL;
 	PowerUp* powerUps = NULL;
 
-	loadGraphics();
-	mapLayout(&blocks, players, playerNumber, rand()%12+1);
+	loadGraphics(); 
 	
+	int CHANCE = 1000;
+	mapLayout(&blocks, players, playerNumber, rand()%12+1, &CHANCE);
 	
+	CHANCE = 5;
+	
+
 	// PETLA GRY
 	while (run) {
 		ALLEGRO_EVENT event;
@@ -106,12 +110,15 @@ int main() {
 
 			movePlayer(players, playerNumber, &keyState, blocks, bombs);
 			placeBomb(players, playerNumber, &bombs, &keyState, display);
+			usePower(players, playerNumber, &keyState, blocks, bombs, powerUps);
 
 			timerBomb(&bombs, blocks, players, playerNumber, &explosions);
 			endExplosions(&explosions);
 
-			
+			powerShield(players, playerNumber);
+			powerInvisibility(players, playerNumber);
 			collectPowerUp(players, playerNumber, &powerUps);
+			disappearancePowerUp(&powerUps);
 
 			if (al_key_down(&keyState, ALLEGRO_KEY_F5)) players[0].health += 1;
 			if (al_key_down(&keyState, ALLEGRO_KEY_ESCAPE)) run = false;

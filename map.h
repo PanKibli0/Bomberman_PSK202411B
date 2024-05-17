@@ -6,6 +6,6 @@
 #include "player.h"
 
 
-void mapLayout(Block** blocks,Player* players, int playerNumber, int mapIndex);
+void mapLayout(Block** blocks,Player* players, int playerNumber, int mapIndex, int *CHANCE);
 
 #endif /* MAP_H */

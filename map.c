@@ -20,32 +20,34 @@ void createMap(Block** blocks, int map[YNUMBER - 2][XNUMBER - 2], Player* player
         for (int j = 0; j < XNUMBER - 2; j++) {
             if (map[i][j] != 0) {
                 switch (map[i][j]) {
+// void initPlayer(Player* player, unsigned int health, int x, int y, float velocity, int bombAmount, int bombPower, ALLEGRO_COLOR color, int controlKeys[5]);
+
                 case 10: // Player 1
                     if (playerNumber >= 1) {
-                        initPlayer(&players[0], 3, (j + 1) * TILE, (i + 1) * TILE, 2, 3, 3, 2, al_map_rgb(255, 0, 0), (int[]) { ALLEGRO_KEY_W, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_A, ALLEGRO_KEY_Q });
+                        initPlayer(&players[0], 3, (j + 1) * TILE, (i + 1) * TILE, 2, 10, 1, al_map_rgb(255, 0, 0), (int[]) { ALLEGRO_KEY_W, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_A, ALLEGRO_KEY_E,ALLEGRO_KEY_R  });
                     }
                     break;
                 case 20: // Player 2
                     if (playerNumber >= 2) {
-                        initPlayer(&players[1], 3, (j + 1) * TILE, (i + 1) * TILE, 2, 3, 3, 2, al_map_rgb(0, 0, 255), (int[]) { ALLEGRO_KEY_UP, ALLEGRO_KEY_DOWN, ALLEGRO_KEY_RIGHT, ALLEGRO_KEY_LEFT, ALLEGRO_KEY_PAD_0 });
+                        initPlayer(&players[1], 3, (j + 1) * TILE, (i + 1) * TILE, 2, 1, 1, al_map_rgb(0, 0, 255), (int[]) { ALLEGRO_KEY_UP, ALLEGRO_KEY_DOWN, ALLEGRO_KEY_RIGHT, ALLEGRO_KEY_LEFT, ALLEGRO_KEY_RSHIFT, ALLEGRO_KEY_RCTRL });
                     }
                     break;
                 case 30: // Player 3
                     if (playerNumber >= 3) {
-                        initPlayer(&players[2], 3, (j + 1) * TILE, (i + 1) * TILE, 2, 3, 3, 2, al_map_rgb(0, 196, 0), (int[]) { ALLEGRO_KEY_I, ALLEGRO_KEY_K, ALLEGRO_KEY_L, ALLEGRO_KEY_J, ALLEGRO_KEY_O });
+                        initPlayer(&players[2], 3, (j + 1) * TILE, (i + 1) * TILE, 2, 1, 1, al_map_rgb(0, 196, 0), (int[]) { ALLEGRO_KEY_I, ALLEGRO_KEY_K, ALLEGRO_KEY_L, ALLEGRO_KEY_J, ALLEGRO_KEY_O, ALLEGRO_KEY_P });
                     }
                     break;
                 case 40: // Player 4
                     if (playerNumber >= 4) {
-                        initPlayer(&players[3], 3, (j + 1) * TILE, (i + 1) * TILE, 2, 3, 3, 2, al_map_rgb(255, 255, 0), (int[]) { ALLEGRO_KEY_PAD_8, ALLEGRO_KEY_PAD_5, ALLEGRO_KEY_PAD_6, ALLEGRO_KEY_PAD_4, ALLEGRO_KEY_PAD_9 });
+                        initPlayer(&players[3], 3, (j + 1) * TILE, (i + 1) * TILE, 2, 1, 1, al_map_rgb(255, 255, 0), (int[]) { ALLEGRO_KEY_PAD_8, ALLEGRO_KEY_PAD_5, ALLEGRO_KEY_PAD_6, ALLEGRO_KEY_PAD_4, ALLEGRO_KEY_PAD_SLASH, ALLEGRO_KEY_PAD_ASTERISK });
                     }
                     else if (playerNumber == 2) {
-                        initPlayer(&players[1], 3, (j + 1) * TILE, (i + 1) * TILE, 2, 3, 3, 2, al_map_rgb(0, 0, 255), (int[]) { ALLEGRO_KEY_UP, ALLEGRO_KEY_DOWN, ALLEGRO_KEY_RIGHT, ALLEGRO_KEY_LEFT, ALLEGRO_KEY_PAD_0 });
+                        initPlayer(&players[1], 3, (j + 1) * TILE, (i + 1) * TILE, 2, 1, 1, al_map_rgb(0, 0, 255), (int[]) { ALLEGRO_KEY_UP, ALLEGRO_KEY_DOWN, ALLEGRO_KEY_RIGHT, ALLEGRO_KEY_LEFT, ALLEGRO_KEY_RSHIFT, ALLEGRO_KEY_RCTRL });
                     }
                     break;
                 default:
                     if (map[i][j] == -1) { addBlock(blocks, (j + 1) * TILE, (i + 1) * TILE, map[i][j]); }
-                    else if (rand() % 100000000 == 0) { addBlock(blocks, (j + 1) * TILE, (i + 1) * TILE, 2); }
+                    else if (rand() % 15 == 0) { addBlock(blocks, (j + 1) * TILE, (i + 1) * TILE, 2); }
                     else if (rand() % 50 == 0) break;
                     else { addBlock(blocks, (j + 1) * TILE, (i + 1) * TILE, map[i][j]); };
                     break;
@@ -58,8 +60,8 @@ void createMap(Block** blocks, int map[YNUMBER - 2][XNUMBER - 2], Player* player
 
 
 
-void mapLayout(Block** blocks, Player* players, int playerNumber, int mapIndex) {
-    
+void mapLayout(Block** blocks, Player* players, int playerNumber, int mapIndex, int *CHANCE) {
+
     switch (mapIndex) {
     case 1: {
         int map[YNUMBER - 2][XNUMBER - 2] = {
@@ -73,7 +75,7 @@ void mapLayout(Block** blocks, Player* players, int playerNumber, int mapIndex) 
             {0, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 0},
             {20, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 40}
         };
-
+        *CHANCE = 100;
         createMap(blocks, map, players, playerNumber);
         break;
     };
@@ -89,7 +91,7 @@ void mapLayout(Block** blocks, Player* players, int playerNumber, int mapIndex) 
             {0, -1, -1, -1, 1, -1, 1, -1, -1, -1, 1, -1, 1, -1, -1, -1, 0},
             {20, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 40}
         };
-
+        *CHANCE = 100;
         createMap(blocks, map, players, playerNumber);
         break;
     };
@@ -105,7 +107,7 @@ void mapLayout(Block** blocks, Player* players, int playerNumber, int mapIndex) 
             {0, -1, 1, -1, 1, -1, 1, 1, -1, 1, 1, -1, 1, -1, 1, -1, 0},
             {20, 0, 1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, 1, 0, 40}
         };
-
+        *CHANCE = 100;
         createMap(blocks, map, players, playerNumber);
         break;
     };
@@ -121,7 +123,7 @@ void mapLayout(Block** blocks, Player* players, int playerNumber, int mapIndex) 
             {0, 1, 1, -1, 1, 1, 1, 1, -1, 1, 1, 1, 1, -1, 1, 1, 0},
             {20, 0, -1, 1, 1, -1, 1, 1, 1, 1, 1, -1, 1, 1, -1, 0, 40}
         };
-
+        *CHANCE = 150;
         createMap(blocks, map, players, playerNumber);
         break;
     };
@@ -137,7 +139,7 @@ void mapLayout(Block** blocks, Player* players, int playerNumber, int mapIndex) 
             {1, -1, 0, -1, 1, -1, 1, 1, -1, 1, 1, -1, 1, -1, 0, -1, 1},
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
         };
-
+        *CHANCE = 80;
         createMap(blocks, map, players, playerNumber);
         break;
     }
@@ -153,7 +155,7 @@ void mapLayout(Block** blocks, Player* players, int playerNumber, int mapIndex) 
             {1, -1, 1, 1, 0, 20, -1, 1, -1, 1, -1, 40, 0, 1, 1, -1, 1},
             {1, 1, 1, -1, -1, 0, 1, 1, -1, 1, 1, 0, -1, -1, 1, 1, 1}
         };
-
+        *CHANCE = 75;
         createMap(blocks, map, players, playerNumber);
         break;
     };
@@ -169,7 +171,7 @@ void mapLayout(Block** blocks, Player* players, int playerNumber, int mapIndex) 
             {1, -1, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, -1, 1},
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
         };
-
+        *CHANCE = 120;
         createMap(blocks, map, players, playerNumber);
         break;
     }
@@ -185,43 +187,11 @@ void mapLayout(Block** blocks, Player* players, int playerNumber, int mapIndex) 
             {1, 1, 0, 1, 1, 1, -1, 1, 1, -1, 1, 1, 1, 1, 0, 1, -1},
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, 1, -1, 1, 1}
         };
-
+        *CHANCE = 120;
         createMap(blocks, map, players, playerNumber);
         break;
     };
     case 9: {
-        int map[YNUMBER - 2][XNUMBER - 2] = {
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, -1, 0, -1, 0, -1, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 10, -1, 30, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 20, -1, 40, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, -1, 0, -1, 0, -1, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-        };
-
-        createMap(blocks, map, players, playerNumber);
-        break;
-    }
-    case 10: {
-        int map[YNUMBER - 2][XNUMBER - 2] = {
-            {10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40}
-        };
-
-        createMap(blocks, map, players, playerNumber);
-        break;
-    };
-    case 11: {
         int map[YNUMBER - 2][XNUMBER - 2] = {
             {10, 0, -1, 1, 1, 1, 1, 1, -1, 1, 1, 1, 1, 1, -1, 0, 30},
             {0, 0, 1, 1, 1, -1, 1, 1, 1, 1, 1, -1, 1, 1, 1, 0, 0},
@@ -233,11 +203,11 @@ void mapLayout(Block** blocks, Player* players, int playerNumber, int mapIndex) 
             {0, 0, 1, 1, 1, -1, 1, 1, 1, 1, 1, -1, 1, 1, 1, 0, 0},
             {20, 0, -1, 1, 1, 1, 1, 1, -1, 1, 1, 1, 1, 1, -1, 0, 40}
         };
-
+        *CHANCE = 60;
         createMap(blocks, map, players, playerNumber);
         break;
     }
-    case 12: {
+    case 10: {
         int map[YNUMBER - 2][XNUMBER - 2] = {
             {-1, 1, 1, -1, 1, 1, -1, 1, -1, 1, -1, 1, 1, -1, 1, 1, -1},
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -249,13 +219,29 @@ void mapLayout(Block** blocks, Player* players, int playerNumber, int mapIndex) 
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
             {-1, 1, 1, -1, 1, 1, -1, 1, -1, 1, -1, 1, 1, -1, 1, 1, -1}
         };
-
+        *CHANCE = 80;
         createMap(blocks, map, players, playerNumber);
         break;
     };
-    case 13: {
+    case 11: {
         int map[YNUMBER - 2][XNUMBER - 2] = {
-            {10, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, -1, 0, -1, 0, -1, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 10, -1, 30, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 20, -1, 40, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, -1, 0, -1, 0, -1, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+        };
+        *CHANCE = 500;
+        createMap(blocks, map, players, playerNumber);
+        break;
+    }
+    case 12: {
+        int map[YNUMBER - 2][XNUMBER - 2] = {
+            {10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -265,9 +251,9 @@ void mapLayout(Block** blocks, Player* players, int playerNumber, int mapIndex) 
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40}
         };
-
+        *CHANCE = 500;
         createMap(blocks, map, players, playerNumber);
         break;
     };
-    };
+    }
 }

@@ -5,20 +5,31 @@
 #include "player.h"
 #include "block.h"
 #include "collision.h"
+#include "powerUp.h"
 
+void initPowerUps(Player* player) {
+	player->activePower.kick = false;
+	player->activePower.bombThief.active = false;
+			player->activePower.bombThief.active = true;
+	player->activePower.bombThief.hold = false;	
+	player->activePower.randomTeleport = false;
+	player->activePower.invisibility = 0.0;
+	player->activePower.shieldTime = 0.0;
+}
 
 // FUNKCJE GRACZA
-void initPlayer(Player* player, unsigned int health, int x, int y, float velocity, int bombAmount, float bombTime, int bombPower, ALLEGRO_COLOR color, int controlKeys[5]) {
+void initPlayer(Player* player, unsigned int health, int x, int y, float velocity, int bombAmount,  int bombPower, ALLEGRO_COLOR color, int controlKeys[6]) {
 	player->health = health;
 	player->position.x = x;
 	player->position.y = y;
 	player->velocity = velocity;
 	player->bombs.bombAmount = bombAmount;
-	player->bombs.bombTime = bombTime;
 	player->bombs.BombPower = bombPower;
 	player->color = color;
+	player->direction = 0;
+	initPowerUps(player);
 
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < 6; i++) {
 		player->controlKeys[i] = controlKeys[i];
 	};
 
@@ -32,6 +43,9 @@ void drawPlayer(Player* players, int playerNumber, ALLEGRO_BITMAP* gameDisplay) 
 	for (int i = 0; i < playerNumber; i++) {
 		if (players[i].health > 0) {
 			al_draw_bitmap(players[i].graphic, players[i].position.x, players[i].position.y, 0);	
+			if (players[i].activePower.shieldTime > 0) {
+				al_draw_circle(players[i].position.x + TILE / 2, players[i].position.y + TILE / 2, TILE / 1.5, al_map_rgb(0, 162, 232), 5);
+			}
 		}
 	}
 }
@@ -42,14 +56,22 @@ void movePlayer(Player* players, int playerNumber, ALLEGRO_KEYBOARD_STATE* keySt
 		if (players[i].health > 0) {
 			float dx = 0, dy = 0;
 
-			if (al_key_down(keyState, players[i].controlKeys[0]))
+			if (al_key_down(keyState, players[i].controlKeys[0])) {
 				dy -= players[i].velocity;
-			if (al_key_down(keyState, players[i].controlKeys[1]))
+				players[i].direction = 1;
+			}
+			if (al_key_down(keyState, players[i].controlKeys[1])) {
 				dy += players[i].velocity;
-			if (al_key_down(keyState, players[i].controlKeys[2]))
+				players[i].direction = 2;
+			}
+			if (al_key_down(keyState, players[i].controlKeys[2])) {
 				dx += players[i].velocity;
-			if (al_key_down(keyState, players[i].controlKeys[3]))
+				players[i].direction = 3;
+			}
+			if (al_key_down(keyState, players[i].controlKeys[3])) {
 				dx -= players[i].velocity;
+				players[i].direction = 4;
+			}
 
 			float newX = players[i].position.x + dx;
 			float newY = players[i].position.y + dy;
@@ -72,18 +94,3 @@ void movePlayer(Player* players, int playerNumber, ALLEGRO_KEYBOARD_STATE* keySt
 	}
 }
 
-
-void placeBomb(Player* players, int playerNumber, Bomb** bomb, ALLEGRO_KEYBOARD_STATE* keyState) {
-	for (int i = 0; i < playerNumber; ++i) {
-		if (al_key_down(keyState, players[i].controlKeys[4]) && players[i].bombs.bombAmount > 0 && players[i].health > 0) {
-			// Obliczanie pozycji bomby na podstawie pozycji gracza
-			int bombX = ((int)(players[i].position.x + TILE / 2) / TILE) * TILE  ;
-			int bombY = ((int)(players[i].position.y + TILE/2) / TILE) * TILE;
-
-			if (addBomb(bomb, bombX, bombY, players[i].bombs.BombPower, players[i].bombs.bombTime, &players[i])) {
-				players[i].bombs.bombAmount -= 1;
-				
-			}
-		}
-	}
-}
