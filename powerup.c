@@ -9,6 +9,12 @@ void deactivatedOtherPowers(Player* player) {
     player->activePower.bombThief.active = false;
     player->activePower.randomTeleport = false;
 
+    if (player->activePower.bombThief.hold) {
+        if (player->bombs.bombAmount > 1)
+            player->bombs.bombAmount--;
+    }
+
+    player->activePower.bombThief.hold = false;
 }
 
 
@@ -48,7 +54,7 @@ void createPowerUp(PowerUp** powerUps, Player* players, int playerNumber, Block*
 
     PowerUp* newPowerUp = malloc(sizeof(PowerUp));
 
-    newPowerUp->type = rand() % TYPES_NUMBER-1;
+    newPowerUp->type = rand() % TYPES_NUMBER - 1;
     newPowerUp->type = TYPES_NUMBER - 2;
     newPowerUp->position.x = x;
     newPowerUp->position.y = y;
@@ -125,11 +131,11 @@ void createPowerUp(PowerUp** powerUps, Player* players, int playerNumber, Block*
     *powerUps = newPowerUp;
 }
 
-void drawPowerUps(PowerUp* powerUps, ALLEGRO_BITMAP* gameDisplay) { 
+void drawPowerUps(PowerUp* powerUps, ALLEGRO_BITMAP* gameDisplay) {
     al_set_target_bitmap(gameDisplay);
     for (PowerUp* powerUp = powerUps; powerUp != NULL; powerUp = powerUp->next) {
         al_draw_bitmap(powerUp->graphic, powerUp->position.x, powerUp->position.y, 0);
-        
+
     }
 }
 
@@ -173,7 +179,7 @@ void collectPowerUp(Player* players, int playerNumber, PowerUp** powerUps) {
                     players[i].activePower.shieldTime += 3.0;
                     break;
                 case INVISIBILITY:
-                    players[i].activePower.invisibility = 8.0; 
+                    players[i].activePower.invisibility = 8.0;
                     break;
                 case KICK:
                     deactivatedOtherPowers(&players[i]);
@@ -185,7 +191,7 @@ void collectPowerUp(Player* players, int playerNumber, PowerUp** powerUps) {
                 case RANDOM_TELEPORT:
                     players[i].activePower.randomTeleport = true;
                     break;
-            }
+                }
                 destroyPowerUp(powerUps, powerUp);
                 break;
             }
@@ -233,7 +239,7 @@ void usePower(Player* players, int playerNumber, ALLEGRO_KEYBOARD_STATE* keyStat
                     break;
                 }
                 else if (players[i].activePower.bombThief.active) {
-                    powerBombThief(&players[i], &bombs);
+                    powerBombThief(&players[i], bombs);
                 }
                 else if (players[i].activePower.randomTeleport) {
                     powerTeleport(&players[i], blocks, *bombs, powerUps);
@@ -243,6 +249,10 @@ void usePower(Player* players, int playerNumber, ALLEGRO_KEYBOARD_STATE* keyStat
             }
         }
     }
+}
+
+void powerKick(Player* player, Bomb** bombs) {
+
 }
 
 void powerBombThief(Player* player, Bomb** bombs) {
@@ -263,13 +273,17 @@ void powerBombThief(Player* player, Bomb** bombs) {
         x -= TILE;
         break;
     }
-    
+
     for (Bomb* bombElement = *bombs; bombElement != NULL; bombElement = bombElement->next) {
         if (bombElement->position.x == x && bombElement->position.y == y) {
-            explodedBomb(bombs, bombElement);          
+            Player* owner = bombElement->owner;
+            owner->bombs.bombAmount++;
+            explodedBomb(bombs, bombElement);
+            player->activePower.bombThief.active = false;
+            player->activePower.bombThief.hold = true;
+            player->bombs.bombAmount++;  
             return;
         }
-        
     }
 }
 
@@ -279,8 +293,8 @@ void powerTeleport(Player* player, Block* blocks, Bomb* bombs, PowerUp* powerUps
     do {
         x = rand() % (XNUMBER - 2) * TILE;
         y = rand() % (YNUMBER - 2) * TILE;
-    } while (!isPositionEmpty(x, y, player, 1, blocks, bombs, powerUps) );
- 
+    } while (!isPositionEmpty(x, y, player, 1, blocks, bombs, powerUps));
+
     player->position.x = x;
     player->position.y = y;
 }

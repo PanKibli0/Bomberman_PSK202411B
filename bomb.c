@@ -38,7 +38,6 @@ bool addBomb(Bomb** bomb, int x, int y, int power, Player* owner) {
 }
 
 
-
 void drawBombs(Bomb* bomb, ALLEGRO_BITMAP* gameDisplay) {
     al_set_target_bitmap(gameDisplay);
     for (Bomb* bombElement = bomb; bombElement != NULL; bombElement = bombElement->next) {
@@ -48,7 +47,7 @@ void drawBombs(Bomb* bomb, ALLEGRO_BITMAP* gameDisplay) {
 
 void explodedBomb(Bomb** bombs, Bomb* explodedBomb) {
     if (*bombs == explodedBomb) {
-        *bombs = explodedBomb->next;      
+        *bombs = explodedBomb->next;
     }
     else {
         for (Bomb* bombElement = *bombs; bombElement != NULL; bombElement = bombElement->next) {
@@ -59,18 +58,18 @@ void explodedBomb(Bomb** bombs, Bomb* explodedBomb) {
         }
     }
     al_destroy_bitmap(explodedBomb->graphic);
-    free(explodedBomb); 
+    free(explodedBomb);
 }
 
 void timerBomb(Bomb** bombs, Block* blocks, Player* players, int playerNumber, Explosion** explosions) {
     for (Bomb* bombElement = *bombs; bombElement != NULL; bombElement = bombElement->next) {
         bombElement->time -= 1.0 / FPS;
 
-        if (bombElement->time <= 0) {
-
+        if (bombElement->time <= 0) {          
             explosion(bombElement, &blocks, players, playerNumber, explosions);
-            bombElement->owner->bombs.bombAmount++;
+            if (bombElement->owner != NULL) bombElement->owner->bombs.bombAmount++;
             explodedBomb(bombs, bombElement);
+            
             break;
         }
     }
@@ -84,10 +83,20 @@ void placeBomb(Player* players, int playerNumber, Bomb** bomb, ALLEGRO_KEYBOARD_
                 // Obliczanie pozycji bomby na podstawie pozycji gracza
                 int bombX = ((int)(players[i].position.x + TILE / 2) / TILE) * TILE;
                 int bombY = ((int)(players[i].position.y + TILE / 2) / TILE) * TILE;
-
-                if (addBomb(bomb, bombX, bombY, players[i].bombs.BombPower, &players[i])) {
+                if (players[i].activePower.bombThief.hold) {
+                    if (addBomb(bomb, bombX, bombY, players[i].bombs.BombPower, NULL)) {
+                        players[i].bombs.bombAmount -= 1;
+                        players[i].activePower.bombThief.hold = false;
+                        players[i].activePower.bombThief.active = true;
+                    }
+                } else if(addBomb(bomb, bombX, bombY, players[i].bombs.BombPower, &players[i])) {
                     players[i].bombs.bombAmount -= 1;
                 }
+
+                
+
+                 
+                
             }
         }
     }

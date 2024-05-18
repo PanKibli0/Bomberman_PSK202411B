@@ -92,9 +92,10 @@ int main() {
 	loadGraphics(); 
 	
 	int CHANCE = 1000;
-	mapLayout(&blocks, players, playerNumber, rand()%12+1, &CHANCE);
+	//mapLayout(&blocks, players, playerNumber, rand()%12+1, &CHANCE);
 	
-	CHANCE = 5;
+	mapLayout(&blocks, players, playerNumber, 12, &CHANCE);
+	//CHANCE = 5;
 	
 
 	// PETLA GRY
@@ -110,7 +111,7 @@ int main() {
 
 			movePlayer(players, playerNumber, &keyState, blocks, bombs);
 			placeBomb(players, playerNumber, &bombs, &keyState, display);
-			usePower(players, playerNumber, &keyState, blocks, bombs, powerUps);
+			usePower(players, playerNumber, &keyState, blocks, &bombs, powerUps);
 
 			timerBomb(&bombs, blocks, players, playerNumber, &explosions);
 			endExplosions(&explosions);

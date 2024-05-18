@@ -26,9 +26,14 @@ void drawInfoPanel(ALLEGRO_BITMAP* infoPanel, Player* players, int playerNumber,
 
                 break;
             }
-            case 1: {                
+            case 1: {  
+                int bombAmount = players[i].bombs.bombAmount;
+                if (players[i].activePower.bombThief.hold) {
+                    bombAmount--;
+                };
+                
                 al_draw_scaled_bitmap(bombGraphic, 0, 0, al_get_bitmap_width(bombGraphic), al_get_bitmap_height(bombGraphic), spot * (1 + 3 * j), spot, TILE/1.25, TILE/1.25, 0);
-                al_draw_textf(font, al_map_rgb(255, 127, 0), spot * (1 + 3 * j) + spot, 0.5 * height / 2 + al_get_font_line_height(font) / 2, ALLEGRO_ALIGN_CENTER, "%d", players[i].bombs.bombAmount);
+                al_draw_textf(font, al_map_rgb(255, 127, 0), spot * (1 + 3 * j) + spot, 0.5 * height / 2 + al_get_font_line_height(font) / 2, ALLEGRO_ALIGN_CENTER, "%d", bombAmount); 
 
                 break;
             }
