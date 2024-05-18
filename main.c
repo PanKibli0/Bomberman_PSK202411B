@@ -92,10 +92,10 @@ int main() {
 	loadGraphics(); 
 	
 	int CHANCE = 1000;
-	//mapLayout(&blocks, players, playerNumber, rand()%12+1, &CHANCE);
+	mapLayout(&blocks, players, playerNumber, rand()%12+1, &CHANCE);
 	
-	mapLayout(&blocks, players, playerNumber, 12, &CHANCE);
-	//CHANCE = 5;
+	//mapLayout(&blocks, players, playerNumber, 11, &CHANCE);
+	CHANCE = 5;
 	
 
 	// PETLA GRY

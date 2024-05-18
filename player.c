@@ -8,9 +8,8 @@
 #include "powerUp.h"
 
 void initPowerUps(Player* player) {
-	player->activePower.kick = false;
+	player->activePower.kick = false; 
 	player->activePower.bombThief.active = false;
-			player->activePower.bombThief.active = true;
 	player->activePower.bombThief.hold = false;	
 	player->activePower.randomTeleport = false;
 	player->activePower.invisibility = 0.0;

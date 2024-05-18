@@ -24,7 +24,7 @@ void createMap(Block** blocks, int map[YNUMBER - 2][XNUMBER - 2], Player* player
 
                 case 10: // Player 1
                     if (playerNumber >= 1) {
-                        initPlayer(&players[0], 3, (j + 1) * TILE, (i + 1) * TILE, 2, 1, 1, al_map_rgb(255, 0, 0), (int[]) { ALLEGRO_KEY_W, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_A, ALLEGRO_KEY_E,ALLEGRO_KEY_R  });
+                        initPlayer(&players[0], 3, (j + 1) * TILE, (i + 1) * TILE, 2, 10, 1, al_map_rgb(255, 0, 0), (int[]) { ALLEGRO_KEY_W, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_A, ALLEGRO_KEY_E,ALLEGRO_KEY_R  });
                     }
                     break;
                 case 20: // Player 2

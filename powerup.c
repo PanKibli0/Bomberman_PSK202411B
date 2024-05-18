@@ -8,12 +8,12 @@ void deactivatedOtherPowers(Player* player) {
     player->activePower.kick = false;
     player->activePower.bombThief.active = false;
     player->activePower.randomTeleport = false;
-
+    /*
     if (player->activePower.bombThief.hold) {
         if (player->bombs.bombAmount > 1)
             player->bombs.bombAmount--;
     }
-
+    */
     player->activePower.bombThief.hold = false;
 }
 
@@ -38,7 +38,7 @@ bool isPositionEmpty(int x, int y, Player* players, int playerNumber, Block* blo
     }
 
     for (int i = 0; i < playerNumber; i++) {
-        if (players[i].health >= 0) continue;
+        if (players[i].health <= 0) continue;
         if (players[i].position.x - TILE / 2 <= x && players[i].position.x + TILE / 2 >= x &&
             players[i].position.y - TILE / 2 <= y && players[i].position.y + TILE / 2 >= y) {
             return false;
@@ -55,7 +55,6 @@ void createPowerUp(PowerUp** powerUps, Player* players, int playerNumber, Block*
     PowerUp* newPowerUp = malloc(sizeof(PowerUp));
 
     newPowerUp->type = rand() % TYPES_NUMBER - 1;
-    newPowerUp->type = TYPES_NUMBER - 2;
     newPowerUp->position.x = x;
     newPowerUp->position.y = y;
     newPowerUp->lifeTime = 4.0;
@@ -186,9 +185,11 @@ void collectPowerUp(Player* players, int playerNumber, PowerUp** powerUps) {
                     players[i].activePower.kick = true;
                     break;
                 case BOMB_THIEF:
+                    deactivatedOtherPowers(&players[i]);
                     players[i].activePower.bombThief.active = true;
                     break;
                 case RANDOM_TELEPORT:
+                    deactivatedOtherPowers(&players[i]);
                     players[i].activePower.randomTeleport = true;
                     break;
                 }
@@ -233,13 +234,13 @@ void usePower(Player* players, int playerNumber, ALLEGRO_KEYBOARD_STATE* keyStat
     for (int i = 0; i < playerNumber; i++) {
         if (players[i].health > 0) {
             if (al_key_down(keyState, players[i].controlKeys[5])) {
-                printf("\nPOWER USED");
                 if (players[i].activePower.kick) {
-                    // powerKick(players[i].position.x, players[i].position.y, players[i].direction, blocks, bombs);
+                    powerKick(&players[i], players, playerNumber, blocks, bombs);
                     break;
                 }
                 else if (players[i].activePower.bombThief.active) {
                     powerBombThief(&players[i], bombs);
+                    break;
                 }
                 else if (players[i].activePower.randomTeleport) {
                     powerTeleport(&players[i], blocks, *bombs, powerUps);
@@ -251,8 +252,43 @@ void usePower(Player* players, int playerNumber, ALLEGRO_KEYBOARD_STATE* keyStat
     }
 }
 
-void powerKick(Player* player, Bomb** bombs) {
+void powerKick(Player* player, Player* players, int playerNumber, Block* blocks, Bomb** bombs) {
+    int x = player->position.x;
+    int y = player->position.y;
 
+    switch (player->direction) {
+    case 1:
+        y -= TILE;
+        break;
+    case 2:
+        y += TILE;
+        break;
+    case 3:
+        x += TILE;
+        break;
+    case 4:
+        x -= TILE;
+        break;
+    }
+
+    for (Bomb* bombElement = *bombs; bombElement != NULL; bombElement = bombElement->next) {
+        if (bombElement->position.x >= x - TILE / 2 && bombElement->position.x <= x + TILE / 2 &&
+            bombElement->position.y >= y - TILE / 2 && bombElement->position.y <= y + TILE / 2) {
+
+            int dx = x - player->position.x;
+            int dy = y - player->position.y;
+            int newX = bombElement->position.x, newY = bombElement->position.y;
+
+            while (isPositionEmpty(newX + dx, newY + dy, players, playerNumber, blocks, *bombs, NULL)) {
+                newX += dx;
+                newY += dy;
+            }
+
+            bombElement->position.x = newX;
+            bombElement->position.y = newY;
+            return;
+        }
+    }
 }
 
 void powerBombThief(Player* player, Bomb** bombs) {

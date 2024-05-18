@@ -91,12 +91,7 @@ void placeBomb(Player* players, int playerNumber, Bomb** bomb, ALLEGRO_KEYBOARD_
                     }
                 } else if(addBomb(bomb, bombX, bombY, players[i].bombs.BombPower, &players[i])) {
                     players[i].bombs.bombAmount -= 1;
-                }
-
-                
-
-                 
-                
+                } 
             }
         }
     }

@@ -36,6 +36,7 @@ void collectPowerUp(Player* players, int playerNumber, PowerUp** powerUps);
 void disappearancePowerUp(PowerUp** powerUps);
 void destroyPowerUp(PowerUp** powerUps, PowerUp* powerUp);
 void usePower(Player* players, int playerNumber, ALLEGRO_KEYBOARD_STATE* keyState, Block* blocks, Bomb** bombs, PowerUp* powerUps);
+void powerKick(Player* player, Player* players, int playerNumber, Block* blocks, Bomb** bombs);
 void powerBombThief(Player* player, Bomb** bombs);
 void powerTeleport(Player* player, Block* blocks, Bomb* bombs, PowerUp* powerUps);
 
