@@ -1,160 +1,110 @@
-﻿#include <stdio.h>
+﻿#include "game.h"
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_image.h>
 #include <time.h>
+#include <stdio.h>
 
+ALLEGRO_EVENT event;
+ALLEGRO_DISPLAY* display;
+ALLEGRO_EVENT_QUEUE* event_queue;
+ALLEGRO_KEYBOARD_STATE keyState;
+ALLEGRO_TIMER* timer;
+ALLEGRO_FONT* font;
 
-#include "player.h"
-#include "position.h"
-#include "bomb.h"
-#include "block.h"
-#include "collision.h"
-#include "explosion.h"
-#include "map.h"
-#include "infoPanel.h"
-#include "powerup.h"
-#include "graphics.h"
-
-
-
-void gameRefresh(ALLEGRO_BITMAP* gameDisplay, Block* blocks, Bomb* bombs, Player* players, int playerNumber, Explosion* explosions, PowerUp* powerUps) {
-	al_set_target_bitmap(gameDisplay);
-	al_clear_to_color(al_map_rgb(96, 96, 96));
-
-	drawBlocks(blocks, gameDisplay);
-	drawBombs(bombs, gameDisplay);
-	drawPlayer(players, playerNumber, gameDisplay);
-	drawExplosion(explosions, gameDisplay);
-	drawPowerUps(powerUps, gameDisplay);
-}
-
-void displayRefreshing(ALLEGRO_DISPLAY* display, ALLEGRO_BITMAP* gameDisplay, ALLEGRO_BITMAP* infoPanel) {
+void drawMainMenu(int choice) {
 	al_set_target_bitmap(al_get_backbuffer(display));
-
-	al_draw_filled_rectangle(0, 0, XSCREEN, al_get_bitmap_height(gameDisplay), al_map_rgb(96, 96, 96));
-	al_draw_bitmap(gameDisplay, (XSCREEN - TILE * 19) / 2, 0, 0);
-	al_draw_filled_rectangle(0, al_get_bitmap_height(gameDisplay), XSCREEN, YSCREEN, al_map_rgb(255, 252, 171));
-	al_draw_bitmap(infoPanel, (XSCREEN - TILE * 19) / 2, 11 * TILE, 0);
-
+	al_clear_to_color(al_map_rgb(128, 128, 128));
+	al_draw_textf(font, al_map_rgb(255, 255, 255), 960, 540, ALLEGRO_ALIGN_CENTER, "%d", choice);
 	al_flip_display();
 }
 
+void mainMenu(int* playerNumber, int* map, bool* gamework, bool* APPWORK) {
+	static int choice = 1;
+	bool work = true;
 
-// Glowna petla gry
+	while (work) {
+		drawMainMenu(choice);
+		al_wait_for_event(event_queue, &event);
+
+		if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
+			if (event.keyboard.keycode == ALLEGRO_KEY_UP || event.keyboard.keycode == ALLEGRO_KEY_W) {
+				choice = (choice != 1) ? choice - 1 : 1;
+				printf("%d\n", choice);
+			}
+			else if (event.keyboard.keycode == ALLEGRO_KEY_DOWN || event.keyboard.keycode == ALLEGRO_KEY_S) {
+				choice = (choice != 3) ? choice + 1 : 3;
+				printf("%d\n", choice);
+			}
+			else if (event.keyboard.keycode == ALLEGRO_KEY_ENTER) {
+				switch (choice) {
+				case 1: // START
+					*playerNumber = 4;
+					*map = 12;
+					*gamework = true;
+					work = false; // Exit the loop
+					break;
+				case 2: // START
+					break;
+				case 3: // EXIT
+					*APPWORK = false;
+					work = false; // Exit the loop
+					break;
+				}
+			}
+		}
+	}
+}
+
+
+
 int main() {
+	int playerNumber = 0, map = 0;
+	bool gamework = false;
+
 	srand(time(0));
-	// ZMIENNE ALLEGRO
 	al_init();
 	al_init_primitives_addon();
 	al_install_keyboard();
 	al_init_font_addon();
 	al_init_ttf_addon();
 	al_init_image_addon();
-	bool run = true;
 
-	// EKRAN
-	//al_set_new_display_flags(ALLEGRO_FULLSCREEN);
+	bool APPWORK = true;
+
 	al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
-	ALLEGRO_DISPLAY* display = al_create_display(XSCREEN, YSCREEN);
-
+	display = al_create_display(XSCREEN, YSCREEN);
 
 	// KLAWIATURA
-	ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
-	ALLEGRO_KEYBOARD_STATE keyState;
+	event_queue = al_create_event_queue();
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
+	al_hide_mouse_cursor(display);
 	bool key[ALLEGRO_KEY_MAX] = { false };
 
 	// FPS
-	ALLEGRO_TIMER* timer = al_create_timer(1.0 / FPS);
+	timer = al_create_timer(1.0 / FPS);
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));
 	al_start_timer(timer);
 
-	// BITMAP DLA ALL
-
-	ALLEGRO_BITMAP* gameDisplay = al_create_bitmap(XNUMBER * TILE, YNUMBER * TILE);
-	ALLEGRO_BITMAP* infoPanel = al_create_bitmap(XNUMBER * TILE, YSCREEN - YNUMBER * TILE);
-	ALLEGRO_FONT* font = al_load_font("graphics/minecraft.ttf", 40, 0);
-
-	// INICJACJA GRY
+	font = al_load_font("graphics/minecraft.ttf", 40, 0);
+	loadGraphics();
 
 
-	int playerNumber = 4;
-
-	Player* players = malloc(playerNumber * sizeof(Player));
-	Bomb* bombs = NULL;
-	Block* blocks = NULL;
-	Explosion* explosions = NULL;
-	PowerUp* powerUps = NULL;
-
-	loadGraphics(); 
-	
-	int CHANCE = 1000;
-	mapLayout(&blocks, players, playerNumber, rand()%12+1, &CHANCE);
-	
-	//mapLayout(&blocks, players, playerNumber, 11, &CHANCE);
-	CHANCE = 5;
-	
-
-	// PETLA GRY
-	while (run) {
-		ALLEGRO_EVENT event;
+	while (APPWORK) {
 		al_wait_for_event(event_queue, &event);
 		al_get_keyboard_state(&keyState);
 
-		if (event.type == ALLEGRO_EVENT_TIMER) {
-			if (rand()%CHANCE == 0) {
-				createPowerUp(&powerUps, players, playerNumber, blocks, bombs);
-			};
 
-			movePlayer(players, playerNumber, &keyState, blocks, bombs);
-			placeBomb(players, playerNumber, &bombs, &keyState, display);
-			usePower(players, playerNumber, &keyState, blocks, &bombs, powerUps);
+		
+		if (!gamework) mainMenu(&playerNumber, &map, &gamework, &APPWORK); else game(playerNumber, map);
+		al_flip_display();
+	};
 
-			timerBomb(&bombs, blocks, players, playerNumber, &explosions);
-			endExplosions(&explosions);
-
-			powerShield(players, playerNumber);
-			powerInvisibility(players, playerNumber);
-			collectPowerUp(players, playerNumber, &powerUps);
-			disappearancePowerUp(&powerUps);
-
-			if (al_key_down(&keyState, ALLEGRO_KEY_F5)) players[0].health += 1;
-			if (al_key_down(&keyState, ALLEGRO_KEY_ESCAPE)) run = false;
-
-			gameRefresh(gameDisplay, blocks, bombs, players, playerNumber, explosions, powerUps);
-			drawInfoPanel(infoPanel, players, playerNumber, font);
-			displayRefreshing(display, gameDisplay, infoPanel);
-
-			
-			int alivePlayers = 0;
-			for (int i = 0; i < playerNumber; ++i) {
-				if (players[i].health > 0) {
-					alivePlayers++;
-				}
-				if (alivePlayers > 2) continue;
-			}
-			if (alivePlayers == 1) {
-				//printf("WYGRANA");
-			}
-			
-		}
-	}
-
-
-	al_destroy_bitmap(gameDisplay);
 	al_destroy_display(display);
 	al_destroy_event_queue(event_queue);
 	al_destroy_timer(timer);
-	free(players);
 
-	while (blocks != NULL) {
-		breakBlock(&blocks, blocks);
-	}
-	while (bombs != NULL) {
-		explodedBomb(&bombs, bombs);
-	}
 	return 0;
-};
+}

@@ -140,6 +140,7 @@
     <ClCompile Include="bomb.c" />
     <ClCompile Include="collision.c" />
     <ClCompile Include="explosion.c" />
+    <ClCompile Include="game.c" />
     <ClCompile Include="graphics.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="map.c" />
@@ -152,6 +153,7 @@
     <ClInclude Include="bomb.h" />
     <ClInclude Include="collision.h" />
     <ClInclude Include="explosion.h" />
+    <ClInclude Include="game.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="infoPanel.h" />

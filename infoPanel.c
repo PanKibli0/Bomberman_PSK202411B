@@ -1,9 +1,9 @@
 #include "infoPanel.h"
 #include "graphics.h"
 
+extern ALLEGRO_FONT* font;
 
-
-void drawInfoPanel(ALLEGRO_BITMAP* infoPanel, Player* players, int playerNumber, ALLEGRO_FONT* font) {
+void drawInfoPanel(ALLEGRO_BITMAP* infoPanel, Player* players, int playerNumber) {
     int width = 4 * TILE;
     int height = al_get_bitmap_height(infoPanel) * 0.9;
     int objectColor[3][3] = { {255,175,200}, {0,0,0}, {255,127,127} };

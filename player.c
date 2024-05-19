@@ -40,7 +40,7 @@ void initPlayer(Player* player, unsigned int health, int x, int y, float velocit
 void drawPlayer(Player* players, int playerNumber, ALLEGRO_BITMAP* gameDisplay) {
 	al_set_target_bitmap(gameDisplay);
 	for (int i = 0; i < playerNumber; i++) {
-		if (players[i].health > 0) {
+		if (players[i].health > 0 && players[i].activePower.invisibility <= 0) {
 			al_draw_bitmap(players[i].graphic, players[i].position.x, players[i].position.y, 0);	
 			if (players[i].activePower.shieldTime > 0) {
 				al_draw_circle(players[i].position.x + TILE / 2, players[i].position.y + TILE / 2, TILE / 1.5, al_map_rgb(0, 162, 232), 5);

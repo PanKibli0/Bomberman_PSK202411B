@@ -8,6 +8,6 @@
 #include "player.h"
 
 
-void drawInfoPanel(ALLEGRO_BITMAP* infoPanel, Player* players, int playerNumber, ALLEGRO_FONT* font);
+void drawInfoPanel(ALLEGRO_BITMAP* infoPanel, Player* players, int playerNumber);
 
 #endif /* INFO_H */
