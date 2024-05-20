@@ -1,7 +1,7 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 
-#include "position.h"
+#include "config.h"
 #include "bomb.h"
 #include "explosion.h"
 #include "player.h"

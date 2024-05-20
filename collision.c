@@ -1,4 +1,4 @@
-#include "position.h"
+#include "config.h"
 #include "player.h"
 #include "bomb.h"
 #include "block.h"

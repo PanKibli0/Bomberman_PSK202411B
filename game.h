@@ -10,7 +10,7 @@
 
 
 #include "player.h"
-#include "position.h"
+#include "config.h"
 #include "bomb.h"
 #include "block.h"
 #include "collision.h"

@@ -2,7 +2,7 @@
 #define BLOCK_H
 
 #include <allegro5/allegro.h>
-#include "position.h"
+#include "config.h"
 
 
 typedef struct Block {

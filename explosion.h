@@ -1,7 +1,7 @@
 #ifndef EXPLOSION_H
 #define EXPLOSION_H
 
-#include "position.h"
+#include "config.h"
 #include "player.h"
 #include "block.h"
 

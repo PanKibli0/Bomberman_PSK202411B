@@ -1,5 +1,5 @@
 #include "map.h"
-#include "position.h"
+#include "config.h"
 
 void createBorder(Block** blocks) {
     // lewo prawo

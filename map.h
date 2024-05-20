@@ -2,7 +2,7 @@
 #define MAP_H
 
 #include "block.h"
-#include "position.h"
+#include "config.h"
 #include "player.h"
 
 
