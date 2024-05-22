@@ -13,7 +13,7 @@ void createExplosion(Explosion** explosions, int x, int y) {
 
     newExplosion->position.x = x;
     newExplosion->position.y = y;
-    newExplosion->direction = 1; // KODZIK ZMIANIA
+    newExplosion->direction = 1; 
     newExplosion->time = 0.2;
 
     newExplosion->graphic = al_create_bitmap(TILE, TILE);

@@ -20,10 +20,10 @@ void gameRefresh(ALLEGRO_BITMAP* gameDisplay, Block* blocks, Bomb* bombs, Player
 void displayRefreshing(ALLEGRO_DISPLAY* display, ALLEGRO_BITMAP* gameDisplay, ALLEGRO_BITMAP* infoPanel) {
 	al_set_target_bitmap(al_get_backbuffer(display));
 
-	al_draw_filled_rectangle(0, 0, XSCREEN, al_get_bitmap_height(gameDisplay), al_map_rgb(96, 96, 96));
-	al_draw_bitmap(gameDisplay, (XSCREEN - TILE * 19) / 2, 0, 0);
-	al_draw_filled_rectangle(0, al_get_bitmap_height(gameDisplay), XSCREEN, YSCREEN, al_map_rgb(255, 252, 171));
-	al_draw_bitmap(infoPanel, (XSCREEN - TILE * 19) / 2, 11 * TILE, 0);
+	al_draw_filled_rectangle(0, 0, 1920, al_get_bitmap_height(gameDisplay), al_map_rgb(96, 96, 96));
+	al_draw_bitmap(gameDisplay, (1920 - TILE * 19) / 2, 0, 0);
+	al_draw_filled_rectangle(0, al_get_bitmap_height(gameDisplay), 1920, 1080, al_map_rgb(255, 252, 171));
+	al_draw_bitmap(infoPanel, (1920 - TILE * 19) / 2, 11 * TILE, 0);
 
 	al_flip_display();
 }
@@ -32,9 +32,8 @@ void displayRefreshing(ALLEGRO_DISPLAY* display, ALLEGRO_BITMAP* gameDisplay, AL
 // Glowna petla gry
 void game(int playerNumber, int map) {
 	bool run = true;
-
-	ALLEGRO_BITMAP* gameDisplay = al_create_bitmap(XNUMBER * TILE, YNUMBER * TILE);
-	ALLEGRO_BITMAP* infoPanel = al_create_bitmap(XNUMBER * TILE, YSCREEN - YNUMBER * TILE);
+	ALLEGRO_BITMAP* gameDisplay = al_create_bitmap(19 * TILE, 11 * TILE);
+	ALLEGRO_BITMAP* infoPanel = al_create_bitmap(19 * TILE, 1080 - 11 * TILE);
 	
 
 	// INICJACJA GRY
@@ -49,7 +48,7 @@ void game(int playerNumber, int map) {
 	int CHANCE;
 	mapLayout(&blocks, players, playerNumber, map, &CHANCE);
 
-
+	
 
 	// PETLA GRY
 	while (run) {

@@ -3,28 +3,28 @@
 
 void createBorder(Block** blocks) {
     // lewo prawo
-    for (int i = 0; i < XNUMBER; i ++) {
-        addBlock(blocks, i*TILE, 0, -1);
-        addBlock(blocks, i*TILE, (YNUMBER - 1) * TILE, -1);
+    for (int i = 0; i < 19; i++) {
+        addBlock(blocks, i * TILE, 0, -1);
+        addBlock(blocks, i * TILE, 10 * TILE, -1);
     }
 
     // gora dol
-    for (int i = 0; i < YNUMBER; i ++) {
-        addBlock(blocks, 0, i*TILE, -1);
-        addBlock(blocks, (XNUMBER - 1) * TILE, i*TILE, -1);
+    for (int i = 0; i < 11; i++) {
+        addBlock(blocks, 0, i * TILE, -1);
+        addBlock(blocks, 18 * TILE, i * TILE, -1);
     }
 }
 
-void createMap(Block** blocks, int map[YNUMBER - 2][XNUMBER - 2], Player* players, int playerNumber) {
-    for (int i = 0; i < YNUMBER - 2; i++) {
-        for (int j = 0; j < XNUMBER - 2; j++) {
+void createMap(Block** blocks, int map[9][17], Player* players, int playerNumber) {
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 17; j++) {
             if (map[i][j] != 0) {
                 switch (map[i][j]) {
-// void initPlayer(Player* player, unsigned int health, int x, int y, float velocity, int bombAmount, int bombPower, ALLEGRO_COLOR color, int controlKeys[5]);
+                    // void initPlayer(Player* player, unsigned int health, int x, int y, float velocity, int bombAmount, int bombPower, ALLEGRO_COLOR color, int controlKeys[5]);
 
                 case 10: // Player 1
                     if (playerNumber >= 1) {
-                        initPlayer(&players[0], 3, (j + 1) * TILE, (i + 1) * TILE, 2, 10, 1, al_map_rgb(255, 0, 0), (int[]) { ALLEGRO_KEY_W, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_A, ALLEGRO_KEY_E,ALLEGRO_KEY_R  });
+                        initPlayer(&players[0], 3, (j + 1) * TILE, (i + 1) * TILE, 2, 10, 1, al_map_rgb(255, 0, 0), (int[]) { ALLEGRO_KEY_W, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_A, ALLEGRO_KEY_E, ALLEGRO_KEY_R });
                     }
                     break;
                 case 20: // Player 2
@@ -60,11 +60,11 @@ void createMap(Block** blocks, int map[YNUMBER - 2][XNUMBER - 2], Player* player
 
 
 
-void mapLayout(Block** blocks, Player* players, int playerNumber, int mapIndex, int *CHANCE) {
+void mapLayout(Block** blocks, Player* players, int playerNumber, int mapIndex, int* CHANCE) {
 
     switch (mapIndex) {
     case 1: {
-        int map[YNUMBER - 2][XNUMBER - 2] = {
+        int map[9][17] = {
             {10, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 30},
             {0, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 0},
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -80,7 +80,7 @@ void mapLayout(Block** blocks, Player* players, int playerNumber, int mapIndex, 
         break;
     };
     case 2: {
-        int map[YNUMBER - 2][XNUMBER - 2] = {
+        int map[9][17] = {
             {10, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 30},
             {0, -1, -1, -1, 1, -1, 1, -1, -1, -1, 1, -1, 1, -1, -1, -1, 0},
             {1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, 1},
@@ -96,7 +96,7 @@ void mapLayout(Block** blocks, Player* players, int playerNumber, int mapIndex, 
         break;
     };
     case 3: {
-        int map[YNUMBER - 2][XNUMBER - 2] = {
+        int map[9][17] = {
             {10, 0, 1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, 1, 0, 30},
             {0, -1, 1, -1, 1, -1, 1, 1, -1, 1, 1, -1, 1, -1, 1, -1, 0},
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -112,7 +112,7 @@ void mapLayout(Block** blocks, Player* players, int playerNumber, int mapIndex, 
         break;
     };
     case 4: {
-        int map[YNUMBER - 2][XNUMBER - 2] = {
+        int map[9][17] = {
             {10, 0, -1, 1, 1, -1, 1, 1, 1, 1, 1, -1, 1, 1, -1, 0, 30},
             {0, 1, 1, -1, 1, 1, 1, 1, -1, 1, 1, 1, 1, -1, 1, 1, 0},
             {-1, 1, 1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, 1, 1, -1},
@@ -128,7 +128,7 @@ void mapLayout(Block** blocks, Player* players, int playerNumber, int mapIndex, 
         break;
     };
     case 5: {
-        int map[YNUMBER - 2][XNUMBER - 2] = {
+        int map[9][17] = {
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
             {1, -1, 0, -1, 1, -1, 1, 1, -1, 1, 1, -1, 1, -1, 0, -1, 1},
             {1, 0, 10, -1, 1, 1, -1, 1, 1, 1, -1, 1, 1, -1, 30, 0, 1},
@@ -144,7 +144,7 @@ void mapLayout(Block** blocks, Player* players, int playerNumber, int mapIndex, 
         break;
     }
     case 6: {
-        int map[YNUMBER - 2][XNUMBER - 2] = {
+        int map[9][17] = {
             {1, 1, 1, -1, -1, 0, 1, 1, -1, 1, 1, 0, -1, -1, 1, 1, 1},
             {1, -1, 1, 1, 0, 10, -1, 1, -1, 1, -1, 30, 0, 1, 1, -1, 1},
             {1, -1, -1, 1, 1, -1, -1, 1, -1, 1, -1, -1, 1, 1, -1, -1, 1},
@@ -160,7 +160,7 @@ void mapLayout(Block** blocks, Player* players, int playerNumber, int mapIndex, 
         break;
     };
     case 7: {
-        int map[YNUMBER - 2][XNUMBER - 2] = {
+        int map[9][17] = {
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
             {1, -1, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, -1, 1},
             {1, 0, 10, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 30, 0, 1},
@@ -176,7 +176,7 @@ void mapLayout(Block** blocks, Player* players, int playerNumber, int mapIndex, 
         break;
     }
     case 8: {
-        int map[YNUMBER - 2][XNUMBER - 2] = {
+        int map[9][17] = {
            {-1, 1, 1, -1, 1, -1, 1, 1, -1, 1, 1, 1, 1, 1, -1, 1, 1},
             {1, 1, 0, 1, 1, 1, 1, -1, 1, 1, 1, 1, 1, 1, 0, 1, 1},
             {1, 0, 10, 0, 1, -1, 1, 1, 1, 1, -1, 1, -1, 0, 30, 0, 1},
@@ -192,7 +192,7 @@ void mapLayout(Block** blocks, Player* players, int playerNumber, int mapIndex, 
         break;
     };
     case 9: {
-        int map[YNUMBER - 2][XNUMBER - 2] = {
+        int map[9][17] = {
             {10, 0, -1, 1, 1, 1, 1, 1, -1, 1, 1, 1, 1, 1, -1, 0, 30},
             {0, 0, 1, 1, 1, -1, 1, 1, 1, 1, 1, -1, 1, 1, 1, 0, 0},
             {-1, 1, -1, 1, 1, 1, 1, -1, 1, -1, 1, 1, 1, 1, -1, 1, -1},
@@ -208,7 +208,7 @@ void mapLayout(Block** blocks, Player* players, int playerNumber, int mapIndex, 
         break;
     }
     case 10: {
-        int map[YNUMBER - 2][XNUMBER - 2] = {
+        int map[9][17] = {
             {-1, 1, 1, -1, 1, 1, -1, 1, -1, 1, -1, 1, 1, -1, 1, 1, -1},
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
             {0, 0, -1, 1, 1, -1, 1, -1, 1, -1, 1, -1, 1, 1, -1, 0, 0},
@@ -224,7 +224,7 @@ void mapLayout(Block** blocks, Player* players, int playerNumber, int mapIndex, 
         break;
     };
     case 11: {
-        int map[YNUMBER - 2][XNUMBER - 2] = {
+        int map[9][17] = {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, -1, 0, -1, 0, -1, 0, 0, 0, 0, 0, 0},
@@ -240,7 +240,7 @@ void mapLayout(Block** blocks, Player* players, int playerNumber, int mapIndex, 
         break;
     }
     case 12: {
-        int map[YNUMBER - 2][XNUMBER - 2] = {
+        int map[9][17] = {
             {10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},

@@ -16,7 +16,7 @@ typedef struct Bomb {
 } Bomb;
 
 
-// FUKCJE
+
 bool addBomb(Bomb** head, int x, int y, int power, Player* owner);
 void drawBombs(Bomb* head, ALLEGRO_BITMAP* gameDisplay);
 void timerBomb(Bomb** bomb, Block* blocks, Player* players, int playerNumber, Explosion** explosions);

@@ -8,12 +8,6 @@ void deactivatedOtherPowers(Player* player) {
     player->activePower.kick = false;
     player->activePower.bombThief.active = false;
     player->activePower.randomTeleport = false;
-    /*
-    if (player->activePower.bombThief.hold) {
-        if (player->bombs.bombAmount > 1)
-            player->bombs.bombAmount--;
-    }
-    */
     player->activePower.bombThief.hold = false;
 }
 
@@ -49,7 +43,7 @@ bool isPositionEmpty(int x, int y, Player* players, int playerNumber, Block* blo
 }
 
 void createPowerUp(PowerUp** powerUps, Player* players, int playerNumber, Block* blocks, Bomb* bombs) {
-    int x = rand() % (XNUMBER - 2) * TILE, y = rand() % (YNUMBER - 2) * TILE;
+    int x = rand() % 17 * TILE, y = rand() % 9 * TILE;
     if (!isPositionEmpty(x, y, players, playerNumber, blocks, bombs, *powerUps)) return;
 
     PowerUp* newPowerUp = malloc(sizeof(PowerUp));
@@ -64,67 +58,42 @@ void createPowerUp(PowerUp** powerUps, Player* players, int playerNumber, Block*
     al_set_target_bitmap(newPowerUp->graphic);
     switch (newPowerUp->type) {
     case HEALTH:
-        // Zielony kolor dla power-upu zwiêkszaj¹cego zdrowie
-        al_clear_to_color(al_map_rgba(0, 255, 0, 20));
-        al_draw_rectangle(0, 0, TILE, TILE, al_map_rgb(0, 0, 0), 5);
+        al_draw_scaled_bitmap(powerHealthGraphic, 0, 0, al_get_bitmap_width(powerHealthGraphic), al_get_bitmap_height(powerHealthGraphic), 0, 0, TILE, TILE, 0);
         break;
     case BOMB_POWER_UP:
-        // Niebieski kolor dla power-upu zwiêkszaj¹cego moc bomb
-        al_clear_to_color(al_map_rgba(0, 0, 255, 20));
-        al_draw_rectangle(0, 0, TILE, TILE, al_map_rgb(0, 0, 0), 5);
+        al_draw_scaled_bitmap(powerBombPowerUpGraphic, 0, 0, al_get_bitmap_width(powerBombPowerUpGraphic), al_get_bitmap_height(powerBombPowerUpGraphic), 0, 0, TILE, TILE, 0);
         break;
     case BOMB_POWER_DOWN:
-        // Czerwony kolor dla power-upu zmniejszaj¹cego moc bomb
-        al_clear_to_color(al_map_rgba(255, 0, 0, 20));
-        al_draw_rectangle(0, 0, TILE, TILE, al_map_rgb(0, 0, 0), 5);
+        al_draw_scaled_bitmap(powerBombPowerDownGraphic, 0, 0, al_get_bitmap_width(powerBombPowerDownGraphic), al_get_bitmap_height(powerBombPowerDownGraphic), 0, 0, TILE, TILE, 0);
         break;
     case VELOCITY_UP:
-        // ¯ó³ty kolor dla power-upu zwiêkszaj¹cego prêdkoœæ
-        al_clear_to_color(al_map_rgba(255, 255, 0, 20));
-        al_draw_rectangle(0, 0, TILE, TILE, al_map_rgb(0, 0, 0), 5);
+        al_draw_scaled_bitmap(powerVelocityUpGraphic, 0, 0, al_get_bitmap_width(powerVelocityUpGraphic), al_get_bitmap_height(powerVelocityUpGraphic), 0, 0, TILE, TILE, 0);
         break;
     case VELOCITY_DOWN:
-        // Pomarañczowy kolor dla power-upu zmniejszaj¹cego prêdkoœæ
-        al_clear_to_color(al_map_rgba(255, 165, 0, 20));
-        al_draw_rectangle(0, 0, TILE, TILE, al_map_rgb(0, 0, 0), 5);
+        al_draw_scaled_bitmap(powerVelocityDownGraphic, 0, 0, al_get_bitmap_width(powerVelocityDownGraphic), al_get_bitmap_height(powerVelocityDownGraphic), 0, 0, TILE, TILE, 0);
         break;
     case BOMB_LIMIT_UP:
-        // Fioletowy kolor dla power-upu zwiêkszaj¹cego limit bomb
-        al_clear_to_color(al_map_rgba(128, 0, 128, 20));
-        al_draw_rectangle(0, 0, TILE, TILE, al_map_rgb(0, 0, 0), 5);
+        al_draw_scaled_bitmap(powerBombLimitUpGraphic, 0, 0, al_get_bitmap_width(powerBombLimitUpGraphic), al_get_bitmap_height(powerBombLimitUpGraphic), 0, 0, TILE, TILE, 0);
         break;
     case BOMB_LIMIT_DOWN:
-        // Ró¿owy kolor dla power-upu zmniejszaj¹cego limit bomb
-        al_clear_to_color(al_map_rgba(255, 20, 147, 20));
-        al_draw_rectangle(0, 0, TILE, TILE, al_map_rgb(0, 0, 0), 5);
+        al_draw_scaled_bitmap(powerBombLimitDownGraphic, 0, 0, al_get_bitmap_width(powerBombLimitDownGraphic), al_get_bitmap_height(powerBombLimitDownGraphic), 0, 0, TILE, TILE, 0);
         break;
     case SHIELD:
-        // Szary kolor dla power-upu daj¹cego tarczê
-        al_clear_to_color(al_map_rgba(128, 128, 128, 20));
-        al_draw_rectangle(0, 0, TILE, TILE, al_map_rgb(0, 0, 0), 5);
+        al_draw_scaled_bitmap(powerShieldGraphic, 0, 0, al_get_bitmap_width(powerShieldGraphic), al_get_bitmap_height(powerShieldGraphic), 0, 0, TILE, TILE, 0);
         break;
     case INVISIBILITY:
-        // Ciemnoniebieski kolor dla power-upu niewidzialnoœci
-        al_clear_to_color(al_map_rgba(0, 0, 128, 20));
-        al_draw_rectangle(0, 0, TILE, TILE, al_map_rgb(0, 0, 0), 5);
+        al_draw_scaled_bitmap(powerInvisibilityGraphic, 0, 0, al_get_bitmap_width(powerInvisibilityGraphic), al_get_bitmap_height(powerInvisibilityGraphic), 0, 0, TILE, TILE, 0);
         break;
     case KICK:
-        // Bia³y kolor dla power-upu daj¹cego mo¿liwoœæ kopania bomb
-        al_clear_to_color(al_map_rgba(255, 255, 255, 20));
-        al_draw_rectangle(0, 0, TILE, TILE, al_map_rgb(0, 0, 0), 5);
+        al_draw_scaled_bitmap(powerKickGraphic, 0, 0, al_get_bitmap_width(powerKickGraphic), al_get_bitmap_height(powerKickGraphic), 0, 0, TILE, TILE, 0);
         break;
     case BOMB_THIEF:
-        // Zielony kolor dla power-upu kradn¹cego bomby
-        al_clear_to_color(al_map_rgba(0, 128, 0, 20));
-        al_draw_rectangle(0, 0, TILE, TILE, al_map_rgb(0, 0, 0), 5);
+        al_draw_scaled_bitmap(powerBombThiefGraphic, 0, 0, al_get_bitmap_width(powerBombThiefGraphic), al_get_bitmap_height(powerBombThiefGraphic), 0, 0, TILE, TILE, 0);
         break;
     case RANDOM_TELEPORT:
-        // Br¹zowy kolor dla power-upu losowej zmiany pozycji
-        al_clear_to_color(al_map_rgba(165, 42, 42, 20));
-        al_draw_rectangle(0, 0, TILE, TILE, al_map_rgb(0, 0, 0), 5);
+        al_draw_scaled_bitmap(powerRandomTeleportGraphic, 0, 0, al_get_bitmap_width(powerRandomTeleportGraphic), al_get_bitmap_height(powerRandomTeleportGraphic), 0, 0, TILE, TILE, 0);
         break;
     }
-
 
     newPowerUp->next = *powerUps;
     *powerUps = newPowerUp;
@@ -178,7 +147,7 @@ void collectPowerUp(Player* players, int playerNumber, PowerUp** powerUps) {
                     players[i].activePower.shieldTime += 3.0;
                     break;
                 case INVISIBILITY:
-                    players[i].activePower.invisibility = 8.0;
+                    players[i].activePower.invisibility = 3.0;
                     break;
                 case KICK:
                     deactivatedOtherPowers(&players[i]);
@@ -327,8 +296,8 @@ void powerBombThief(Player* player, Bomb** bombs) {
 void powerTeleport(Player* player, Block* blocks, Bomb* bombs, PowerUp* powerUps) {
     int x, y;
     do {
-        x = rand() % (XNUMBER - 2) * TILE;
-        y = rand() % (YNUMBER - 2) * TILE;
+        x = rand() % (19 - 2) * TILE;
+        y = rand() % (11 - 2) * TILE;
     } while (!isPositionEmpty(x, y, player, 1, blocks, bombs, powerUps));
 
     player->position.x = x;

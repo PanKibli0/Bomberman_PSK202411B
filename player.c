@@ -6,6 +6,7 @@
 #include "block.h"
 #include "collision.h"
 #include "powerUp.h"
+#include "graphics.h"
 
 void initPowerUps(Player* player) {
 	player->activePower.kick = false; 
@@ -43,7 +44,11 @@ void drawPlayer(Player* players, int playerNumber, ALLEGRO_BITMAP* gameDisplay) 
 		if (players[i].health > 0 && players[i].activePower.invisibility <= 0) {
 			al_draw_bitmap(players[i].graphic, players[i].position.x, players[i].position.y, 0);	
 			if (players[i].activePower.shieldTime > 0) {
-				al_draw_circle(players[i].position.x + TILE / 2, players[i].position.y + TILE / 2, TILE / 1.5, al_map_rgb(0, 162, 232), 5);
+				al_draw_scaled_bitmap(shieldGraphic,
+					0, 0, al_get_bitmap_width(shieldGraphic), al_get_bitmap_height(shieldGraphic),
+					players[i].position.x + (al_get_bitmap_width(players[i].graphic) - al_get_bitmap_width(shieldGraphic) * 0.75) / 2,
+					players[i].position.y + (al_get_bitmap_height(players[i].graphic) - al_get_bitmap_height(shieldGraphic) * 0.75) / 2,
+					al_get_bitmap_width(shieldGraphic) * 0.75, al_get_bitmap_height(shieldGraphic) * 0.75, 0);
 			}
 		}
 	}
