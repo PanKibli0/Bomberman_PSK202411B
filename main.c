@@ -6,7 +6,7 @@
 #include <allegro5/allegro_image.h>
 #include <time.h>
 #include <stdio.h>
-
+#include "graphics.h"
 
 ALLEGRO_EVENT event;
 ALLEGRO_DISPLAY* display;
@@ -16,17 +16,12 @@ ALLEGRO_TIMER* timer;
 ALLEGRO_FONT* font;
 
 
-void drawMainMenu(int choice) {
+void drawMainMenu(ALLEGRO_BITMAP* background) {
+	
+	ALLEGRO_BITMAP* logo = al_load_bitmap("graphics/logo.png");
 	al_set_target_bitmap(al_get_backbuffer(display));
-
-	const char* options[] = { "START", "INFO", "EXIT" };
-
-	for (int i = 0; i < 3; i++) {
-		al_draw_filled_rounded_rectangle(810, 420 + i * 100, 1110, 500 + i * 100 , 45, 45, al_map_rgb(192, 192, 192));
-		al_draw_rounded_rectangle(810, 420 + i * 100, 1110, 500 + i * 100 , 45, 45, al_map_rgb(0, 0, 0), 5);
-		al_draw_text(font, (choice == i + 1) ? al_map_rgb(255, 255, 0) : al_map_rgb(255, 255, 255), 960, 445 + i * 100 , ALLEGRO_ALIGN_CENTER, options[i]);
-	}
-	al_flip_display();
+	al_draw_bitmap(background, 0, 0, 0);
+	al_draw_bitmap(logo, 465, 0, 0);
 }
 
 
@@ -44,25 +39,25 @@ void ChooseMenu(bool* gamework, bool* work, int* playerNumber, int* map, ALLEGRO
 		// Liczba graczy
 		const char* playerOptions[] = { "2 Players", "3 Players", "4 Players" };
 
-		al_draw_filled_rounded_rectangle(410, 60, 1510, 140, 45, 45, al_map_rgb(128, 128, 128));
+		al_draw_filled_rounded_rectangle(410, 60, 1510, 140, 45, 45, al_map_rgb(192, 192, 192));
 		al_draw_rounded_rectangle(410, 60, 1510, 140, 45, 45, al_map_rgb(0, 0, 0), 5);
 		al_draw_text(font, (choice == 1) ? al_map_rgb(255, 255, 0) : al_map_rgb(255, 255, 255), 650, 85, ALLEGRO_ALIGN_LEFT, "CHOOSE NUMBER OF PLAYERS:");
 
 		for (int i = 0; i < 3; i++) {
 			ALLEGRO_COLOR textColor = (choice == 1) ? ((i + 2 == *playerNumber) ? al_map_rgb(255, 255, 0) : al_map_rgb(255, 255, 255)) : ((i + 2 == *playerNumber) ? al_map_rgb(0, 0, 255) : al_map_rgb(255, 255, 255));
-			al_draw_filled_rounded_rectangle(410 + i * 400, 150, 710 + i * 400, 230, 45, 45, al_map_rgb(128, 128, 128));
+			al_draw_filled_rounded_rectangle(410 + i * 400, 150, 710 + i * 400, 230, 45, 45, al_map_rgb(192, 192, 192));
 			al_draw_rounded_rectangle(410 + i * 400, 150, 710 + i * 400, 230, 45, 45, al_map_rgb(0, 0, 0), 5);
 			al_draw_text(font, textColor, 560 + i * 400, 175, ALLEGRO_ALIGN_CENTER, playerOptions[i]);
 		}
 
 		// Mapa
-		al_draw_filled_rounded_rectangle(410, 270, 1510, 350, 45, 45, al_map_rgb(128, 128, 128));
+		al_draw_filled_rounded_rectangle(410, 270, 1510, 350, 45, 45, al_map_rgb(192, 192, 192));
 		al_draw_rounded_rectangle(410, 270, 1510, 350, 45, 45, al_map_rgb(0, 0, 0), 5);
 		al_draw_text(font, (choice == 2) ? al_map_rgb(255, 255, 0) : al_map_rgb(255, 255, 255), 810, 295, ALLEGRO_ALIGN_LEFT, "CHOOSE A MAP:");
 
 		// Przycisk Random
 		ALLEGRO_COLOR randomTextColor = (choice == 2 && *map == 0) ? al_map_rgb(255, 255, 0) : (choice != 2 && *map == 0) ? al_map_rgb(0, 0, 255) : al_map_rgb(255, 255, 255);
-		al_draw_filled_rounded_rectangle(610, 360, 1310, 440, 45, 45, al_map_rgb(128, 128, 128));
+		al_draw_filled_rounded_rectangle(610, 360, 1310, 440, 45, 45, al_map_rgb(192, 192, 192));
 		al_draw_rounded_rectangle(610, 360, 1310, 440, 45, 45, al_map_rgb(0, 0, 0), 5);
 		al_draw_text(font, randomTextColor, 960, 385, ALLEGRO_ALIGN_CENTER, "Random");
 
@@ -75,7 +70,7 @@ void ChooseMenu(bool* gamework, bool* work, int* playerNumber, int* map, ALLEGRO
 			int col = i % 3;
 			int x = 410 + col * 400;
 			int y = 460 + row * 100;
-			al_draw_filled_rounded_rectangle(x, y, x + 300, y + 80, 45, 45, al_map_rgb(128, 128, 128));
+			al_draw_filled_rounded_rectangle(x, y, x + 300, y + 80, 45, 45, al_map_rgb(192, 192, 192));
 			al_draw_rounded_rectangle(x, y, x + 300, y + 80, 45, 45, al_map_rgb(0, 0, 0), 5);
 			al_draw_text(font, mapTextColor, x + 150, y + 25, ALLEGRO_ALIGN_CENTER, mapNames[i]);
 		}
@@ -102,7 +97,7 @@ void ChooseMenu(bool* gamework, bool* work, int* playerNumber, int* map, ALLEGRO
 					choice = 2;
 				}
 				else if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
-					al_draw_bitmap(background, 0, 0, 0);
+					drawMainMenu(background);
 					return;
 				}
 				break;
@@ -173,17 +168,101 @@ void ChooseMenu(bool* gamework, bool* work, int* playerNumber, int* map, ALLEGRO
 
 
 
-void mainMenu(int* playerNumber, int* map, bool* gamework, bool* APPWORK) {
-	static int choice = 1;
-	bool work = true;
-
-	ALLEGRO_BITMAP* background = al_load_bitmap("graphics/background.png");
+void infoMenu(ALLEGRO_BITMAP* background) {
+	int choice = 1;
+	ALLEGRO_FONT* fontInfo = al_load_font("graphics/font.ttf", 25, 0);
 	al_set_target_bitmap(al_get_backbuffer(display));
 	al_draw_bitmap(background, 0, 0, 0);
 
 
+	ALLEGRO_BITMAP* graphics[] = {
+		powerBombPowerUpGraphic,
+		powerBombPowerDownGraphic,
+		powerVelocityUpGraphic,
+		powerVelocityDownGraphic,
+		powerBombLimitUpGraphic,
+		powerBombLimitDownGraphic,
+		powerHealthGraphic,
+		powerShieldGraphic,
+		powerInvisibilityGraphic,
+		powerKickGraphic,
+		powerBombThiefGraphic,
+		powerRandomTeleportGraphic
+	};
+
+	int numGraphics = sizeof(graphics) / sizeof(graphics[0]);
+	const char* descriptions[] = {
+		"Increases bomb power.",
+		"Decreases bomb power (cannot go below one).",
+		"Increases player's speed.",
+		"Decreases player's speed.",
+		"Increases bomb limit.",
+		"Decreases bomb limit (cannot go below one).",
+		"Adds one heart.",
+		"Provides a shield for a short time.",
+		"Grants invisibility for a short time.",
+		"Press skill button to kick a bomb as far as possible \nin the player's direction.",
+		"Press skill button to steal a bomb placed next to the player \nin the player's direction.",
+		"Press skill button to teleport to a random location. \n(One-time use)"
+	};
+
+	for (int i = 0; i < numGraphics; ++i) {
+		int col = i % 2;
+		int row = i / 2;
+
+		int rectX = 85 + col * 931;
+		int rectY = 100 + row * 136;
+
+		al_draw_bitmap(graphics[i], rectX, rectY, 0);
+		al_draw_filled_rounded_rectangle(rectX + 106, 100 + row * 136, rectX + 806, 196 + row * 136, 45, 45, al_map_rgb(192, 192, 192));
+		al_draw_rounded_rectangle(rectX + 106, 100 + row * 136, rectX + 806, 196 + row * 136, 45, 45, al_map_rgb(0, 0, 0), 5);
+		al_draw_textf(fontInfo, al_map_rgb(255, 255, 255), rectX + 456, 135 + row * 136, ALLEGRO_ALIGN_CENTER, "%s\n%", descriptions[i]);
+	}
+
+	
+	al_draw_filled_rounded_rectangle(585, 940, 885, 1020, 45, 45, al_map_rgb(192, 192, 192)); 
+	al_draw_rounded_rectangle(585, 940, 885, 1020, 45, 45, al_map_rgb(0, 0, 0), 5);
+	al_draw_text(font, (choice == 1) ? al_map_rgb(255, 255, 0) : al_map_rgb(255, 255, 255), 735, 965, ALLEGRO_ALIGN_CENTER, "GENERAL");
+
+ 
+	al_draw_filled_rounded_rectangle(1015, 940, 1315, 1020, 45, 45, al_map_rgb(192, 192, 192));
+	al_draw_rounded_rectangle(1015, 940, 1315, 1020, 45, 45, al_map_rgb(0, 0, 0), 5);
+	al_draw_text(font, (choice == 2) ? al_map_rgb(255, 255, 0) : al_map_rgb(255, 255, 255), 1165, 965, ALLEGRO_ALIGN_CENTER, "POWER-UPS");
+
+	al_flip_display();
+
+	while (1) {
+		al_wait_for_event(event_queue, &event);
+
+		if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
+			if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
+				drawMainMenu(background);
+				
+				return;
+			}
+		}
+	}
+}
+
+void mainMenu(int* playerNumber, int* map, bool* gamework, bool* APPWORK) {
+	static int choice = 1;
+	bool work = true;
+	ALLEGRO_BITMAP* background = al_load_bitmap("graphics/background.png");
+	drawMainMenu(background);
+
 	while (work) {
-		drawMainMenu(choice);
+		
+		al_set_target_bitmap(al_get_backbuffer(display));
+
+		const char* options[] = { "START", "INFO", "EXIT" };
+
+		for (int i = 0; i < 3; i++) {
+			al_draw_filled_rounded_rectangle(810, 420 + i * 100, 1110, 500 + i * 100, 45, 45, al_map_rgb(192, 192, 192));
+			al_draw_rounded_rectangle(810, 420 + i * 100, 1110, 500 + i * 100, 45, 45, al_map_rgb(0, 0, 0), 5);
+			al_draw_text(font, (choice == i + 1) ? al_map_rgb(255, 255, 0) : al_map_rgb(255, 255, 255), 960, 445 + i * 100, ALLEGRO_ALIGN_CENTER, options[i]);
+		}
+		al_flip_display();
+
 		al_wait_for_event(event_queue, &event);
 		al_flip_display();
 		if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
@@ -200,11 +279,7 @@ void mainMenu(int* playerNumber, int* map, bool* gamework, bool* APPWORK) {
 					ChooseMenu(gamework, &work, playerNumber, map, background);
 					break;
 				case 2: // INFO
-					//InfoMenu();
-					*map = rand() % 12 + 1;
-					*playerNumber = rand()%2+2;
-					work = false;
-					*gamework = true;
+					infoMenu(background);
 					break;
 				case 3: // EXIT
 					*APPWORK = false;
@@ -248,7 +323,7 @@ int main() {
 	al_start_timer(timer);
 
 	font = al_load_font("graphics/font.ttf", 40, 0);
-
+	loadGraphics();
 
 	while (APPWORK) {
 		al_wait_for_event(event_queue, &event);
@@ -256,7 +331,7 @@ int main() {
 
 		if (!gamework) { mainMenu(&playerNumber, &map, &gamework, &APPWORK); }
 		else {
-			loadGraphics();
+			
 			game(playerNumber, map);
 		}
 	};

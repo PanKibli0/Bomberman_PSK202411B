@@ -39,6 +39,6 @@ void loadGraphics() {
     powerShieldGraphic = al_load_bitmap("graphics/powers/PWR_SHIELD.png");
     powerInvisibilityGraphic = al_load_bitmap("graphics/powers/PWR_INVISIBILITY.png");
     powerKickGraphic = al_load_bitmap("graphics/powers/PWR_KICK.png");
-    powerBombThiefGraphic = al_load_bitmap("graphics/powers/PWR_BOMB_THIEF.png");
-    powerRandomTeleportGraphic = al_load_bitmap("graphics/powers/PWR_RANDOM_TELEPORT.png");
+    powerBombThiefGraphic = al_load_bitmap("graphics/powers/PWR_THIEF.png");
+    powerRandomTeleportGraphic = al_load_bitmap("graphics/powers/PWR_TELEPORT.png");
 }
