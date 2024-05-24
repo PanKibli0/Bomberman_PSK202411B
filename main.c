@@ -220,6 +220,7 @@ void infoMenu(ALLEGRO_BITMAP* background) {
 	}
 
 	
+	/*
 	al_draw_filled_rounded_rectangle(585, 940, 885, 1020, 45, 45, al_map_rgb(192, 192, 192)); 
 	al_draw_rounded_rectangle(585, 940, 885, 1020, 45, 45, al_map_rgb(0, 0, 0), 5);
 	al_draw_text(font, (choice == 1) ? al_map_rgb(255, 255, 0) : al_map_rgb(255, 255, 255), 735, 965, ALLEGRO_ALIGN_CENTER, "GENERAL");
@@ -228,6 +229,7 @@ void infoMenu(ALLEGRO_BITMAP* background) {
 	al_draw_filled_rounded_rectangle(1015, 940, 1315, 1020, 45, 45, al_map_rgb(192, 192, 192));
 	al_draw_rounded_rectangle(1015, 940, 1315, 1020, 45, 45, al_map_rgb(0, 0, 0), 5);
 	al_draw_text(font, (choice == 2) ? al_map_rgb(255, 255, 0) : al_map_rgb(255, 255, 255), 1165, 965, ALLEGRO_ALIGN_CENTER, "POWER-UPS");
+	*/
 
 	al_flip_display();
 
@@ -332,7 +334,7 @@ int main() {
 		if (!gamework) { mainMenu(&playerNumber, &map, &gamework, &APPWORK); }
 		else {
 			
-			game(playerNumber, map);
+			game(playerNumber, map, &gamework);
 		}
 	};
 

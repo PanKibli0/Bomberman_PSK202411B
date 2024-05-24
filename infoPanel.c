@@ -1,58 +1,54 @@
 #include "infoPanel.h"
 #include "graphics.h"
 
-
 extern ALLEGRO_FONT* font;
 
-
-
 void drawInfoPanel(ALLEGRO_BITMAP* infoPanel, Player* players, int playerNumber) {
-    int width = 4 * TILE;
-    int height = al_get_bitmap_height(infoPanel) * 0.9;
-    int spot = width / 10;
-    
     ALLEGRO_BITMAP** playerInfo = malloc(playerNumber * sizeof(ALLEGRO_BITMAP*));
     for (int i = 0; i < playerNumber; i++) {
-        playerInfo[i] = al_create_bitmap(width, height);
+        playerInfo[i] = al_create_bitmap(340, 130);
         al_set_target_bitmap(playerInfo[i]);
 
-        
+        al_draw_filled_rounded_rectangle(0, 0, 340, 130, 10, 10, players[i].color); 
+
         if (players[i].health > 0) {
-            al_clear_to_color(players[i].color); 
-            for (int j = 0; j < 3; j++) {
-                switch (j) {
-                case 0: {
-                    al_draw_scaled_bitmap(heartGraphic, 0, 0, al_get_bitmap_width(heartGraphic), al_get_bitmap_height(heartGraphic), spot * (1 + 3 * j), spot, TILE / 1.25, TILE / 1.25, 0);
-                    al_draw_textf(font, al_map_rgb(255, 255, 255), spot * (1 + 3 * j) + spot, 0.5 * height / 2 + al_get_font_line_height(font) / 2, ALLEGRO_ALIGN_CENTER, "%d", players[i].health);
-                    break;
-                }
-                case 1: {
-                    int bombAmount = players[i].bombs.bombAmount;
-                    if (players[i].activePower.bombThief.hold) {
-                        bombAmount--;
-                    }
-                    al_draw_scaled_bitmap(bombGraphic, 0, 0, al_get_bitmap_width(bombGraphic), al_get_bitmap_height(bombGraphic), spot * (1 + 3 * j), spot, TILE / 1.25, TILE / 1.25, 0);
-                    al_draw_textf(font, al_map_rgb(255, 127, 0), spot * (1 + 3 * j) + spot, 0.5 * height / 2 + al_get_font_line_height(font) / 2, ALLEGRO_ALIGN_CENTER, "%d", bombAmount);
-                    break;
-                }
-                case 2: {
-                    al_draw_filled_rectangle(spot * (1 + 3 * j), spot, spot * (3 + 3 * j), height - spot, al_map_rgb(255, 127, 127));
-                    al_draw_rectangle(spot * (1 + 3 * j), spot, spot * (3 + 3 * j), height - spot, al_map_rgb(255, 64, 0), 6);
-                    al_draw_textf(font, al_map_rgb(255, 255, 255), spot * (1 + 3 * j) + spot, 0.5 * height / 2 + al_get_font_line_height(font) / 2, ALLEGRO_ALIGN_CENTER, "%d", players[i].bombs.BombPower);
-                    break;
-                }
-                }
+            al_draw_scaled_bitmap(heartGraphic, 0, 0, al_get_bitmap_width(bombGraphic), al_get_bitmap_height(bombGraphic), 45, 10, 50, 50, 0);
+            al_draw_textf(font, al_map_rgb(255, 255, 255), 125, 20, ALLEGRO_ALIGN_CENTER, "%d", players[i].health);
+
+            int bombAmount = players[i].bombs.bombAmount;
+            if (players[i].activePower.bombThief.hold) {
+                bombAmount--;
+            };
+
+            al_draw_scaled_bitmap(bombGraphic, 0, 0, al_get_bitmap_width(bombGraphic), al_get_bitmap_height(bombGraphic), 200, 11, 50, 50, 0);
+            al_draw_textf(font, al_map_rgb(255, 255, 255), 275, 20, ALLEGRO_ALIGN_CENTER, "%d", bombAmount);
+
+            al_draw_scaled_bitmap(explosionGraphic, 0, 0, al_get_bitmap_width(explosionGraphic), al_get_bitmap_height(explosionGraphic), 45, 70, 50, 50, 0);
+            al_draw_textf(font, al_map_rgb(255, 255, 255), 125, 80, ALLEGRO_ALIGN_CENTER, "%d", players[i].bombs.BombPower);
+
+            if (players[i].activePower.kick) {
+                al_draw_scaled_bitmap(kickGraphic, 0, 0, al_get_bitmap_width(kickGraphic), al_get_bitmap_height(kickGraphic), 220, 70, 50, 50, 0);
+            }
+            else if (players[i].activePower.bombThief.active) {
+                al_draw_scaled_bitmap(thiefGraphic, 0, 0, al_get_bitmap_width(thiefGraphic), al_get_bitmap_height(thiefGraphic), 220, 70, 50, 50, 0);
+            }
+            else if (players[i].activePower.bombThief.hold) {
+                al_draw_scaled_bitmap(thiefGraphic, 0, 0, al_get_bitmap_width(thiefGraphic), al_get_bitmap_height(thiefGraphic), 200, 70, 50, 50, 0);
+                al_draw_scaled_bitmap(bombGraphic, 0, 0, al_get_bitmap_width(bombGraphic), al_get_bitmap_height(bombGraphic), 240, 70, 50, 50, 0);
+            }
+            else if (players[i].activePower.randomTeleport) {
+                al_draw_scaled_bitmap(teleportGraphic, 0, 0, al_get_bitmap_width(teleportGraphic), al_get_bitmap_height(teleportGraphic), 220, 70, 50, 50, 0);
+            }
+            else {
+                al_draw_text(font, al_map_rgb(255, 255, 255), 240, 80, ALLEGRO_ALIGN_CENTER, "X");
             }
         }
         else {
-            // SMIERC
-            al_clear_to_color(players[i].color);
-
-            al_draw_text(font, al_map_rgb(255, 255, 255), width / 2, height / 2 - al_get_font_line_height(font) / 2, ALLEGRO_ALIGN_CENTER, "DEAD");
+            al_draw_text(font, al_map_rgb(255, 255, 255), 170, 46, ALLEGRO_ALIGN_CENTER, "DEAD");
         }
 
         al_set_target_bitmap(infoPanel);
-        al_draw_bitmap(playerInfo[i], i * TILE * 5, 0.05 * height, 0);
+        al_draw_bitmap(playerInfo[i], i * TILE * 5, 6, 0);
     }
 
     for (int i = 0; i < playerNumber; i++) {

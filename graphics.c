@@ -7,6 +7,11 @@ ALLEGRO_BITMAP* hardDblockGraphic = NULL;
 ALLEGRO_BITMAP* IDblockGraphic = NULL;
 ALLEGRO_BITMAP* heartGraphic = NULL;
 ALLEGRO_BITMAP* shieldGraphic = NULL;
+ALLEGRO_BITMAP* explosionGraphic = NULL;
+
+ALLEGRO_BITMAP* kickGraphic = NULL;
+ALLEGRO_BITMAP* thiefGraphic = NULL;
+ALLEGRO_BITMAP* teleportGraphic = NULL;
 
 ALLEGRO_BITMAP* powerHealthGraphic = NULL;
 ALLEGRO_BITMAP* powerBombPowerUpGraphic = NULL;
@@ -28,6 +33,11 @@ void loadGraphics() {
     IDblockGraphic = al_load_bitmap("graphics/IDblock.png");
     heartGraphic = al_load_bitmap("graphics/heart.png");
     shieldGraphic = al_load_bitmap("graphics/shield.png"); ;
+    explosionGraphic = al_load_bitmap("graphics/explosion.png");
+
+    kickGraphic = al_load_bitmap("graphics/kick.png");;
+    thiefGraphic = al_load_bitmap("graphics/thief.png");;
+    teleportGraphic = al_load_bitmap("graphics/teleport.png");;
 
     powerHealthGraphic = al_load_bitmap("graphics/powers/PWR_HEALTH.png");
     powerBombPowerUpGraphic = al_load_bitmap("graphics/powers/PWR_BOMB_POWER_UP.png");

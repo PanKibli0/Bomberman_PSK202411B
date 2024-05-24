@@ -10,7 +10,12 @@ extern ALLEGRO_BITMAP* hardDblockGraphic;
 extern ALLEGRO_BITMAP* IDblockGraphic;
 extern ALLEGRO_BITMAP* heartGraphic;
 extern ALLEGRO_BITMAP* shieldGraphic;
+extern ALLEGRO_BITMAP* explosionGraphic;
 
+
+extern ALLEGRO_BITMAP* kickGraphic;
+extern ALLEGRO_BITMAP* thiefGraphic;
+extern ALLEGRO_BITMAP* teleportGraphic;
 
 extern ALLEGRO_BITMAP* powerHealthGraphic;
 extern ALLEGRO_BITMAP* powerBombPowerUpGraphic;

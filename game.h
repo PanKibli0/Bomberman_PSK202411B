@@ -20,6 +20,6 @@
 #include "powerup.h"
 #include "graphics.h"
 
-void game(int playerNumber, int map);
+void game(int playerNumber, int map, bool *gamework);
 
 #endif /* GAME_H */

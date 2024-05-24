@@ -1,10 +1,12 @@
 #include "game.h"
 
+
 extern ALLEGRO_EVENT event;
 extern ALLEGRO_DISPLAY* display;
 extern ALLEGRO_EVENT_QUEUE* event_queue;
 extern ALLEGRO_KEYBOARD_STATE keyState;
 extern ALLEGRO_TIMER* timer;
+extern ALLEGRO_FONT* font;
 
 void gameRefresh(ALLEGRO_BITMAP* gameDisplay, Block* blocks, Bomb* bombs, Player* players, int playerNumber, Explosion* explosions, PowerUp* powerUps) {
 	al_set_target_bitmap(gameDisplay);
@@ -17,7 +19,7 @@ void gameRefresh(ALLEGRO_BITMAP* gameDisplay, Block* blocks, Bomb* bombs, Player
 	drawPowerUps(powerUps, gameDisplay);
 }
 
-void displayRefreshing(ALLEGRO_DISPLAY* display, ALLEGRO_BITMAP* gameDisplay, ALLEGRO_BITMAP* infoPanel) {
+void displayRefreshing(ALLEGRO_BITMAP* gameDisplay, ALLEGRO_BITMAP* infoPanel) {
 	al_set_target_bitmap(al_get_backbuffer(display));
 
 	al_draw_filled_rectangle(0, 0, 1920, al_get_bitmap_height(gameDisplay), al_map_rgb(96, 96, 96));
@@ -29,8 +31,36 @@ void displayRefreshing(ALLEGRO_DISPLAY* display, ALLEGRO_BITMAP* gameDisplay, AL
 }
 
 
+void victory(int winnerIndex, Player* players) {
+	al_set_target_bitmap(al_get_backbuffer(display));
+
+	al_draw_filled_rounded_rectangle(640, 360, 1280, 720, 100, 100, players[winnerIndex].color);
+	al_draw_rounded_rectangle(640, 360, 1280, 720, 100, 100, al_map_rgb(0,0,0), 10);
+	
+	al_draw_filled_rounded_rectangle(710, 445, 1210, 525, 45, 45, al_map_rgb(192, 192, 192));
+	al_draw_rounded_rectangle(710, 445, 1210, 525, 45, 45, al_map_rgb(0, 0, 0), 5);
+	al_draw_textf(font, players[winnerIndex].color, 960, 470, ALLEGRO_ALIGN_CENTER, "Player %d won!", winnerIndex);
+
+	// Drugi przycisk
+	al_draw_filled_rounded_rectangle(810, 565, 1110, 645, 45, 45, al_map_rgb(192, 192, 192));
+	al_draw_rounded_rectangle(810, 565, 1110, 645, 45, 45, al_map_rgb(0, 0, 0), 5);
+	al_draw_text(font, al_map_rgb(255, 255, 0), 960, 590, ALLEGRO_ALIGN_CENTER, "EXIT ");
+
+	al_flip_display();
+
+	while (1) {
+		ALLEGRO_EVENT event;
+		al_wait_for_event(event_queue, &event);
+
+		if (event.type == ALLEGRO_EVENT_KEY_DOWN && (event.keyboard.keycode == ALLEGRO_KEY_ENTER || event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)) {
+			return;
+		}
+	}
+}
+
+
 // Glowna petla gry
-void game(int playerNumber, int map) {
+void game(int playerNumber, int map, bool *gamework) {
 	bool run = true;
 	ALLEGRO_BITMAP* gameDisplay = al_create_bitmap(19 * TILE, 11 * TILE);
 	ALLEGRO_BITMAP* infoPanel = al_create_bitmap(19 * TILE, 1080 - 11 * TILE);
@@ -76,19 +106,23 @@ void game(int playerNumber, int map) {
 
 			gameRefresh(gameDisplay, blocks, bombs, players, playerNumber, explosions, powerUps);
 			drawInfoPanel(infoPanel, players, playerNumber);
-			displayRefreshing(display, gameDisplay, infoPanel);
+			displayRefreshing(gameDisplay, infoPanel);
 
 			int alivePlayers = 0;
+			int winnerIndex = -1;
 			for (int i = 0; i < playerNumber; ++i) {
 				if (players[i].health > 0) {
 					alivePlayers++;
+					winnerIndex = i;
 				}
-				if (alivePlayers > 2) continue;
-			}
-			if (alivePlayers == 1) {
-				//printf("WYGRANA");
+				if (alivePlayers > 1) continue;
 			}
 
+			if (alivePlayers == 1) {
+				*gamework = false;
+				victory(winnerIndex, players);
+				run = false;
+			}
 		}
 	}
 
