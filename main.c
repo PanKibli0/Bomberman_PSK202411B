@@ -30,6 +30,8 @@ void ChooseMenu(bool* gamework, bool* work, int* playerNumber, int* map, ALLEGRO
 	int choice = 1;
 	*playerNumber = 2;
 	*map = 0;
+	
+
 	al_set_target_bitmap(al_get_backbuffer(display));
 	al_draw_bitmap(background, 0, 0, 0);
 
@@ -152,6 +154,7 @@ void ChooseMenu(bool* gamework, bool* work, int* playerNumber, int* map, ALLEGRO
 			case 3:
 				if (event.keyboard.keycode == ALLEGRO_KEY_ENTER) {
 					if (*map == 0) *map = rand() % 12 + 1;
+					loadPlayerGraphics(*playerNumber);
 					*gamework = true;
 					*work = false;
 					return;
@@ -331,9 +334,9 @@ int main() {
 		al_wait_for_event(event_queue, &event);
 		al_get_keyboard_state(&keyState);
 
-		if (!gamework) { mainMenu(&playerNumber, &map, &gamework, &APPWORK); }
-		else {
-			
+		if (!gamework) { 
+			mainMenu(&playerNumber, &map, &gamework, &APPWORK); 
+		} else {
 			game(playerNumber, map, &gamework);
 		}
 	};

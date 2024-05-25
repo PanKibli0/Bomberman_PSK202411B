@@ -18,7 +18,9 @@ void createExplosion(Explosion** explosions, int x, int y) {
 
     newExplosion->graphic = al_create_bitmap(TILE, TILE);
     al_set_target_bitmap(newExplosion->graphic);
-    al_draw_filled_rectangle(0, 0, TILE, TILE, al_map_rgba(255, 0, 0, 50));
+    al_draw_scaled_bitmap(explosionGraphic, 0, 0, al_get_bitmap_width(explosionGraphic), al_get_bitmap_height(explosionGraphic), 0, 0, TILE, TILE, 0);
+
+
 
     newExplosion->next = *explosions;
     *explosions = newExplosion;
@@ -125,7 +127,7 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber, Ex
 
         if (!destroyed) {
             for (int j = 0; j < playerNumber; j++) {
-                if (!damaged && players[j].position.y == y && players[j].position.x > x && players[j].position.x <= newX + TILE) {
+                if (!damaged && players[j].position.y == y && players[j].position.x > x && players[j].position.x <= newX + TILE-5) {
                     if (players[j].health > 0 && players[j].activePower.shieldTime <= 0)
                         players[j].health -= 1;
                     damaged = true;
@@ -162,7 +164,7 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber, Ex
 
         if (!destroyed) {
             for (int j = 0; j < playerNumber; j++) {
-                if (!damaged && players[j].position.y == y && players[j].position.x < x && players[j].position.x >= newX - TILE) {
+                if (!damaged && players[j].position.y == y && players[j].position.x < x && players[j].position.x >= newX - TILE+5) {
                     if (players[j].health > 0 && players[j].activePower.shieldTime <= 0)
                         players[j].health -= 1;
                     damaged = true;
@@ -197,7 +199,7 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber, Ex
 
         if (!destroyed) {
             for (int j = 0; j < playerNumber; j++) {
-                if (!damaged && players[j].position.x == x && players[j].position.y < y && players[j].position.y >= newY - TILE) {
+                if (!damaged && players[j].position.x == x && players[j].position.y < y && players[j].position.y >= newY - TILE+5) {
                     if (players[j].health > 0 && players[j].activePower.shieldTime <= 0)
                         players[j].health -= 1;
                     damaged = true;
@@ -233,7 +235,7 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber, Ex
 
         if (!destroyed) {
             for (int j = 0; j < playerNumber; j++) {
-                if (!damaged && players[j].position.x == x && players[j].position.y > y && players[j].position.y <= newY + TILE) {
+                if (!damaged && players[j].position.x == x && players[j].position.y > y && players[j].position.y <= newY + TILE-5) {
                    
                     if (players[j].health > 0 && players[j].activePower.shieldTime <= 0)
                         players[j].health -= 1;

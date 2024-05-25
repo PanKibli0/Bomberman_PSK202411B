@@ -1,7 +1,7 @@
 #ifndef position_H
 #define position_H
 
-#define FPS 120
+#define FPS 90
 #define TILE 85
 
 

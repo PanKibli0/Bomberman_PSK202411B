@@ -24,25 +24,25 @@ void createMap(Block** blocks, int map[9][17], Player* players, int playerNumber
 
                 case 10: // Player 1
                     if (playerNumber >= 1) {
-                        initPlayer(&players[0], 1, (j + 1) * TILE, (i + 1) * TILE, 2, 1, 1, al_map_rgb(106,55,113), (int[]) { ALLEGRO_KEY_W, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_A, ALLEGRO_KEY_E, ALLEGRO_KEY_R });
+                        initPlayer(players, 0, 3, (j + 1) * TILE, (i + 1) * TILE, 2, 1, 1, al_map_rgb(106,55,113), (int[]) { ALLEGRO_KEY_W, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_A, ALLEGRO_KEY_E, ALLEGRO_KEY_R });
                     }
                     break;
                 case 20: // Player 2
                     if (playerNumber >= 2) {
-                        initPlayer(&players[1], 3, (j + 1) * TILE, (i + 1) * TILE, 2, 1, 1, al_map_rgb(237, 28, 36), (int[]) { ALLEGRO_KEY_UP, ALLEGRO_KEY_DOWN, ALLEGRO_KEY_RIGHT, ALLEGRO_KEY_LEFT, ALLEGRO_KEY_RSHIFT, ALLEGRO_KEY_RCTRL });
+                        initPlayer(players,1, 3, (j + 1) * TILE, (i + 1) * TILE, 2, 1, 1, al_map_rgb(237, 28, 36), (int[]) { ALLEGRO_KEY_UP, ALLEGRO_KEY_DOWN, ALLEGRO_KEY_RIGHT, ALLEGRO_KEY_LEFT, ALLEGRO_KEY_RSHIFT, ALLEGRO_KEY_RCTRL });
                     }
                     break;
                 case 30: // Player 3
                     if (playerNumber >= 3) {
-                        initPlayer(&players[2], 3, (j + 1) * TILE, (i + 1) * TILE, 2, 1, 1, al_map_rgb(0, 73, 232), (int[]) { ALLEGRO_KEY_I, ALLEGRO_KEY_K, ALLEGRO_KEY_L, ALLEGRO_KEY_J, ALLEGRO_KEY_O, ALLEGRO_KEY_P });
+                        initPlayer(players,2, 3, (j + 1) * TILE, (i + 1) * TILE, 2, 1, 1, al_map_rgb(0, 73, 232), (int[]) { ALLEGRO_KEY_I, ALLEGRO_KEY_K, ALLEGRO_KEY_L, ALLEGRO_KEY_J, ALLEGRO_KEY_O, ALLEGRO_KEY_P });
                     }
                     break;
                 case 40: // Player 4
                     if (playerNumber >= 4) {
-                        initPlayer(&players[3], 3, (j + 1) * TILE, (i + 1) * TILE, 2, 1, 1, al_map_rgb(1, 194, 0), (int[]) { ALLEGRO_KEY_PAD_8, ALLEGRO_KEY_PAD_5, ALLEGRO_KEY_PAD_6, ALLEGRO_KEY_PAD_4, ALLEGRO_KEY_PAD_SLASH, ALLEGRO_KEY_PAD_ASTERISK });
+                        initPlayer(players,3 ,3, (j + 1) * TILE, (i + 1) * TILE, 2, 1, 1, al_map_rgb(1, 194, 0), (int[]) { ALLEGRO_KEY_PAD_8, ALLEGRO_KEY_PAD_5, ALLEGRO_KEY_PAD_6, ALLEGRO_KEY_PAD_4, ALLEGRO_KEY_PAD_SLASH, ALLEGRO_KEY_PAD_ASTERISK });
                     }
                     else if (playerNumber == 2) {
-                        initPlayer(&players[1], 3, (j + 1) * TILE, (i + 1) * TILE, 2, 1, 1, al_map_rgb(237, 28, 36), (int[]) { ALLEGRO_KEY_UP, ALLEGRO_KEY_DOWN, ALLEGRO_KEY_RIGHT, ALLEGRO_KEY_LEFT, ALLEGRO_KEY_RSHIFT, ALLEGRO_KEY_RCTRL });
+                        initPlayer(players,1, 3, (j + 1) * TILE, (i + 1) * TILE, 2, 1, 1, al_map_rgb(237, 28, 36), (int[]) { ALLEGRO_KEY_UP, ALLEGRO_KEY_DOWN, ALLEGRO_KEY_RIGHT, ALLEGRO_KEY_LEFT, ALLEGRO_KEY_RSHIFT, ALLEGRO_KEY_RCTRL });
                     }
                     break;
                 default:

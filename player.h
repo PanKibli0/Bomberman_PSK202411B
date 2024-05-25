@@ -30,12 +30,13 @@ typedef struct {
     BombData bombs;
     PowerUpData activePower;
     int direction; // gora, dol , lewo, prawo
+    int frame;
     ALLEGRO_COLOR color;
     int controlKeys[6];
 } Player;
 
 // FUKCJE
-void initPlayer(Player* player, unsigned int health, int x, int y, float velocity, int bombAmount, int bombPower, ALLEGRO_COLOR color, int controlKeys[5]);
+void initPlayer(Player* players, int playerIndex, unsigned int health, int x, int y, float velocity, int bombAmount, int bombPower, ALLEGRO_COLOR color, int controlKeys[5]);
 void drawPlayer(Player* player,int playerNumber, ALLEGRO_BITMAP* gameDisplay);
 void movePlayer(Player* player, int playerNumber, ALLEGRO_KEYBOARD_STATE* keyState, Block* block, struct Bomb* bomb);
 void placeBomb(Player* players, int playerNumber, struct Bomb** bomb, ALLEGRO_KEYBOARD_STATE* keyState);

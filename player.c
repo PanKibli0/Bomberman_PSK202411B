@@ -1,5 +1,7 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
+#include <math.h>
+#include <stdio.h>
 
 #include "config.h"
 #include "player.h"
@@ -18,31 +20,32 @@ void initPowerUps(Player* player) {
 }
 
 // FUNKCJE GRACZA
-void initPlayer(Player* player, unsigned int health, int x, int y, float velocity, int bombAmount,  int bombPower, ALLEGRO_COLOR color, int controlKeys[6]) {
-	player->health = health;
-	player->position.x = x;
-	player->position.y = y;
-	player->velocity = velocity;
-	player->bombs.bombAmount = bombAmount;
-	player->bombs.BombPower = bombPower;
-	player->color = color;
-	player->direction = 0;
-	initPowerUps(player);
+void initPlayer(Player* players, int playerIndex, unsigned int health, int x, int y, float velocity, int bombAmount, int bombPower, ALLEGRO_COLOR color, int controlKeys[6]) {
+	players[playerIndex].health = health;
+	players[playerIndex].position.x = x;
+	players[playerIndex].position.y = y;
+	players[playerIndex].velocity = velocity;
+	players[playerIndex].bombs.bombAmount = bombAmount;
+	players[playerIndex].bombs.BombPower = bombPower;
+	players[playerIndex].color = color;
+	players[playerIndex].direction = 0;
+	players[playerIndex].frame = 0;
+	initPowerUps(&players[playerIndex]);
 
 	for (int i = 0; i < 6; i++) {
-		player->controlKeys[i] = controlKeys[i];
-	};
-
-	player->graphic = al_create_bitmap(TILE, TILE);
-	al_set_target_bitmap(player->graphic);
-	al_draw_rectangle(0, 0, TILE, TILE, player->color, 10);
+		players[playerIndex].controlKeys[i] = controlKeys[i];
+	}
+	players[playerIndex].graphic = al_create_bitmap(TILE, TILE);
+	al_set_target_bitmap(players[playerIndex].graphic);
+	al_draw_scaled_bitmap(playerIdleGraphics[playerIndex], 0, 0, al_get_bitmap_width(playerIdleGraphics[playerIndex]), al_get_bitmap_height(playerIdleGraphics[playerIndex]), 0, 0, TILE, TILE, 0);
 }
 
 void drawPlayer(Player* players, int playerNumber, ALLEGRO_BITMAP* gameDisplay) {
 	al_set_target_bitmap(gameDisplay);
 	for (int i = 0; i < playerNumber; i++) {
 		if (players[i].health > 0 && players[i].activePower.invisibility <= 0) {
-			al_draw_bitmap(players[i].graphic, players[i].position.x, players[i].position.y, 0);	
+			al_draw_scaled_bitmap(players[i].graphic, 0, 0, al_get_bitmap_width(players[i].graphic), al_get_bitmap_height(players[i].graphic),
+				players[i].position.x, players[i].position.y, TILE, TILE, 0);
 			if (players[i].activePower.shieldTime > 0) {
 				al_draw_scaled_bitmap(shieldGraphic,
 					0, 0, al_get_bitmap_width(shieldGraphic), al_get_bitmap_height(shieldGraphic),
@@ -59,22 +62,33 @@ void movePlayer(Player* players, int playerNumber, ALLEGRO_KEYBOARD_STATE* keySt
 	for (int i = 0; i < playerNumber; i++) {
 		if (players[i].health > 0) {
 			float dx = 0, dy = 0;
+			bool moved = false;
 
 			if (al_key_down(keyState, players[i].controlKeys[0])) {
 				dy -= players[i].velocity;
-				players[i].direction = 1;
+				players[i].direction = 1; // Lewo
+				moved = true;
 			}
 			if (al_key_down(keyState, players[i].controlKeys[1])) {
 				dy += players[i].velocity;
-				players[i].direction = 2;
+				players[i].direction = 2; // Prawo
+				moved = true;
 			}
 			if (al_key_down(keyState, players[i].controlKeys[2])) {
 				dx += players[i].velocity;
-				players[i].direction = 3;
+				players[i].direction = 3; // Góra
+				moved = true;
 			}
 			if (al_key_down(keyState, players[i].controlKeys[3])) {
 				dx -= players[i].velocity;
-				players[i].direction = 4;
+				players[i].direction = 4; // Dó³
+				moved = true;
+			}
+
+			if (moved) {
+				players[i].frame++;
+				players[i].frame %= 4; 
+				players[i].graphic = playerGraphics[i][players[i].direction - 1][players[i].frame];
 			}
 
 			float newX = players[i].position.x + dx;
@@ -89,7 +103,7 @@ void movePlayer(Player* players, int playerNumber, ALLEGRO_KEYBOARD_STATE* keySt
 				}
 			}
 			else {
-				if (!checkBlockCollision(newX, newY,  block) && !checkPlayerCollision(newX, newY, players, playerNumber, i)) {
+				if (!checkBlockCollision(newX, newY, block) && !checkPlayerCollision(newX, newY, players, playerNumber, i)) {
 					players[i].position.x = newX;
 					players[i].position.y = newY;
 				}
@@ -97,4 +111,3 @@ void movePlayer(Player* players, int playerNumber, ALLEGRO_KEYBOARD_STATE* keySt
 		}
 	}
 }
-

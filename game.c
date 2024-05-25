@@ -39,12 +39,12 @@ void victory(int winnerIndex, Player* players) {
 	
 	al_draw_filled_rounded_rectangle(710, 445, 1210, 525, 45, 45, al_map_rgb(192, 192, 192));
 	al_draw_rounded_rectangle(710, 445, 1210, 525, 45, 45, al_map_rgb(0, 0, 0), 5);
-	al_draw_textf(font, players[winnerIndex].color, 960, 470, ALLEGRO_ALIGN_CENTER, "Player %d won!", winnerIndex);
+	if (winnerIndex != -1) al_draw_textf(font, players[winnerIndex].color, 960, 470, ALLEGRO_ALIGN_CENTER, "Player %d won!", winnerIndex);
+	else (al_draw_text(font, al_map_rgb(0,0,0), 960, 470, ALLEGRO_ALIGN_CENTER, "No one won!"));
 
-	// Drugi przycisk
 	al_draw_filled_rounded_rectangle(810, 565, 1110, 645, 45, 45, al_map_rgb(192, 192, 192));
 	al_draw_rounded_rectangle(810, 565, 1110, 645, 45, 45, al_map_rgb(0, 0, 0), 5);
-	al_draw_text(font, al_map_rgb(255, 255, 0), 960, 590, ALLEGRO_ALIGN_CENTER, "EXIT ");
+	al_draw_text(font, al_map_rgb(255, 255, 0), 960, 590, ALLEGRO_ALIGN_CENTER, "EXIT");
 
 	al_flip_display();
 
@@ -57,6 +57,34 @@ void victory(int winnerIndex, Player* players) {
 		}
 	}
 }
+
+bool endGame() {
+	al_set_target_bitmap(al_get_backbuffer(display));
+
+	al_draw_filled_rounded_rectangle(640, 360, 1280, 720, 100, 100, al_map_rgb(24, 110, 172));
+	al_draw_rounded_rectangle(640, 360, 1280, 720, 100, 100, al_map_rgb(0, 0, 0), 10);
+
+	al_draw_filled_rounded_rectangle(710, 445, 1210, 525, 45, 45, al_map_rgb(192, 192, 192));
+	al_draw_rounded_rectangle(710, 445, 1210, 525, 45, 45, al_map_rgb(0, 0, 0), 5);
+	al_draw_text(font, al_map_rgb(255, 255, 255), 960, 470, ALLEGRO_ALIGN_CENTER, "RETURN TO MAIN MENU");
+
+	al_draw_filled_rounded_rectangle(810, 565, 1110, 645, 45, 45, al_map_rgb(192, 192, 192));
+	al_draw_rounded_rectangle(810, 565, 1110, 645, 45, 45, al_map_rgb(0, 0, 0), 5);
+	al_draw_text(font, al_map_rgb(255, 255, 0), 960, 590, ALLEGRO_ALIGN_CENTER, "EXIT");
+
+	al_flip_display();
+
+	while (1) {
+		ALLEGRO_EVENT event;
+		al_wait_for_event(event_queue, &event);
+
+		if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
+			if (event.keyboard.keycode == ALLEGRO_KEY_ENTER) return true;
+			else if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE) return false;
+		}
+	}
+}
+
 
 
 // Glowna petla gry
@@ -73,12 +101,8 @@ void game(int playerNumber, int map, bool *gamework) {
 	Explosion* explosions = NULL;
 	PowerUp* powerUps = NULL;
 
-
-
 	int CHANCE;
 	mapLayout(&blocks, players, playerNumber, map, &CHANCE);
-
-	
 
 	// PETLA GRY
 	while (run) {
@@ -102,8 +126,6 @@ void game(int playerNumber, int map, bool *gamework) {
 			collectPowerUp(players, playerNumber, &powerUps);
 			disappearancePowerUp(&powerUps);
 
-			if (al_key_down(&keyState, ALLEGRO_KEY_ESCAPE)) run = false;
-
 			gameRefresh(gameDisplay, blocks, bombs, players, playerNumber, explosions, powerUps);
 			drawInfoPanel(infoPanel, players, playerNumber);
 			displayRefreshing(gameDisplay, infoPanel);
@@ -122,6 +144,20 @@ void game(int playerNumber, int map, bool *gamework) {
 				*gamework = false;
 				victory(winnerIndex, players);
 				run = false;
+			} else if (alivePlayers == 0) {
+				*gamework = false;
+				victory(-1, players);
+				run = false;
+			}
+
+			
+
+			if (al_key_down(&keyState, ALLEGRO_KEY_ESCAPE)) {
+				if (endGame()) {
+					*gamework = false;
+					run = false;
+				}
+				al_rest(0.1);
 			}
 		}
 	}

@@ -2,7 +2,8 @@
 #include "powerup.h"
 #include "graphics.h"
 #include "bomb.h"
-#include <stdio.h>
+
+
 
 void deactivatedOtherPowers(Player* player) {
     player->activePower.kick = false;
@@ -43,15 +44,15 @@ bool isPositionEmpty(int x, int y, Player* players, int playerNumber, Block* blo
 }
 
 void createPowerUp(PowerUp** powerUps, Player* players, int playerNumber, Block* blocks, Bomb* bombs) {
-    int x = rand() % 17 * TILE, y = rand() % 9 * TILE;
+    int x = rand() % 17 * TILE+TILE, y = rand() % 9 * TILE+TILE;
     if (!isPositionEmpty(x, y, players, playerNumber, blocks, bombs, *powerUps)) return;
 
     PowerUp* newPowerUp = malloc(sizeof(PowerUp));
 
-    newPowerUp->type = rand() % TYPES_NUMBER - 1;
+    newPowerUp->type = rand() % TYPES_NUMBER;
     newPowerUp->position.x = x;
     newPowerUp->position.y = y;
-    newPowerUp->lifeTime = 4.0;
+    newPowerUp->lifeTime = 7.0;
 
     // Grafika dla power-upów
     newPowerUp->graphic = al_create_bitmap(TILE, TILE);
@@ -129,11 +130,11 @@ void collectPowerUp(Player* players, int playerNumber, PowerUp** powerUps) {
                     }
                     break;
                 case VELOCITY_UP:
-                    players[i].velocity += 1;
+                    players[i].velocity += 0.2;
                     break;
                 case VELOCITY_DOWN:
                     if (players[i].velocity > 1) {
-                        players[i].velocity -= 1;
+                        players[i].velocity -= 0.4;
                     }
                     break;
                 case BOMB_LIMIT_UP:
@@ -259,6 +260,7 @@ void powerKick(Player* player, Player* players, int playerNumber, Block* blocks,
         }
     }
 }
+
 
 void powerBombThief(Player* player, Bomb** bombs) {
     int x = player->position.x / TILE * TILE;

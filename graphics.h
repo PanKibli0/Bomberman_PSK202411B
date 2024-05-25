@@ -12,6 +12,8 @@ extern ALLEGRO_BITMAP* heartGraphic;
 extern ALLEGRO_BITMAP* shieldGraphic;
 extern ALLEGRO_BITMAP* explosionGraphic;
 
+extern ALLEGRO_BITMAP* playerIdleGraphics[];
+extern ALLEGRO_BITMAP* playerGraphics[4][4][4];
 
 extern ALLEGRO_BITMAP* kickGraphic;
 extern ALLEGRO_BITMAP* thiefGraphic;
@@ -31,7 +33,8 @@ extern ALLEGRO_BITMAP* powerBombThiefGraphic;
 extern ALLEGRO_BITMAP* powerRandomTeleportGraphic;
 
 
-void loadGraphics();
 
+void loadGraphics();
+void loadPlayerGraphics(int playerNumber);
 
 #endif /* GRAPHICS_H */
