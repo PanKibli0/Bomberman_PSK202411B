@@ -4,7 +4,6 @@
 
 #include "graphics.h"
 #include "bomb.h"
-
 #include <stdio.h>
 
 // RYSOWANIE 
@@ -127,7 +126,7 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber, Ex
 
         if (!destroyed) {
             for (int j = 0; j < playerNumber; j++) {
-                if (!damaged && players[j].position.y == y && players[j].position.x > x && players[j].position.x <= newX + TILE-5) {
+                if (!damaged && players[j].position.y >= y - TILE/3 && players[j].position.y <= y + TILE/3 && players[j].position.x > TILE/3 && players[j].position.x <= newX + TILE - TILE/3) {
                     if (players[j].health > 0 && players[j].activePower.shieldTime <= 0)
                         players[j].health -= 1;
                     damaged = true;
@@ -164,7 +163,7 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber, Ex
 
         if (!destroyed) {
             for (int j = 0; j < playerNumber; j++) {
-                if (!damaged && players[j].position.y == y && players[j].position.x < x && players[j].position.x >= newX - TILE+5) {
+                if (!damaged && players[j].position.y >= y - TILE/3 && players[j].position.y <= y + TILE/3 && players[j].position.x < x && players[j].position.x >= newX - TILE + TILE/3) {
                     if (players[j].health > 0 && players[j].activePower.shieldTime <= 0)
                         players[j].health -= 1;
                     damaged = true;
@@ -199,7 +198,7 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber, Ex
 
         if (!destroyed) {
             for (int j = 0; j < playerNumber; j++) {
-                if (!damaged && players[j].position.x == x && players[j].position.y < y && players[j].position.y >= newY - TILE+5) {
+                if (!damaged && players[j].position.x >= x - TILE/3 && players[j].position.x <= x + TILE/3 && players[j].position.y < y && players[j].position.y >= newY - TILE + TILE/3) {
                     if (players[j].health > 0 && players[j].activePower.shieldTime <= 0)
                         players[j].health -= 1;
                     damaged = true;
@@ -235,13 +234,11 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber, Ex
 
         if (!destroyed) {
             for (int j = 0; j < playerNumber; j++) {
-                if (!damaged && players[j].position.x == x && players[j].position.y > y && players[j].position.y <= newY + TILE-5) {
-                   
+                if (!damaged && players[j].position.x >= x - TILE/3 && players[j].position.x <= x + TILE/3 && players[j].position.y > y && players[j].position.y <= newY + TILE - TILE/3) {
                     if (players[j].health > 0 && players[j].activePower.shieldTime <= 0)
                         players[j].health -= 1;
                     damaged = true;
                     players[j].activePower.shieldTime = 3.0;
-
                     break;
                 }
             }

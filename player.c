@@ -45,7 +45,7 @@ void drawPlayer(Player* players, int playerNumber, ALLEGRO_BITMAP* gameDisplay) 
 	for (int i = 0; i < playerNumber; i++) {
 		if (players[i].health > 0 && players[i].activePower.invisibility <= 0) {
 			al_draw_scaled_bitmap(players[i].graphic, 0, 0, al_get_bitmap_width(players[i].graphic), al_get_bitmap_height(players[i].graphic),
-				players[i].position.x, players[i].position.y, TILE, TILE, 0);
+				players[i].position.x, players[i].position.y, TILE-5, TILE-5, 0);
 			if (players[i].activePower.shieldTime > 0) {
 				al_draw_scaled_bitmap(shieldGraphic,
 					0, 0, al_get_bitmap_width(shieldGraphic), al_get_bitmap_height(shieldGraphic),
@@ -87,12 +87,20 @@ void movePlayer(Player* players, int playerNumber, ALLEGRO_KEYBOARD_STATE* keySt
 
 			if (moved) {
 				players[i].frame++;
-				players[i].frame %= 4; 
-				players[i].graphic = playerGraphics[i][players[i].direction - 1][players[i].frame];
+				players[i].frame %= 40; 
+				if (players[i].frame % 10 == 0) players[i].graphic = playerGraphics[i][players[i].direction - 1][players[i].frame/10];
 			}
 
 			float newX = players[i].position.x + dx;
 			float newY = players[i].position.y + dy;
+
+			if (moved && newX - players[i].velocity/2 < (int)(newX / TILE) * TILE && newX + players[i].velocity*2 >(int)(newX / TILE) * TILE) {
+				newX = (int)(newX / TILE) * TILE;
+			}
+
+			if (moved && newY - players[i].velocity/2 < (int)(newY / TILE) * TILE && newY + players[i].velocity*2 > (int)(newY / TILE) * TILE) {
+				newY = (int)(newY / TILE) * TILE;	
+			}
 
 			bool onBomb = checkBombCollision(players[i].position.x, players[i].position.y, bomb);
 

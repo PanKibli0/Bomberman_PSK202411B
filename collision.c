@@ -7,8 +7,10 @@
 
 bool checkBlockCollision(float x, float y, Block* block) {
     for (Block* blockElement = block; blockElement != NULL; blockElement = blockElement->next) {
-        if (x + TILE > blockElement->position.x && x < blockElement->position.x + TILE &&
-            y + TILE > blockElement->position.y && y < blockElement->position.y + TILE) {
+        if (x + TILE - 6 > blockElement->position.x &&
+            x + 6 < blockElement->position.x + TILE &&
+            y + TILE - 6 > blockElement->position.y &&
+            y + 6 < blockElement->position.y + TILE) {
             return true;
         }
     }
