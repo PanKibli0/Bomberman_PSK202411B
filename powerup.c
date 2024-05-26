@@ -3,7 +3,7 @@
 #include "graphics.h"
 #include "bomb.h"
 
-
+#include <stdio.h>
 
 void deactivatedOtherPowers(Player* player) {
     player->activePower.kick = false;
@@ -281,14 +281,18 @@ void powerBombThief(Player* player, Bomb** bombs) {
         break;
     }
 
+    printf("Player Position: (%d, %d)\n", player->position.x, player->position.y);
+    printf("Bomb Check Position: (%d, %d)\n", x, y);
+
     for (Bomb* bombElement = *bombs; bombElement != NULL; bombElement = bombElement->next) {
-        if (bombElement->position.x == x && bombElement->position.y == y) {
-            Player* owner = bombElement->owner;
-            owner->bombs.bombAmount++;
+        printf("Bomb Position: (%d, %d)\n", bombElement->position.x, bombElement->position.y);
+        if (bombElement->position.x >= x - 10 && bombElement->position.x <= x + 10 &&
+            bombElement->position.y >= y - 10 && bombElement->position.y <= y + 10) {
+            bombElement->owner->bombs.bombAmount++;
             explodedBomb(bombs, bombElement);
             player->activePower.bombThief.active = false;
             player->activePower.bombThief.hold = true;
-            player->bombs.bombAmount++;  
+            player->bombs.bombAmount++;
             return;
         }
     }
@@ -298,8 +302,8 @@ void powerBombThief(Player* player, Bomb** bombs) {
 void powerTeleport(Player* player, Block* blocks, Bomb* bombs, PowerUp* powerUps) {
     int x, y;
     do {
-        x = rand() % (19 - 2) * TILE;
-        y = rand() % (11 - 2) * TILE;
+        x = rand() % 17 * TILE;
+        y = rand() % 9 * TILE;
     } while (!isPositionEmpty(x, y, player, 1, blocks, bombs, powerUps));
 
     player->position.x = x;
