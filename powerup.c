@@ -223,8 +223,8 @@ void usePower(Player* players, int playerNumber, ALLEGRO_KEYBOARD_STATE* keyStat
 }
 
 void powerKick(Player* player, Player* players, int playerNumber, Block* blocks, Bomb** bombs) {
-    int x = player->position.x;
-    int y = player->position.y;
+    int x = player->position.x / TILE * TILE;
+    int y = player->position.y / TILE * TILE;
 
     switch (player->direction) {
     case 1:
@@ -242,8 +242,8 @@ void powerKick(Player* player, Player* players, int playerNumber, Block* blocks,
     }
 
     for (Bomb* bombElement = *bombs; bombElement != NULL; bombElement = bombElement->next) {
-        if (bombElement->position.x >= x - TILE / 2 && bombElement->position.x <= x + TILE / 2 &&
-            bombElement->position.y >= y - TILE / 2 && bombElement->position.y <= y + TILE / 2) {
+        if (bombElement->position.x >= x - TILE / 3 && bombElement->position.x <= x + TILE / 3 &&
+            bombElement->position.y >= y - TILE / 3 && bombElement->position.y <= y + TILE / 3) {
 
             int dx = x - player->position.x;
             int dy = y - player->position.y;
@@ -281,13 +281,12 @@ void powerBombThief(Player* player, Bomb** bombs) {
         break;
     }
 
-    printf("Player Position: (%d, %d)\n", player->position.x, player->position.y);
-    printf("Bomb Check Position: (%d, %d)\n", x, y);
+ 
 
     for (Bomb* bombElement = *bombs; bombElement != NULL; bombElement = bombElement->next) {
-        printf("Bomb Position: (%d, %d)\n", bombElement->position.x, bombElement->position.y);
-        if (bombElement->position.x >= x - 10 && bombElement->position.x <= x + 10 &&
-            bombElement->position.y >= y - 10 && bombElement->position.y <= y + 10) {
+     
+        if (bombElement->position.x >= x - TILE / 3 && bombElement->position.x <= x + TILE / 3 &&
+            bombElement->position.y >= y - TILE / 3 && bombElement->position.y <= y + TILE / 3) {
             bombElement->owner->bombs.bombAmount++;
             explodedBomb(bombs, bombElement);
             player->activePower.bombThief.active = false;

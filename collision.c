@@ -19,8 +19,10 @@ bool checkBlockCollision(float x, float y, Block* block) {
 
 bool checkBombCollision(float x, float y, Bomb* bomb) {
     for (Bomb* bombElement = bomb; bombElement != NULL; bombElement = bombElement->next) {
-        if (x + TILE > bombElement->position.x && x < bombElement->position.x + TILE &&
-            y + TILE > bombElement->position.y && y < bombElement->position.y + TILE) {
+        if (x + TILE - 6 > bombElement->position.x &&
+            x + 6 < bombElement->position.x + TILE &&
+            y + TILE - 6 > bombElement->position.y &&
+            y + 6 < bombElement->position.y + TILE) {
             return true;
         }
     }
