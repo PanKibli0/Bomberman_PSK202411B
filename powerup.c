@@ -262,7 +262,7 @@ void powerKick(Player* player, Player* players, int playerNumber, Block* blocks,
     }
 }
 
-
+// *****************************************
 
 void powerBombThief(Player* player, Bomb** bombs) {
     int x = player->position.x;
@@ -271,36 +271,25 @@ void powerBombThief(Player* player, Bomb** bombs) {
     switch (player->direction) {
     case 1:
         y -= TILE;
-        printf("Direction: Up\n");
         break;
     case 2:
         y += TILE;
-        printf("Direction: Down\n");
         break;
     case 3:
         x += TILE;
-        printf("Direction: Right\n");
         break;
     case 4:
         x -= TILE;
-        printf("Direction: Left\n");
         break;
     }
 
-    printf("Player position: (%d, %d)\n", x, y);
-
-    printf("Checking bomb positions around: (%d, %d)\n", x, y);
-
     for (Bomb* bombElement = *bombs; bombElement != NULL; bombElement = bombElement->next) {
-        printf("Bomb position: (%d, %d)\n", bombElement->position.x, bombElement->position.y);
-        if (bombElement->position.x >= x - TILE/3  && bombElement->position.x <= x + TILE/3 &&
-            bombElement->position.y >= y - TILE/3  && bombElement->position.y <= y + TILE/3 ) {
-            printf("\tPRZED KRADZIEZA\n");
-            // BLAD Z PAMIECIA
-            bombElement->owner->bombs.bombAmount++;
-            printf("DODANIE DO GRACZA");
+        if (bombElement->position.x >= x - TILE / 3 && bombElement->position.x <= x + TILE / 3 &&
+            bombElement->position.y >= y - TILE / 3 && bombElement->position.y <= y + TILE / 3) {
+            if (bombElement->owner != NULL) {
+                bombElement->owner->bombs.bombAmount++;
+            }
             explodedBomb(bombs, bombElement);
-            printf("\tKRADZIEZ\n");
             player->activePower.bombThief.active = false;
             player->activePower.bombThief.hold = true;
             player->bombs.bombAmount++;
@@ -308,6 +297,8 @@ void powerBombThief(Player* player, Bomb** bombs) {
         }
     }
 }
+
+// *********************************************
 
 void powerTeleport(Player* player, Block* blocks, Bomb* bombs, PowerUp* powerUps) {
     int x, y;

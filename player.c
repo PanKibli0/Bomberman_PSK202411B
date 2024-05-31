@@ -11,7 +11,7 @@
 #include "graphics.h"
 
 void initPowerUps(Player* player) {
-	player->activePower.kick = true; 
+	player->activePower.kick = false; 
 	player->activePower.bombThief.active = false;
 	player->activePower.bombThief.hold = false;	
 	player->activePower.randomTeleport = false;
