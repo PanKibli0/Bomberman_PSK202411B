@@ -89,10 +89,10 @@ void ChooseMenu(bool* gamework, bool* work, int* playerNumber, int* map, ALLEGRO
 		if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
 			switch (choice) {
 			case 1:
-				if (event.keyboard.keycode == ALLEGRO_KEY_LEFT) {
+				if (event.keyboard.keycode == ALLEGRO_KEY_LEFT || event.keyboard.keycode == ALLEGRO_KEY_A) {
 					*playerNumber = (*playerNumber > 2) ? *playerNumber - 1 : 4;
 				}
-				else if (event.keyboard.keycode == ALLEGRO_KEY_RIGHT) {
+				else if (event.keyboard.keycode == ALLEGRO_KEY_RIGHT || event.keyboard.keycode == ALLEGRO_KEY_D) {
 					*playerNumber = (*playerNumber < 4) ? *playerNumber + 1 : 2;
 				}
 				else if (event.keyboard.keycode == ALLEGRO_KEY_ENTER) {
@@ -126,7 +126,7 @@ void ChooseMenu(bool* gamework, bool* work, int* playerNumber, int* map, ALLEGRO
 						*map = 0;
 					}
 				}
-				else if (event.keyboard.keycode == ALLEGRO_KEY_LEFT) {
+				else if (event.keyboard.keycode == ALLEGRO_KEY_LEFT || event.keyboard.keycode == ALLEGRO_KEY_A) {
 					if (*map > 0) {
 						--(*map);
 					}
@@ -134,7 +134,7 @@ void ChooseMenu(bool* gamework, bool* work, int* playerNumber, int* map, ALLEGRO
 						*map = 12;
 					}
 				}
-				else if (event.keyboard.keycode == ALLEGRO_KEY_RIGHT) {
+				else if (event.keyboard.keycode == ALLEGRO_KEY_RIGHT || event.keyboard.keycode == ALLEGRO_KEY_D) {
 					if (*map < 12) {
 						++(*map);
 					}
@@ -205,7 +205,7 @@ void infoMenu(ALLEGRO_BITMAP* background) {
 		"Provides a shield for a short time.",
 		"Grants invisibility for a short time.",
 		"Press skill button to kick a bomb as far as possible \nin the player's direction.",
-		"Press skill button to steal a bomb placed next to the player \nin the player's direction.",
+		"Press skill button to steal a bomb placed next to \nthe player in the player's direction.",
 		"Press skill button to teleport to a random location. \n(One-time use)"
 	};
 
@@ -219,7 +219,7 @@ void infoMenu(ALLEGRO_BITMAP* background) {
 		al_draw_bitmap(graphics[i], rectX, rectY, 0);
 		al_draw_filled_rounded_rectangle(rectX + 106, 100 + row * 136, rectX + 806, 196 + row * 136, 45, 45, al_map_rgb(192, 192, 192));
 		al_draw_rounded_rectangle(rectX + 106, 100 + row * 136, rectX + 806, 196 + row * 136, 45, 45, al_map_rgb(0, 0, 0), 5);
-		al_draw_textf(fontInfo, al_map_rgb(255, 255, 255), rectX + 456, 135 + row * 136, ALLEGRO_ALIGN_CENTER, "%s\n%", descriptions[i]);
+		al_draw_multiline_text(fontInfo, al_map_rgb(255, 255, 255), rectX + 456, 135 + row * 136, 700, 20, ALLEGRO_ALIGN_CENTER, descriptions[i]);
 	}
 
 	

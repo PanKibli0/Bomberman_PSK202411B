@@ -1,4 +1,4 @@
-#include <allegro5/allegro.h>
+ï»¿#include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 #include <math.h>
 #include <stdio.h>
@@ -11,7 +11,7 @@
 #include "graphics.h"
 
 void initPowerUps(Player* player) {
-	player->activePower.kick = false; 
+	player->activePower.kick = true; 
 	player->activePower.bombThief.active = false;
 	player->activePower.bombThief.hold = false;	
 	player->activePower.randomTeleport = false;
@@ -30,6 +30,8 @@ void initPlayer(Player* players, int playerIndex, unsigned int health, int x, in
 	players[playerIndex].color = color;
 	players[playerIndex].direction = 0;
 	players[playerIndex].frame = 0;
+	
+
 	initPowerUps(&players[playerIndex]);
 
 	for (int i = 0; i < 6; i++) {
@@ -45,7 +47,7 @@ void drawPlayer(Player* players, int playerNumber, ALLEGRO_BITMAP* gameDisplay) 
 	for (int i = 0; i < playerNumber; i++) {
 		if (players[i].health > 0 && players[i].activePower.invisibility <= 0) {
 			al_draw_scaled_bitmap(players[i].graphic, 0, 0, al_get_bitmap_width(players[i].graphic), al_get_bitmap_height(players[i].graphic),
-				players[i].position.x, players[i].position.y, TILE-5, TILE-5, 0);
+				players[i].position.x, players[i].position.y+5, TILE-9, TILE-9, 0);
 			if (players[i].activePower.shieldTime > 0) {
 				al_draw_scaled_bitmap(shieldGraphic,
 					0, 0, al_get_bitmap_width(shieldGraphic), al_get_bitmap_height(shieldGraphic),
@@ -66,40 +68,40 @@ void movePlayer(Player* players, int playerNumber, ALLEGRO_KEYBOARD_STATE* keySt
 
 			if (al_key_down(keyState, players[i].controlKeys[0])) {
 				dy -= players[i].velocity;
-				players[i].direction = 1; // Lewo
+				players[i].direction = 1; // gora
 				moved = true;
 			}
 			if (al_key_down(keyState, players[i].controlKeys[1])) {
 				dy += players[i].velocity;
-				players[i].direction = 2; // Prawo
+				players[i].direction = 2; // dol
 				moved = true;
 			}
 			if (al_key_down(keyState, players[i].controlKeys[2])) {
 				dx += players[i].velocity;
-				players[i].direction = 3; // Góra
+				players[i].direction = 3; // prawo
 				moved = true;
 			}
 			if (al_key_down(keyState, players[i].controlKeys[3])) {
 				dx -= players[i].velocity;
-				players[i].direction = 4; // Dó³
+				players[i].direction = 4; // lewo
 				moved = true;
 			}
 
 			if (moved) {
 				players[i].frame++;
-				players[i].frame %= 40; 
-				if (players[i].frame % 10 == 0) players[i].graphic = playerGraphics[i][players[i].direction - 1][players[i].frame/10];
+				players[i].frame %= 40;
+				if (players[i].frame % 10 == 0) players[i].graphic = playerGraphics[i][players[i].direction - 1][players[i].frame / 10];
 			}
 
 			float newX = players[i].position.x + dx;
 			float newY = players[i].position.y + dy;
 
-			if (moved && newX - players[i].velocity/2 < (int)(newX / TILE) * TILE && newX + players[i].velocity*2 >(int)(newX / TILE) * TILE) {
+			if (moved && newX - players[i].velocity / 2 < (int)(newX / TILE) * TILE && newX + players[i].velocity * 2 > (int)(newX / TILE) * TILE) {
 				newX = (int)(newX / TILE) * TILE;
 			}
 
-			if (moved && newY - players[i].velocity/2 < (int)(newY / TILE) * TILE && newY + players[i].velocity*2 > (int)(newY / TILE) * TILE) {
-				newY = (int)(newY / TILE) * TILE;	
+			if (moved && newY - players[i].velocity / 2 < (int)(newY / TILE) * TILE && newY + players[i].velocity * 2 > (int)(newY / TILE) * TILE) {
+				newY = (int)(newY / TILE) * TILE;
 			}
 
 			bool onBomb = checkBombCollision(players[i].position.x, players[i].position.y, bomb);

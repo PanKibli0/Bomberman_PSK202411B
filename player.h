@@ -18,7 +18,7 @@ typedef struct {
     struct {  bool active; bool hold; } bombThief; // wziecie postawionej bomby
     bool randomTeleport; // losowa zmiana miejsca 
     float invisibility; //  niewidzialnosc
-    /*V*/ float shieldTime; // chroni przed obrazeniami
+    float shieldTime; // chroni przed obrazeniami
 } PowerUpData;
 
 
@@ -29,7 +29,7 @@ typedef struct {
     float velocity;
     BombData bombs;
     PowerUpData activePower;
-    int direction; // gora, dol , lewo, prawo
+    int direction; // gora , dol, lewo, prawo
     int frame;
     ALLEGRO_COLOR color;
     int controlKeys[6];

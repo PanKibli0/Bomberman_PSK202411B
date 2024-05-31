@@ -134,7 +134,7 @@ void collectPowerUp(Player* players, int playerNumber, PowerUp** powerUps) {
                     break;
                 case VELOCITY_DOWN:
                     if (players[i].velocity > 1) {
-                        players[i].velocity -= 0.4;
+                        players[i].velocity -= 0.25;
                     }
                     break;
                 case BOMB_LIMIT_UP:
@@ -223,8 +223,8 @@ void usePower(Player* players, int playerNumber, ALLEGRO_KEYBOARD_STATE* keyStat
 }
 
 void powerKick(Player* player, Player* players, int playerNumber, Block* blocks, Bomb** bombs) {
-    int x = player->position.x / TILE * TILE;
-    int y = player->position.y / TILE * TILE;
+    int x = player->position.x;
+    int y = player->position.y;
 
     switch (player->direction) {
     case 1:
@@ -256,39 +256,51 @@ void powerKick(Player* player, Player* players, int playerNumber, Block* blocks,
 
             bombElement->position.x = newX;
             bombElement->position.y = newY;
+            
             return;
         }
     }
 }
 
 
+
 void powerBombThief(Player* player, Bomb** bombs) {
-    int x = player->position.x / TILE * TILE;
-    int y = player->position.y / TILE * TILE;
+    int x = player->position.x;
+    int y = player->position.y;
 
     switch (player->direction) {
     case 1:
         y -= TILE;
+        printf("Direction: Up\n");
         break;
     case 2:
         y += TILE;
+        printf("Direction: Down\n");
         break;
     case 3:
         x += TILE;
+        printf("Direction: Right\n");
         break;
     case 4:
         x -= TILE;
+        printf("Direction: Left\n");
         break;
     }
 
- 
+    printf("Player position: (%d, %d)\n", x, y);
+
+    printf("Checking bomb positions around: (%d, %d)\n", x, y);
 
     for (Bomb* bombElement = *bombs; bombElement != NULL; bombElement = bombElement->next) {
-     
-        if (bombElement->position.x >= x - TILE / 3 && bombElement->position.x <= x + TILE / 3 &&
-            bombElement->position.y >= y - TILE / 3 && bombElement->position.y <= y + TILE / 3) {
+        printf("Bomb position: (%d, %d)\n", bombElement->position.x, bombElement->position.y);
+        if (bombElement->position.x >= x - TILE/3  && bombElement->position.x <= x + TILE/3 &&
+            bombElement->position.y >= y - TILE/3  && bombElement->position.y <= y + TILE/3 ) {
+            printf("\tPRZED KRADZIEZA\n");
+            // BLAD Z PAMIECIA
             bombElement->owner->bombs.bombAmount++;
+            printf("DODANIE DO GRACZA");
             explodedBomb(bombs, bombElement);
+            printf("\tKRADZIEZ\n");
             player->activePower.bombThief.active = false;
             player->activePower.bombThief.hold = true;
             player->bombs.bombAmount++;
@@ -297,12 +309,11 @@ void powerBombThief(Player* player, Bomb** bombs) {
     }
 }
 
-
 void powerTeleport(Player* player, Block* blocks, Bomb* bombs, PowerUp* powerUps) {
     int x, y;
     do {
-        x = rand() % 17 * TILE;
-        y = rand() % 9 * TILE;
+        x = rand() % 17 * TILE+TILE;
+        y = rand() % 9 * TILE+TILE;
     } while (!isPositionEmpty(x, y, player, 1, blocks, bombs, powerUps));
 
     player->position.x = x;

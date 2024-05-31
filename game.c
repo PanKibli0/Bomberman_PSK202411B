@@ -11,12 +11,13 @@ extern ALLEGRO_FONT* font;
 void gameRefresh(ALLEGRO_BITMAP* gameDisplay, Block* blocks, Bomb* bombs, Player* players, int playerNumber, Explosion* explosions, PowerUp* powerUps) {
 	al_set_target_bitmap(gameDisplay);
 	al_clear_to_color(al_map_rgb(96, 96, 96));
-
+	
 	drawBlocks(blocks, gameDisplay);
+	drawPowerUps(powerUps, gameDisplay);
 	drawBombs(bombs, gameDisplay);
 	drawPlayer(players, playerNumber, gameDisplay);
 	drawExplosion(explosions, gameDisplay);
-	drawPowerUps(powerUps, gameDisplay);
+	
 }
 
 void displayRefreshing(ALLEGRO_BITMAP* gameDisplay, ALLEGRO_BITMAP* infoPanel) {
@@ -39,7 +40,7 @@ void victory(int winnerIndex, Player* players) {
 	
 	al_draw_filled_rounded_rectangle(710, 445, 1210, 525, 45, 45, al_map_rgb(192, 192, 192));
 	al_draw_rounded_rectangle(710, 445, 1210, 525, 45, 45, al_map_rgb(0, 0, 0), 5);
-	if (winnerIndex != -1) al_draw_textf(font, players[winnerIndex].color, 960, 470, ALLEGRO_ALIGN_CENTER, "Player %d won!", winnerIndex);
+	if (winnerIndex != -1) al_draw_textf(font, players[winnerIndex].color, 960, 470, ALLEGRO_ALIGN_CENTER, "Player %d won!", winnerIndex+1);
 	else (al_draw_text(font, al_map_rgb(0,0,0), 960, 470, ALLEGRO_ALIGN_CENTER, "No one won!"));
 
 	al_draw_filled_rounded_rectangle(810, 565, 1110, 645, 45, 45, al_map_rgb(192, 192, 192));

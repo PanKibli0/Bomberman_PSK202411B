@@ -8,7 +8,6 @@
 
 typedef struct Explosion {
 	Position position;
-	int direction;
 	float time;
 	ALLEGRO_BITMAP* graphic;
 	struct Explosion* next;
