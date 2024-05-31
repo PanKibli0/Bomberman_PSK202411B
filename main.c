@@ -170,14 +170,70 @@ void ChooseMenu(bool* gamework, bool* work, int* playerNumber, int* map, ALLEGRO
 }
 
 
+void infoGeneral() {
+	ALLEGRO_FONT* fontInfo = al_load_font("graphics/font.ttf", 60, 0);
 
-void infoMenu(ALLEGRO_BITMAP* background) {
-	int choice = 1;
+	ALLEGRO_COLOR colors[] = { al_map_rgb(106, 55, 113), al_map_rgb(237, 28, 36), al_map_rgb(0, 73, 232), al_map_rgb(1, 194, 0) };
+
+	// Rysowanie graczy za pomocą pętli
+	for (int i = 0; i < 4; ++i) {
+		int x = (i % 2 == 0) ? 190 : 1040;
+		int y = (i < 2) ? 100 : 455;
+		
+		al_draw_filled_rounded_rectangle(x, y, x + 660, y +335, 45, 45, colors[i]);
+		al_draw_rounded_rectangle(x, y, x + 660, y +335, 45, 45, al_map_rgb(0, 0, 0), 5);
+		al_draw_bitmap(playerIdleGraphics[i], x + 15, y + 15, 0);
+		al_draw_textf(fontInfo, al_map_rgb(255, 255, 255), x + 330, y + 30, ALLEGRO_ALIGN_CENTER, "PLAYER %d", i+1);
+	}
+
+	// AUTORZY
+	al_draw_filled_rounded_rectangle(190, 820, 1700, 905, 45, 45, al_map_rgb(192, 192, 192));
+	al_draw_rounded_rectangle(190, 820, 1700, 905, 45, 45, al_map_rgb(0, 0, 0), 5);
+	al_draw_text(font, al_map_rgb(255, 255, 255), 945, 845, ALLEGRO_ALIGN_CENTER, "AUTORS: Kacper Bugara | Michal Cebula | Maciej Dudek");
+
+
+	
+	const char* keys[4][6] = {
+	{"W", "A", "S", "D", "E", "R"},
+	{"^", "<", "v", ">", "SH", "CT"},
+	{"I", "J", "K", "L", "O", "P"},
+	{"8", "4", "5", "6", "/", "*"}
+	};
+
+	// KLAWISZE 
+	for (int i = 0; i < 4; i++) {
+		int x = (i % 2 == 0) ? 315 : 1165;
+		int y = (i < 2) ? 315 : 670;
+
+
+		al_draw_filled_rounded_rectangle(x, y-105 , x+95, y-15, 20, 20, al_map_rgb(192, 192, 192)); // Góra
+		al_draw_rounded_rectangle(x, y-105, x + 95, y-15, 20, 20, al_map_rgb(0, 0, 0), 5);
+		al_draw_text(fontInfo, al_map_rgb(255, 255, 255), x+30, y-80, ALLEGRO_ALIGN_LEFT, keys[i][0]);
+
+		for (int j = -1; j < 2; j++) {
+			int gap = (j == 1 || j == -1) ? j*15 : 0;
+			al_draw_filled_rounded_rectangle(x+j*95+gap, y, x + (j + 1) * 95+gap, y + 95, 20, 20, al_map_rgb(192, 192, 192));
+			al_draw_rounded_rectangle(x + j * 95+gap, y, x + (j + 1) * 95+gap, y + 95, 20, 20, al_map_rgb(0, 0, 0), 5);
+			al_draw_text(fontInfo, al_map_rgb(255, 255, 255), x+j*95+30+gap, y+25, ALLEGRO_ALIGN_LEFT, keys[i][j+2]);
+		}
+
+		al_draw_bitmap(bombGraphic, x+260, y - 105, 0); // Bomba
+		al_draw_filled_rounded_rectangle(x+260, y, x+360, y+95, 20, 20, al_map_rgb(192, 192, 192));
+		al_draw_rounded_rectangle(x+260, y, x+360, y+95, 20, 20, al_map_rgb(0, 0, 0), 5);
+		al_draw_text(fontInfo, al_map_rgb(255, 255, 255), (i != 1)?x+290:x+270, y + 25, ALLEGRO_ALIGN_LEFT, keys[i][4]);
+
+		al_draw_bitmap(kickGraphic, x+375, y - 105, 0); // POWER
+		al_draw_filled_rounded_rectangle(x+375, y, x+475, y+95, 20, 20, al_map_rgb(192, 192, 192));
+		al_draw_rounded_rectangle(x+375, y, x+475, y+95, 20, 20, al_map_rgb(0, 0, 0), 5);
+		al_draw_text(fontInfo, al_map_rgb(255, 255, 255), (i != 1) ? x+405:x+385, y+25, ALLEGRO_ALIGN_LEFT, keys[i][5]);
+	}
+}
+
+// ***************************
+
+
+void infoPowerups() {
 	ALLEGRO_FONT* fontInfo = al_load_font("graphics/font.ttf", 25, 0);
-	al_set_target_bitmap(al_get_backbuffer(display));
-	al_draw_bitmap(background, 0, 0, 0);
-
-
 	ALLEGRO_BITMAP* graphics[] = {
 		powerBombPowerUpGraphic,
 		powerBombPowerDownGraphic,
@@ -209,6 +265,8 @@ void infoMenu(ALLEGRO_BITMAP* background) {
 		"Press skill button to teleport to a random location. \n(One-time use)"
 	};
 
+	
+
 	for (int i = 0; i < numGraphics; ++i) {
 		int col = i % 2;
 		int row = i / 2;
@@ -221,33 +279,61 @@ void infoMenu(ALLEGRO_BITMAP* background) {
 		al_draw_rounded_rectangle(rectX + 106, 100 + row * 136, rectX + 806, 196 + row * 136, 45, 45, al_map_rgb(0, 0, 0), 5);
 		al_draw_multiline_text(fontInfo, al_map_rgb(255, 255, 255), rectX + 456, 135 + row * 136, 700, 20, ALLEGRO_ALIGN_CENTER, descriptions[i]);
 	}
-
-	
-	/*
-	al_draw_filled_rounded_rectangle(585, 940, 885, 1020, 45, 45, al_map_rgb(192, 192, 192)); 
-	al_draw_rounded_rectangle(585, 940, 885, 1020, 45, 45, al_map_rgb(0, 0, 0), 5);
-	al_draw_text(font, (choice == 1) ? al_map_rgb(255, 255, 0) : al_map_rgb(255, 255, 255), 735, 965, ALLEGRO_ALIGN_CENTER, "GENERAL");
-
- 
-	al_draw_filled_rounded_rectangle(1015, 940, 1315, 1020, 45, 45, al_map_rgb(192, 192, 192));
-	al_draw_rounded_rectangle(1015, 940, 1315, 1020, 45, 45, al_map_rgb(0, 0, 0), 5);
-	al_draw_text(font, (choice == 2) ? al_map_rgb(255, 255, 0) : al_map_rgb(255, 255, 255), 1165, 965, ALLEGRO_ALIGN_CENTER, "POWER-UPS");
-	*/
-
 	al_flip_display();
+}
+
+
+
+void infoMenu(ALLEGRO_BITMAP* background) {
+	int choice = 1;
+	
+	bool redraw = true;
+
+	al_set_target_bitmap(al_get_backbuffer(display));
 
 	while (1) {
+		if (redraw) {
+			al_draw_bitmap(background, 0, 0, 0);
+			al_draw_filled_rounded_rectangle(585, 940, 885, 1020, 45, 45, al_map_rgb(192, 192, 192));
+			al_draw_rounded_rectangle(585, 940, 885, 1020, 45, 45, al_map_rgb(0, 0, 0), 5);
+			al_draw_text(font, (choice == 1) ? al_map_rgb(255, 255, 0) : al_map_rgb(255, 255, 255), 735, 965, ALLEGRO_ALIGN_CENTER, "GENERAL");
+
+			al_draw_filled_rounded_rectangle(1015, 940, 1315, 1020, 45, 45, al_map_rgb(192, 192, 192));
+			al_draw_rounded_rectangle(1015, 940, 1315, 1020, 45, 45, al_map_rgb(0, 0, 0), 5);
+			al_draw_text(font, (choice == 2) ? al_map_rgb(255, 255, 0) : al_map_rgb(255, 255, 255), 1165, 965, ALLEGRO_ALIGN_CENTER, "POWER-UPS");
+
+			if (choice == 1) {
+				infoGeneral();
+			}
+			else if (choice == 2) {
+				infoPowerups();
+			}
+
+			al_flip_display();
+			redraw = false;
+		}
+
 		al_wait_for_event(event_queue, &event);
 
 		if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
-			if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
+			switch (event.keyboard.keycode) {
+			case ALLEGRO_KEY_ESCAPE:
+			case ALLEGRO_KEY_ENTER:
 				drawMainMenu(background);
-				
 				return;
+			case ALLEGRO_KEY_LEFT:
+			case ALLEGRO_KEY_A:
+			case ALLEGRO_KEY_RIGHT:
+			case ALLEGRO_KEY_D:
+				choice = (choice == 1) ? 2 : 1;
+				redraw = true;
+				break;
 			}
 		}
 	}
 }
+
+
 
 void mainMenu(int* playerNumber, int* map, bool* gamework, bool* APPWORK) {
 	static int choice = 1;

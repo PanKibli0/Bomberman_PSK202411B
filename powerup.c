@@ -262,7 +262,6 @@ void powerKick(Player* player, Player* players, int playerNumber, Block* blocks,
     }
 }
 
-// *****************************************
 
 void powerBombThief(Player* player, Bomb** bombs) {
     int x = player->position.x;
