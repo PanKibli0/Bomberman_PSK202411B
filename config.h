@@ -7,7 +7,7 @@
 
 
 typedef struct {
-    int x, y;
+    float x, y;
 } Position;
 
 #endif /* position_H */

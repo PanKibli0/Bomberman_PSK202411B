@@ -50,6 +50,10 @@ void createPowerUp(PowerUp** powerUps, Player* players, int playerNumber, Block*
     PowerUp* newPowerUp = malloc(sizeof(PowerUp));
 
     newPowerUp->type = rand() % TYPES_NUMBER;
+
+    //
+    newPowerUp->type = 3;
+
     newPowerUp->position.x = x;
     newPowerUp->position.y = y;
     newPowerUp->lifeTime = 7.0;
@@ -132,11 +136,11 @@ void collectPowerUp(Player* players, int playerNumber, PowerUp** powerUps) {
                     }
                     break;
                 case VELOCITY_UP:
-                    players[i].velocity += 0.2;
+                    players[i].velocity += 0.4;
                     break;
                 case VELOCITY_DOWN:
                     if (players[i].velocity > 1) {
-                        players[i].velocity -= 0.25;
+                        players[i].velocity -= 0.30;
                     }
                     break;
                 case BOMB_LIMIT_UP:

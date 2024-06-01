@@ -96,14 +96,7 @@ void movePlayer(Player* players, int playerNumber, ALLEGRO_KEYBOARD_STATE* keySt
 			float newX = players[i].position.x + dx;
 			float newY = players[i].position.y + dy;
 
-			if (moved && newX - players[i].velocity / 2 < (int)(newX / TILE) * TILE && newX + players[i].velocity * 2 > (int)(newX / TILE) * TILE) {
-				newX = (int)(newX / TILE) * TILE;
-			}
-
-			if (moved && newY - players[i].velocity / 2 < (int)(newY / TILE) * TILE && newY + players[i].velocity * 2 > (int)(newY / TILE) * TILE) {
-				newY = (int)(newY / TILE) * TILE;
-			}
-
+			
 			bool onBomb = checkBombCollision(players[i].position.x, players[i].position.y, bomb);
 
 			if (!onBomb) {
