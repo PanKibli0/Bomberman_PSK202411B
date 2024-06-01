@@ -4,6 +4,7 @@
 #include "bomb.h"
 #include "sounds.h"
 
+#include <stdio.h>
 
 void deactivatedOtherPowers(Player* player) {
     player->activePower.kick = false;
@@ -13,7 +14,7 @@ void deactivatedOtherPowers(Player* player) {
 }
 
 
-bool isPositionEmpty(int x, int y, Player* players, int playerNumber, Block* blocks, Bomb* bombs, PowerUp* powerUps) {
+bool isPositionEmpty(int x, int y, Player* players, int playerNumber, Block* blocks, Bomb* bombs, PowerUp* powerUps, bool teleport) {
     for (Block* block = blocks; block != NULL; block = block->next) {
         if (block->position.x == x && block->position.y == y) {
             return false;
@@ -32,22 +33,24 @@ bool isPositionEmpty(int x, int y, Player* players, int playerNumber, Block* blo
         }
     }
 
-    for (int i = 0; i < playerNumber; i++) {
+  
+ 
+     for (int i = 0; i < playerNumber; i++) {
         if (players[i].health <= 0) continue;
-        if (players[i].position.x - TILE / 2-5 <= x &&
-            players[i].position.x + TILE / 2+5 >= x &&
-            players[i].position.y - TILE / 2-5 <= y &&
-            players[i].position.y + TILE / 2+5 >= y) {
+        if (players[i].position.x - TILE / 2 - 5 <= x &&
+            players[i].position.x + TILE / 2 + 5 >= x &&
+            players[i].position.y - TILE / 2 - 5 <= y &&
+            players[i].position.y + TILE / 2 + 5 >= y) {
             return false;
+            }
         }
-    }
-
+    
     return true;
 }
 
 void createPowerUp(PowerUp** powerUps, Player* players, int playerNumber, Block* blocks, Bomb* bombs) {
     int x = rand() % 17 * TILE+TILE, y = rand() % 9 * TILE+TILE;
-    if (!isPositionEmpty(x, y, players, playerNumber, blocks, bombs, *powerUps)) return;
+    if (!isPositionEmpty(x, y, players, playerNumber, blocks, bombs, *powerUps, false)) return;
 
     PowerUp* newPowerUp = malloc(sizeof(PowerUp));
 
@@ -254,7 +257,7 @@ void powerKick(Player* player, Player* players, int playerNumber, Block* blocks,
             int dy = y - player->position.y;
             int newX = bombElement->position.x, newY = bombElement->position.y;
 
-            while (isPositionEmpty(newX + dx, newY + dy, players, playerNumber, blocks, *bombs, NULL)) {
+            while (isPositionEmpty(newX + dx, newY + dy, players, playerNumber, blocks, *bombs, NULL, false)) {
                 newX += dx;
                 newY += dy;
             }
@@ -309,7 +312,7 @@ void powerTeleport(Player* player, Block* blocks, Bomb* bombs, PowerUp* powerUps
     do {
         x = rand() % 17 * TILE+TILE;
         y = rand() % 9 * TILE+TILE;
-    } while (!isPositionEmpty(x, y, player, 1, blocks, bombs, powerUps));
+    } while (!isPositionEmpty(x, y, player, 1, blocks, bombs, powerUps, true));
 
     player->position.x = x;
     player->position.y = y;
