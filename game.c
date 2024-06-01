@@ -104,7 +104,7 @@ void game(int playerNumber, int map, bool *gamework) {
 
 	int CHANCE;
 	mapLayout(&blocks, players, playerNumber, map, &CHANCE);
-	
+
 	// PETLA GRY
 	while (run) {
 		al_wait_for_event(event_queue, &event);

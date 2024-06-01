@@ -34,8 +34,10 @@ bool isPositionEmpty(int x, int y, Player* players, int playerNumber, Block* blo
 
     for (int i = 0; i < playerNumber; i++) {
         if (players[i].health <= 0) continue;
-        if (players[i].position.x - TILE / 2 <= x && players[i].position.x + TILE / 2 >= x &&
-            players[i].position.y - TILE / 2 <= y && players[i].position.y + TILE / 2 >= y) {
+        if (players[i].position.x - TILE / 2-5 <= x &&
+            players[i].position.x + TILE / 2+5 >= x &&
+            players[i].position.y - TILE / 2-5 <= y &&
+            players[i].position.y + TILE / 2+5 >= y) {
             return false;
         }
     }
@@ -50,9 +52,6 @@ void createPowerUp(PowerUp** powerUps, Player* players, int playerNumber, Block*
     PowerUp* newPowerUp = malloc(sizeof(PowerUp));
 
     newPowerUp->type = rand() % TYPES_NUMBER;
-
-    //
-    newPowerUp->type = 3;
 
     newPowerUp->position.x = x;
     newPowerUp->position.y = y;
@@ -116,10 +115,10 @@ void collectPowerUp(Player* players, int playerNumber, PowerUp** powerUps) {
     for (int i = 0; i < playerNumber; i++) {
         if (players[i].health == 0) continue;
         for (PowerUp* powerUp = *powerUps; powerUp != NULL; powerUp = powerUp->next) {
-            if (players[i].position.x < powerUp->position.x + TILE / 2 &&
-                players[i].position.x + TILE > powerUp->position.x &&
-                players[i].position.y < powerUp->position.y + TILE / 2 &&
-                players[i].position.y + TILE > powerUp->position.y) {
+            if (players[i].position.x - TILE / 2 <= powerUp->position.x &&
+                players[i].position.x + TILE / 2 >= powerUp->position.x &&
+                players[i].position.y - TILE / 2 <= powerUp->position.y &&
+                players[i].position.y + TILE / 2 >= powerUp->position.y) {
                 
                 al_play_sample(powerUpSound, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 
