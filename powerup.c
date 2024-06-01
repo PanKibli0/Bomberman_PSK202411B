@@ -1,9 +1,9 @@
-#include <allegro5/allegro_primitives.h>
+
 #include "powerup.h"
 #include "graphics.h"
 #include "bomb.h"
+#include "sounds.h"
 
-#include <stdio.h>
 
 void deactivatedOtherPowers(Player* player) {
     player->activePower.kick = false;
@@ -116,7 +116,9 @@ void collectPowerUp(Player* players, int playerNumber, PowerUp** powerUps) {
                 players[i].position.x + TILE > powerUp->position.x &&
                 players[i].position.y < powerUp->position.y + TILE / 2 &&
                 players[i].position.y + TILE > powerUp->position.y) {
-                // Kolekcja power-upu
+                
+                al_play_sample(powerUpSound, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+
                 switch (powerUp->type) {
                 case HEALTH:
                     players[i].health++;
@@ -297,7 +299,7 @@ void powerBombThief(Player* player, Bomb** bombs) {
     }
 }
 
-// *********************************************
+
 
 void powerTeleport(Player* player, Block* blocks, Bomb* bombs, PowerUp* powerUps) {
     int x, y;

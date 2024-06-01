@@ -75,6 +75,8 @@
     <Allegro_AddonImage>true</Allegro_AddonImage>
     <Allegro_AddonFont>true</Allegro_AddonFont>
     <Allegro_AddonTTF>true</Allegro_AddonTTF>
+    <Allegro_AddonAudio>true</Allegro_AddonAudio>
+    <Allegro_AddonAcodec>true</Allegro_AddonAcodec>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -147,6 +149,7 @@
     <ClCompile Include="infoPanel.c" />
     <ClCompile Include="player.c" />
     <ClCompile Include="powerup.c" />
+    <ClCompile Include="sounds.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="block.h" />
@@ -160,6 +163,7 @@
     <ClInclude Include="player.h" />
     <ClInclude Include="config.h" />
     <ClInclude Include="powerup.h" />
+    <ClInclude Include="sounds.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

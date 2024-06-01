@@ -1,12 +1,12 @@
 #include <allegro5/allegro.h>
-#include <allegro5/allegro_primitives.h>
+
 
 #include "config.h"
 #include "bomb.h"
 #include "explosion.h"
 #include "player.h"
 #include "graphics.h"
-
+#include "sounds.h"
 
 
 bool addBomb(Bomb** bomb, int x, int y, int power, Player* owner) {
@@ -69,7 +69,7 @@ void timerBomb(Bomb** bombs, Block* blocks, Player* players, int playerNumber, E
             explosion(bombElement, &blocks, players, playerNumber, explosions);
             if (bombElement->owner != NULL) bombElement->owner->bombs.bombAmount++;
             explodedBomb(bombs, bombElement);
-            
+            al_play_sample(explosionSound, 0.2, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
             break;
         }
     }

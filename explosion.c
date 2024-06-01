@@ -1,10 +1,11 @@
 ﻿#include "explosion.h"
 #include <allegro5/allegro.h>
-#include <allegro5/allegro_primitives.h>
+
 
 #include "graphics.h"
 #include "bomb.h"
-#include <stdio.h>
+#include "sounds.h"
+
 
 // RYSOWANIE 
 void createExplosion(Explosion** explosions, int x, int y) {
@@ -91,8 +92,10 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber, Ex
             if (players[j].position.x >= x - TILE / 2 && players[j].position.x <= x + TILE / 2 &&
                 players[j].position.y >= y - TILE / 2 && players[j].position.y <= y + TILE / 2) {
                 if (!damaged) {
-                    if (players[j].health > 0 && players[j].activePower.shieldTime <= 0)
+                    if (players[j].health > 0 && players[j].activePower.shieldTime <= 0) {
                         players[j].health -= 1;
+                        al_play_sample(hitSound, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+                    }
                     damaged = true;
                     players[j].activePower.shieldTime = 3.0;
                     break;
@@ -128,8 +131,10 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber, Ex
             for (int j = 0; j < playerNumber; j++) {
                 if (players[j].position.y >= y - TILE / 3 && players[j].position.y <= y + TILE / 3 &&
                     players[j].position.x >= newX - TILE / 3 && players[j].position.x <= newX + TILE / 3) {
-                    if (players[j].health > 0 && players[j].activePower.shieldTime <= 0)
+                    if (players[j].health > 0 && players[j].activePower.shieldTime <= 0) {
                         players[j].health -= 1;
+                        al_play_sample(hitSound, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+                    }
                     damaged = true;
                     players[j].activePower.shieldTime = 3.0;
                     break;
@@ -167,8 +172,10 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber, Ex
             for (int j = 0; j < playerNumber; j++) {
                 if (players[j].position.y >= y - TILE / 3 && players[j].position.y <= y + TILE / 3 &&
                     players[j].position.x >= newX - TILE / 3 && players[j].position.x <= newX + TILE / 3) {
-                    if (players[j].health > 0 && players[j].activePower.shieldTime <= 0)
+                    if (players[j].health > 0 && players[j].activePower.shieldTime <= 0) {
                         players[j].health -= 1;
+                        al_play_sample(hitSound, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+                    }
                     damaged = true;
                     players[j].activePower.shieldTime = 3.0;
                     break;
@@ -203,8 +210,10 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber, Ex
             for (int j = 0; j < playerNumber; j++) {
                 if (players[j].position.x >= x - TILE / 3 && players[j].position.x <= x + TILE / 3 &&
                     players[j].position.y >= newY - TILE / 3 && players[j].position.y <= newY + TILE / 3) {
-                    if (players[j].health > 0 && players[j].activePower.shieldTime <= 0)
+                    if (players[j].health > 0 && players[j].activePower.shieldTime <= 0) {
                         players[j].health -= 1;
+                        al_play_sample(hitSound, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+                    }
                     damaged = true;
                     players[j].activePower.shieldTime = 3.0;
                     break;
@@ -240,8 +249,10 @@ void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber, Ex
             for (int j = 0; j < playerNumber; j++) {
                 if (players[j].position.x >= x - TILE / 3 && players[j].position.x <= x + TILE / 3 &&
                     players[j].position.y >= newY - TILE / 3 && players[j].position.y <= newY + TILE / 3) {
-                    if (players[j].health > 0 && players[j].activePower.shieldTime <= 0)
+                    if (players[j].health > 0 && players[j].activePower.shieldTime <= 0) {
                         players[j].health -= 1;
+                        al_play_sample(hitSound, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+                    }
                     damaged = true;
                     players[j].activePower.shieldTime = 3.0;
                     break;

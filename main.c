@@ -5,8 +5,8 @@
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_image.h>
 #include <time.h>
-#include <stdio.h>
 #include "graphics.h"
+#include "sounds.h"
 
 ALLEGRO_EVENT event;
 ALLEGRO_DISPLAY* display;
@@ -396,7 +396,12 @@ int main() {
 	al_init_font_addon();
 	al_init_ttf_addon();
 	al_init_image_addon();
+	al_install_audio();
+	al_init_acodec_addon();
+	al_reserve_samples(10);
 
+	loadSounds();
+	al_play_sample(mainSong, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 	bool APPWORK = true;
 
 	al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
