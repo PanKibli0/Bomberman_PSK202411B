@@ -222,7 +222,7 @@ void infoGeneral() {
 		al_draw_rounded_rectangle(x+260, y, x+360, y+95, 20, 20, al_map_rgb(0, 0, 0), 5);
 		al_draw_text(fontInfo, al_map_rgb(255, 255, 255), (i != 1)?x+290:x+270, y + 25, ALLEGRO_ALIGN_LEFT, keys[i][4]);
 
-		al_draw_bitmap(kickGraphic, x+375, y - 105, 0); // POWER
+		al_draw_bitmap(powerBaseGraphic, x+375, y - 105, 0); // POWER
 		al_draw_filled_rounded_rectangle(x+375, y, x+475, y+95, 20, 20, al_map_rgb(192, 192, 192));
 		al_draw_rounded_rectangle(x+375, y, x+475, y+95, 20, 20, al_map_rgb(0, 0, 0), 5);
 		al_draw_text(fontInfo, al_map_rgb(255, 255, 255), (i != 1) ? x+405:x+385, y+25, ALLEGRO_ALIGN_LEFT, keys[i][5]);

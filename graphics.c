@@ -17,6 +17,7 @@ ALLEGRO_BITMAP* kickGraphic = NULL;
 ALLEGRO_BITMAP* thiefGraphic = NULL;
 ALLEGRO_BITMAP* teleportGraphic = NULL;
 
+ALLEGRO_BITMAP* powerBaseGraphic = NULL;
 ALLEGRO_BITMAP* powerHealthGraphic = NULL;
 ALLEGRO_BITMAP* powerBombPowerUpGraphic = NULL;
 ALLEGRO_BITMAP* powerBombPowerDownGraphic = NULL;
@@ -50,6 +51,7 @@ void loadGraphics() {
     thiefGraphic = al_load_bitmap("graphics/thief.png");
     teleportGraphic = al_load_bitmap("graphics/teleport.png");
 
+    powerBaseGraphic = al_load_bitmap("graphics/powers/PWR_BASE.png");
     powerHealthGraphic = al_load_bitmap("graphics/powers/PWR_HEALTH.png");
     powerBombPowerUpGraphic = al_load_bitmap("graphics/powers/PWR_BOMB_POWER_UP.png");
     powerBombPowerDownGraphic = al_load_bitmap("graphics/powers/PWR_BOMB_POWER_DOWN.png");

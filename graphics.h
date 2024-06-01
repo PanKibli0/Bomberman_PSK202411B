@@ -19,6 +19,7 @@ extern ALLEGRO_BITMAP* kickGraphic;
 extern ALLEGRO_BITMAP* thiefGraphic;
 extern ALLEGRO_BITMAP* teleportGraphic;
 
+extern ALLEGRO_BITMAP* powerBaseGraphic;
 extern ALLEGRO_BITMAP* powerHealthGraphic;
 extern ALLEGRO_BITMAP* powerBombPowerUpGraphic;
 extern ALLEGRO_BITMAP* powerBombPowerDownGraphic;
