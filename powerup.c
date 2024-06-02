@@ -14,7 +14,7 @@ void deactivatedOtherPowers(Player* player) {
 }
 
 
-bool isPositionEmpty(int x, int y, Player* players, int playerNumber, Block* blocks, Bomb* bombs, PowerUp* powerUps, bool teleport) {
+bool isPositionEmpty(int x, int y, Player* players, int playerNumber, Block* blocks, Bomb* bombs, PowerUp* powerUps) {
     for (Block* block = blocks; block != NULL; block = block->next) {
         if (block->position.x == x && block->position.y == y) {
             return false;
@@ -50,7 +50,7 @@ bool isPositionEmpty(int x, int y, Player* players, int playerNumber, Block* blo
 
 void createPowerUp(PowerUp** powerUps, Player* players, int playerNumber, Block* blocks, Bomb* bombs) {
     int x = rand() % 17 * TILE+TILE, y = rand() % 9 * TILE+TILE;
-    if (!isPositionEmpty(x, y, players, playerNumber, blocks, bombs, *powerUps, false)) return;
+    if (!isPositionEmpty(x, y, players, playerNumber, blocks, bombs, *powerUps)) return;
 
     PowerUp* newPowerUp = malloc(sizeof(PowerUp));
 
@@ -312,7 +312,7 @@ void powerTeleport(Player* player, Block* blocks, Bomb* bombs, PowerUp* powerUps
     do {
         x = rand() % 17 * TILE+TILE;
         y = rand() % 9 * TILE+TILE;
-    } while (!isPositionEmpty(x, y, player, 1, blocks, bombs, powerUps, true));
+    } while (!isPositionEmpty(x, y, player, 1, blocks, bombs, powerUps));
 
     player->position.x = x;
     player->position.y = y;
