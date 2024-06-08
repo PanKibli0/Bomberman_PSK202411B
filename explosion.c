@@ -1,19 +1,13 @@
 ﻿#include "explosion.h"
 #include <allegro5/allegro.h>
-/**
- * @file explosion.c
- * @brief Plik implementujący funkcjonalność bomb i ich efektu.
- */
-/**
- * @brief Tworzy nowy wybuch na podanej pozycji.
- *
- * Funkcja alokuje pamięć na nowy wybuch, ustawia jego pozycję i czas trwania,
- * a także tworzy bitmapę grafiki wybuchu.
- *
- * @param explosions Podwójny wskaźnik na początek listy wybuchów.
- * @param x Współrzędna x pozycji wybuchu.
- * @param y Współrzędna y pozycji wybuchu.
- */
+
+
+#include "graphics.h"
+#include "bomb.h"
+#include "sounds.h"
+
+
+// RYSOWANIE 
 void createExplosion(Explosion** explosions, int x, int y) {
     Explosion* newExplosion = malloc(sizeof(Explosion));
 
@@ -25,35 +19,19 @@ void createExplosion(Explosion** explosions, int x, int y) {
     al_set_target_bitmap(newExplosion->graphic);
     al_draw_scaled_bitmap(explosionGraphic, 0, 0, al_get_bitmap_width(explosionGraphic), al_get_bitmap_height(explosionGraphic), 0, 0, TILE, TILE, 0);
 
+
+
     newExplosion->next = *explosions;
     *explosions = newExplosion;
 }
 
-/**
- * @brief Rysuje wszystkie wybuchy na ekranie gry.
- *
- * Funkcja ustawia cel rysowania na ekran gry i rysuje wszystkie wybuchy
- * z listy wybuchów w odpowiednich pozycjach.
- *
- * @param explosions Podwójny wskaźnik na początek listy wybuchów.
- * @param gameDisplay Bitmapa reprezentująca ekran gry.
- */
 void drawExplosion(Explosion* explosions, ALLEGRO_BITMAP* gameDisplay) {
     al_set_target_bitmap(gameDisplay);
     for (Explosion* explosion = explosions; explosion != NULL; explosion = explosion->next) {
-        al_draw_bitmap(explosion->graphic, explosion->position.x, explosion->position.y, 0);
+       al_draw_bitmap(explosion->graphic, explosion->position.x, explosion->position.y, 0);
     }
 }
 
-/**
- * @brief Usuwa wybuch z listy wybuchów i zwalnia pamięć.
- *
- * Funkcja usuwa podany wybuch z listy wybuchów, zwalniając pamięć zajętą przez
- * jego bitmapę grafiki oraz samą strukturę wybuchu.
- *
- * @param explosions Podwójny wskaźnik na początek listy wybuchów.
- * @param endExplosion Wskaźnik na wybuch do usunięcia.
- */
 void endExplosion(Explosion** explosions, Explosion* endExplosion) {
     if (*explosions == endExplosion) {
         *explosions = endExplosion->next;
@@ -70,40 +48,18 @@ void endExplosion(Explosion** explosions, Explosion* endExplosion) {
     free(endExplosion);
 }
 
-/**
- * @brief Aktualizuje wybuchy na ekranie i usuwa te, których czas życia minął.
- *
- * Funkcja zmniejsza czas życia każdego wybuchu o odpowiednią wartość na podstawie
- * liczby klatek na sekundę (FPS). Jeśli czas życia wybuchu spadnie poniżej zera,
- * usuwa go z listy wybuchów.
- *
- * @param explosions Podwójny wskaźnik na początek listy wybuchów.
- */
 void endExplosions(Explosion** explosions) {
     for (Explosion* explosion = *explosions; explosion != NULL; explosion = explosion->next) {
         explosion->time -= 1.0 / FPS;
 
         if (explosion->time <= 0) {
-            endExplosion(explosions, explosion);
+            endExplosion(explosions, explosion);           
             break;
-        }
+        }        
     }
 }
 
-/**
- * @brief Obsługuje logikę wybuchu bomby.
- *
- * Funkcja generuje wybuch bomby na podstawie jej pozycji i mocy, niszcząc bloki
- * oraz raniąc graczy. Wybuch jest generowany w pięciu kierunkach: góra, dół, lewo,
- * prawo oraz środek.
- *
- * @param bomb Wskaźnik na bombę, która wybuchła.
- * @param blocks Podwójny wskaźnik na początek listy bloków na planszy.
- * @param players Tablica graczy.
- * @param playerNumber Liczba graczy.
- * @param explosions Podwójny wskaźnik na początek listy wybuchów.
- */
-
+// LOGIKA WYBUCHU
 void explosion(Bomb* bomb, Block** blocks, Player* players, int playerNumber, Explosion** explosions) {
     int x = bomb->position.x;
     int y = bomb->position.y;

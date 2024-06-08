@@ -1,12 +1,4 @@
-﻿
-/**
- * @file main.c
- * @brief Plik główny programu.
- *
- * Ten plik zawiera funkcje główne programu, takie jak menu główne, menu informacyjne oraz funkcję main().
- */
-
-#include "game.h"
+﻿#include "game.h"
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
@@ -16,19 +8,14 @@
 #include "graphics.h"
 #include "sounds.h"
 
-// Deklaracje zmiennych globalnych
-ALLEGRO_EVENT event; /**< Zmienna przechowująca aktualne zdarzenie. */
-ALLEGRO_DISPLAY* display; /**< Zmienna przechowująca wskaźnik na okno programu. */
-ALLEGRO_EVENT_QUEUE* event_queue; /**< Kolejka zdarzeń obsługująca wejście od użytkownika. */
-ALLEGRO_KEYBOARD_STATE keyState; /**< Stan klawiatury. */
-ALLEGRO_TIMER* timer; /**< Timer odpowiedzialny za odświeżanie ekranu. */
-ALLEGRO_FONT* font; /**< Czcionka używana w grze. */
+ALLEGRO_EVENT event;
+ALLEGRO_DISPLAY* display;
+ALLEGRO_EVENT_QUEUE* event_queue;
+ALLEGRO_KEYBOARD_STATE keyState;
+ALLEGRO_TIMER* timer;
+ALLEGRO_FONT* font;
 
-/**
- * @brief Funkcja rysująca główne menu gry.
- *
- * @param background Obraz tła menu.
- */
+
 void drawMainMenu(ALLEGRO_BITMAP* background) {
 	
 	ALLEGRO_BITMAP* logo = al_load_bitmap("graphics/logo.png");
@@ -38,15 +25,7 @@ void drawMainMenu(ALLEGRO_BITMAP* background) {
 }
 
 
-/**
- * @brief Funkcja obsługująca menu wyboru opcji gry.
- *
- * @param gamework Wskaźnik na zmienną określającą stan gry.
- * @param work Wskaźnik na zmienną określającą stan menu.
- * @param playerNumber Wskaźnik na zmienną przechowującą liczbę graczy.
- * @param map Wskaźnik na zmienną przechowującą wybraną mapę.
- * @param background Obraz tła menu.
- */
+
 void ChooseMenu(bool* gamework, bool* work, int* playerNumber, int* map, ALLEGRO_BITMAP* background) {
 	int choice = 1;
 	*playerNumber = 2;
@@ -190,9 +169,7 @@ void ChooseMenu(bool* gamework, bool* work, int* playerNumber, int* map, ALLEGRO
 	al_destroy_bitmap(background);
 }
 
-/**
- * @brief Funkcja wyświetlająca ogólne informacje o grze.
- */
+
 void infoGeneral() {
 	ALLEGRO_FONT* fontInfo = al_load_font("graphics/font.ttf", 60, 0);
 
@@ -254,9 +231,7 @@ void infoGeneral() {
 
 // ***************************
 
-/**
- * @brief Funkcja wyświetlająca informacje o bonusach w grze.
- */
+
 void infoPowerups() {
 	ALLEGRO_FONT* fontInfo = al_load_font("graphics/font.ttf", 25, 0);
 	ALLEGRO_BITMAP* graphics[] = {
@@ -308,11 +283,7 @@ void infoPowerups() {
 }
 
 
-/**
- * @brief Funkcja obsługująca menu informacyjne.
- *
- * @param background Obraz tła menu.
- */
+
 void infoMenu(ALLEGRO_BITMAP* background) {
 	int choice = 1;
 	
@@ -363,14 +334,7 @@ void infoMenu(ALLEGRO_BITMAP* background) {
 }
 
 
-/**
- * @brief Funkcja obsługująca menu główne.
- *
- * @param playerNumber Wskaźnik na zmienną przechowującą liczbę graczy.
- * @param map Wskaźnik na zmienną przechowującą wybraną mapę.
- * @param gamework Wskaźnik na zmienną określającą stan gry.
- * @param APPWORK Wskaźnik na zmienną określającą stan działania aplikacji.
- */
+
 void mainMenu(int* playerNumber, int* map, bool* gamework, bool* APPWORK) {
 	static int choice = 1;
 	bool work = true;
@@ -420,11 +384,7 @@ void mainMenu(int* playerNumber, int* map, bool* gamework, bool* APPWORK) {
 	}
 }
 
-/**
- * @brief Funkcja główna programu.
- *
- * @return Wartość zwracana przez funkcję main().
- */
+
 int main() {
 	int playerNumber = 0, map = 0;
 	bool gamework = false;
