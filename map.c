@@ -47,7 +47,7 @@ void createMap(Block** blocks, int map[9][17], Player* players, int playerNumber
                     break;
                 default:
                     if (map[i][j] == -1) { addBlock(blocks, (j + 1) * TILE, (i + 1) * TILE, map[i][j]); }
-                    else if (rand() % 20 == 0) { addBlock(blocks, (j + 1) * TILE, (i + 1) * TILE, 2); }
+                    else if (rand() % 10 == 0) { addBlock(blocks, (j + 1) * TILE, (i + 1) * TILE, 2); }
                     else if (rand() % 20 == 0) break;
                     else { addBlock(blocks, (j + 1) * TILE, (i + 1) * TILE, map[i][j]); };
                     break;
