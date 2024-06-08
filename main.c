@@ -1,4 +1,12 @@
-﻿#include "game.h"
+﻿
+/**
+ * @file main.c
+ * @brief Plik główny programu.
+ *
+ * Ten plik zawiera funkcje główne programu, takie jak menu główne, menu informacyjne oraz funkcję main().
+ */
+
+#include "game.h"
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
@@ -8,16 +16,21 @@
 #include "graphics.h"
 #include "sounds.h"
 
-ALLEGRO_EVENT event;
-ALLEGRO_DISPLAY* display;
-ALLEGRO_EVENT_QUEUE* event_queue;
-ALLEGRO_KEYBOARD_STATE keyState;
-ALLEGRO_TIMER* timer;
-ALLEGRO_FONT* font;
+ // Deklaracje zmiennych globalnych
+ALLEGRO_EVENT event; /**< Zmienna przechowująca aktualne zdarzenie. */
+ALLEGRO_DISPLAY* display; /**< Zmienna przechowująca wskaźnik na okno programu. */
+ALLEGRO_EVENT_QUEUE* event_queue; /**< Kolejka zdarzeń obsługująca wejście od użytkownika. */
+ALLEGRO_KEYBOARD_STATE keyState; /**< Stan klawiatury. */
+ALLEGRO_TIMER* timer; /**< Timer odpowiedzialny za odświeżanie ekranu. */
+ALLEGRO_FONT* font; /**< Czcionka używana w grze. */
 
-
+/**
+ * @brief Funkcja rysująca główne menu gry.
+ *
+ * @param background Obraz tła menu.
+ */
 void drawMainMenu(ALLEGRO_BITMAP* background) {
-	
+
 	ALLEGRO_BITMAP* logo = al_load_bitmap("graphics/logo.png");
 	al_set_target_bitmap(al_get_backbuffer(display));
 	al_draw_bitmap(background, 0, 0, 0);
@@ -25,12 +38,20 @@ void drawMainMenu(ALLEGRO_BITMAP* background) {
 }
 
 
-
+/**
+ * @brief Funkcja obsługująca menu wyboru opcji gry.
+ *
+ * @param gamework Wskaźnik na zmienną określającą stan gry.
+ * @param work Wskaźnik na zmienną określającą stan menu.
+ * @param playerNumber Wskaźnik na zmienną przechowującą liczbę graczy.
+ * @param map Wskaźnik na zmienną przechowującą wybraną mapę.
+ * @param background Obraz tła menu.
+ */
 void ChooseMenu(bool* gamework, bool* work, int* playerNumber, int* map, ALLEGRO_BITMAP* background) {
 	int choice = 1;
 	*playerNumber = 2;
 	*map = 0;
-	
+
 
 	al_set_target_bitmap(al_get_backbuffer(display));
 	al_draw_bitmap(background, 0, 0, 0);
@@ -169,7 +190,9 @@ void ChooseMenu(bool* gamework, bool* work, int* playerNumber, int* map, ALLEGRO
 	al_destroy_bitmap(background);
 }
 
-
+/**
+ * @brief Funkcja wyświetlająca ogólne informacje o grze.
+ */
 void infoGeneral() {
 	ALLEGRO_FONT* fontInfo = al_load_font("graphics/font.ttf", 60, 0);
 
@@ -179,11 +202,11 @@ void infoGeneral() {
 	for (int i = 0; i < 4; ++i) {
 		int x = (i % 2 == 0) ? 190 : 1040;
 		int y = (i < 2) ? 100 : 455;
-		
-		al_draw_filled_rounded_rectangle(x, y, x + 660, y +335, 45, 45, colors[i]);
-		al_draw_rounded_rectangle(x, y, x + 660, y +335, 45, 45, al_map_rgb(0, 0, 0), 5);
+
+		al_draw_filled_rounded_rectangle(x, y, x + 660, y + 335, 45, 45, colors[i]);
+		al_draw_rounded_rectangle(x, y, x + 660, y + 335, 45, 45, al_map_rgb(0, 0, 0), 5);
 		al_draw_bitmap(playerIdleGraphics[i], x + 15, y + 15, 0);
-		al_draw_textf(fontInfo, al_map_rgb(255, 255, 255), x + 330, y + 30, ALLEGRO_ALIGN_CENTER, "PLAYER %d", i+1);
+		al_draw_textf(fontInfo, al_map_rgb(255, 255, 255), x + 330, y + 30, ALLEGRO_ALIGN_CENTER, "PLAYER %d", i + 1);
 	}
 
 	// AUTORZY
@@ -192,7 +215,7 @@ void infoGeneral() {
 	al_draw_text(font, al_map_rgb(255, 255, 255), 945, 845, ALLEGRO_ALIGN_CENTER, "AUTORS: Kacper Bugara | Michal Cebula | Maciej Dudek");
 
 
-	
+
 	const char* keys[4][6] = {
 	{"W", "A", "S", "D", "E", "R"},
 	{"^", "<", "v", ">", "SH", "CT"},
@@ -206,32 +229,34 @@ void infoGeneral() {
 		int y = (i < 2) ? 315 : 670;
 
 
-		al_draw_filled_rounded_rectangle(x, y-105 , x+95, y-15, 20, 20, al_map_rgb(192, 192, 192)); // Góra
-		al_draw_rounded_rectangle(x, y-105, x + 95, y-15, 20, 20, al_map_rgb(0, 0, 0), 5);
-		al_draw_text(fontInfo, al_map_rgb(255, 255, 255), x+30, y-80, ALLEGRO_ALIGN_LEFT, keys[i][0]);
+		al_draw_filled_rounded_rectangle(x, y - 105, x + 95, y - 15, 20, 20, al_map_rgb(192, 192, 192)); // Góra
+		al_draw_rounded_rectangle(x, y - 105, x + 95, y - 15, 20, 20, al_map_rgb(0, 0, 0), 5);
+		al_draw_text(fontInfo, al_map_rgb(255, 255, 255), x + 30, y - 80, ALLEGRO_ALIGN_LEFT, keys[i][0]);
 
 		for (int j = -1; j < 2; j++) {
-			int gap = (j == 1 || j == -1) ? j*15 : 0;
-			al_draw_filled_rounded_rectangle(x+j*95+gap, y, x + (j + 1) * 95+gap, y + 95, 20, 20, al_map_rgb(192, 192, 192));
-			al_draw_rounded_rectangle(x + j * 95+gap, y, x + (j + 1) * 95+gap, y + 95, 20, 20, al_map_rgb(0, 0, 0), 5);
-			al_draw_text(fontInfo, al_map_rgb(255, 255, 255), x+j*95+30+gap, y+25, ALLEGRO_ALIGN_LEFT, keys[i][j+2]);
+			int gap = (j == 1 || j == -1) ? j * 15 : 0;
+			al_draw_filled_rounded_rectangle(x + j * 95 + gap, y, x + (j + 1) * 95 + gap, y + 95, 20, 20, al_map_rgb(192, 192, 192));
+			al_draw_rounded_rectangle(x + j * 95 + gap, y, x + (j + 1) * 95 + gap, y + 95, 20, 20, al_map_rgb(0, 0, 0), 5);
+			al_draw_text(fontInfo, al_map_rgb(255, 255, 255), x + j * 95 + 30 + gap, y + 25, ALLEGRO_ALIGN_LEFT, keys[i][j + 2]);
 		}
 
-		al_draw_bitmap(bombGraphic, x+260, y - 105, 0); // Bomba
-		al_draw_filled_rounded_rectangle(x+260, y, x+360, y+95, 20, 20, al_map_rgb(192, 192, 192));
-		al_draw_rounded_rectangle(x+260, y, x+360, y+95, 20, 20, al_map_rgb(0, 0, 0), 5);
-		al_draw_text(fontInfo, al_map_rgb(255, 255, 255), (i != 1)?x+290:x+270, y + 25, ALLEGRO_ALIGN_LEFT, keys[i][4]);
+		al_draw_bitmap(bombGraphic, x + 260, y - 105, 0); // Bomba
+		al_draw_filled_rounded_rectangle(x + 260, y, x + 360, y + 95, 20, 20, al_map_rgb(192, 192, 192));
+		al_draw_rounded_rectangle(x + 260, y, x + 360, y + 95, 20, 20, al_map_rgb(0, 0, 0), 5);
+		al_draw_text(fontInfo, al_map_rgb(255, 255, 255), (i != 1) ? x + 290 : x + 270, y + 25, ALLEGRO_ALIGN_LEFT, keys[i][4]);
 
-		al_draw_bitmap(powerBaseGraphic, x+375, y - 105, 0); // POWER
-		al_draw_filled_rounded_rectangle(x+375, y, x+475, y+95, 20, 20, al_map_rgb(192, 192, 192));
-		al_draw_rounded_rectangle(x+375, y, x+475, y+95, 20, 20, al_map_rgb(0, 0, 0), 5);
-		al_draw_text(fontInfo, al_map_rgb(255, 255, 255), (i != 1) ? x+405:x+385, y+25, ALLEGRO_ALIGN_LEFT, keys[i][5]);
+		al_draw_bitmap(powerBaseGraphic, x + 375, y - 105, 0); // POWER
+		al_draw_filled_rounded_rectangle(x + 375, y, x + 475, y + 95, 20, 20, al_map_rgb(192, 192, 192));
+		al_draw_rounded_rectangle(x + 375, y, x + 475, y + 95, 20, 20, al_map_rgb(0, 0, 0), 5);
+		al_draw_text(fontInfo, al_map_rgb(255, 255, 255), (i != 1) ? x + 405 : x + 385, y + 25, ALLEGRO_ALIGN_LEFT, keys[i][5]);
 	}
 }
 
 // ***************************
 
-
+/**
+ * @brief Funkcja wyświetlająca informacje o bonusach w grze.
+ */
 void infoPowerups() {
 	ALLEGRO_FONT* fontInfo = al_load_font("graphics/font.ttf", 25, 0);
 	ALLEGRO_BITMAP* graphics[] = {
@@ -265,7 +290,7 @@ void infoPowerups() {
 		"Press skill button to teleport to a random location. \n(One-time use)"
 	};
 
-	
+
 
 	for (int i = 0; i < numGraphics; ++i) {
 		int col = i % 2;
@@ -283,10 +308,14 @@ void infoPowerups() {
 }
 
 
-
+/**
+ * @brief Funkcja obsługująca menu informacyjne.
+ *
+ * @param background Obraz tła menu.
+ */
 void infoMenu(ALLEGRO_BITMAP* background) {
 	int choice = 1;
-	
+
 	bool redraw = true;
 
 	al_set_target_bitmap(al_get_backbuffer(display));
@@ -334,7 +363,14 @@ void infoMenu(ALLEGRO_BITMAP* background) {
 }
 
 
-
+/**
+ * @brief Funkcja obsługująca menu główne.
+ *
+ * @param playerNumber Wskaźnik na zmienną przechowującą liczbę graczy.
+ * @param map Wskaźnik na zmienną przechowującą wybraną mapę.
+ * @param gamework Wskaźnik na zmienną określającą stan gry.
+ * @param APPWORK Wskaźnik na zmienną określającą stan działania aplikacji.
+ */
 void mainMenu(int* playerNumber, int* map, bool* gamework, bool* APPWORK) {
 	static int choice = 1;
 	bool work = true;
@@ -342,7 +378,7 @@ void mainMenu(int* playerNumber, int* map, bool* gamework, bool* APPWORK) {
 	drawMainMenu(background);
 
 	while (work) {
-		
+
 		al_set_target_bitmap(al_get_backbuffer(display));
 
 		const char* options[] = { "START", "INFO", "EXIT" };
@@ -363,7 +399,7 @@ void mainMenu(int* playerNumber, int* map, bool* gamework, bool* APPWORK) {
 			else if (event.keyboard.keycode == ALLEGRO_KEY_DOWN || event.keyboard.keycode == ALLEGRO_KEY_S) {
 				choice = (choice != 3) ? choice + 1 : 1;
 			}
-			
+
 			else if (event.keyboard.keycode == ALLEGRO_KEY_ENTER) {
 				switch (choice) {
 				case 1: // START
@@ -384,7 +420,11 @@ void mainMenu(int* playerNumber, int* map, bool* gamework, bool* APPWORK) {
 	}
 }
 
-
+/**
+ * @brief Funkcja główna programu.
+ *
+ * @return Wartość zwracana przez funkcję main().
+ */
 int main() {
 	int playerNumber = 0, map = 0;
 	bool gamework = false;
@@ -425,9 +465,10 @@ int main() {
 		al_wait_for_event(event_queue, &event);
 		al_get_keyboard_state(&keyState);
 
-		if (!gamework) { 
-			mainMenu(&playerNumber, &map, &gamework, &APPWORK); 
-		} else {
+		if (!gamework) {
+			mainMenu(&playerNumber, &map, &gamework, &APPWORK);
+		}
+		else {
 			game(playerNumber, map, &gamework);
 		}
 	};
