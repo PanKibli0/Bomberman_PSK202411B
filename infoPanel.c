@@ -3,13 +3,27 @@
 
 extern ALLEGRO_FONT* font;
 
+/**
+ * @file infoPanel.c
+ * @brief Deklaracja funkcji odpowiedzialnych za rysowanie panelu informacyjnego dla graczy w grze Bomberman.
+ */
+
+ /**
+  * @brief Funkcja odpowiedzialna za rysowanie panelu informacyjnego dla graczy.
+  *
+  * Rysuje informacje o zdrowiu, iloœci bomb, sile bomb oraz aktywnych power-upach dla ka¿dego gracza na panelu informacyjnym.
+  *
+  * @param infoPanel Bitmapa panelu informacyjnego.
+  * @param players Tablica graczy.
+  * @param playerNumber Liczba graczy.
+  */
 void drawInfoPanel(ALLEGRO_BITMAP* infoPanel, Player* players, int playerNumber) {
     ALLEGRO_BITMAP** playerInfo = malloc(playerNumber * sizeof(ALLEGRO_BITMAP*));
     for (int i = 0; i < playerNumber; i++) {
         playerInfo[i] = al_create_bitmap(340, 130);
         al_set_target_bitmap(playerInfo[i]);
 
-        al_draw_filled_rounded_rectangle(0, 0, 340, 130, 10, 10, players[i].color); 
+        al_draw_filled_rounded_rectangle(0, 0, 340, 130, 10, 10, players[i].color);
 
         if (players[i].health > 0) {
             al_draw_scaled_bitmap(heartGraphic, 0, 0, al_get_bitmap_width(bombGraphic), al_get_bitmap_height(bombGraphic), 45, 10, 50, 50, 0);
@@ -56,3 +70,5 @@ void drawInfoPanel(ALLEGRO_BITMAP* infoPanel, Player* players, int playerNumber)
     }
     free(playerInfo);
 }
+
+#endif /* INFO_H */

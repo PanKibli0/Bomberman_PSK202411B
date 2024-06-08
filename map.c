@@ -1,6 +1,18 @@
+/**
+ * @file map.c
+ * @brief Plik Ÿród³owy zawieraj¹cy implementacjê funkcji zwi¹zanych z map¹.
+ */
+
 #include "map.h"
 #include "config.h"
 
+ /**
+  * @brief Funkcja tworz¹ca granice mapy.
+  *
+  * Tworzy granice mapy poprzez dodawanie bloków na jej krawêdziach.
+  *
+  * @param blocks tablica wskaŸników na bloki mapy
+  */
 void createBorder(Block** blocks) {
     // lewo prawo
     for (int i = 0; i < 19; i++) {
@@ -15,6 +27,16 @@ void createBorder(Block** blocks) {
     }
 }
 
+/**
+ * @brief Funkcja tworz¹ca mapê gry.
+ *
+ * Tworzy mapê gry na podstawie przekazanej tablicy dwuwymiarowej.
+ *
+ * @param blocks tablica wskaŸników na bloki mapy
+ * @param map tablica dwuwymiarowa reprezentuj¹ca uk³ad bloków na mapie
+ * @param players tablica struktur reprezentuj¹cych graczy
+ * @param playerNumber liczba graczy
+ */
 void createMap(Block** blocks, int map[9][17], Player* players, int playerNumber) {
     for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 17; j++) {
@@ -22,27 +44,27 @@ void createMap(Block** blocks, int map[9][17], Player* players, int playerNumber
                 switch (map[i][j]) {
                     // void initPlayer(Player* player, unsigned int health, int x, int y, float velocity, int bombAmount, int bombPower, ALLEGRO_COLOR color, int controlKeys[5]);
 
-                case 10: // Player 1
+                case 10: // Gracz 1
                     if (playerNumber >= 1) {
-                        initPlayer(players, 0, 3, (j + 1) * TILE, (i + 1) * TILE, 2, 1, 1, al_map_rgb(106,55,113), (int[]) { ALLEGRO_KEY_W, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_A, ALLEGRO_KEY_E, ALLEGRO_KEY_R });
+                        initPlayer(players, 0, 3, (j + 1) * TILE, (i + 1) * TILE, 2, 1, 1, al_map_rgb(106, 55, 113), (int[]) { ALLEGRO_KEY_W, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_A, ALLEGRO_KEY_E, ALLEGRO_KEY_R });
                     }
                     break;
-                case 20: // Player 2
+                case 20: // Gracz 2
                     if (playerNumber >= 2) {
-                        initPlayer(players,1, 3, (j + 1) * TILE, (i + 1) * TILE, 2, 1, 1, al_map_rgb(237, 28, 36), (int[]) { ALLEGRO_KEY_UP, ALLEGRO_KEY_DOWN, ALLEGRO_KEY_RIGHT, ALLEGRO_KEY_LEFT, ALLEGRO_KEY_RSHIFT, ALLEGRO_KEY_RCTRL });
+                        initPlayer(players, 1, 3, (j + 1) * TILE, (i + 1) * TILE, 2, 1, 1, al_map_rgb(237, 28, 36), (int[]) { ALLEGRO_KEY_UP, ALLEGRO_KEY_DOWN, ALLEGRO_KEY_RIGHT, ALLEGRO_KEY_LEFT, ALLEGRO_KEY_RSHIFT, ALLEGRO_KEY_RCTRL });
                     }
                     break;
-                case 30: // Player 3
+                case 30: // Gracz 3
                     if (playerNumber >= 3) {
-                        initPlayer(players,2, 3, (j + 1) * TILE, (i + 1) * TILE, 2, 1, 1, al_map_rgb(0, 73, 232), (int[]) { ALLEGRO_KEY_I, ALLEGRO_KEY_K, ALLEGRO_KEY_L, ALLEGRO_KEY_J, ALLEGRO_KEY_O, ALLEGRO_KEY_P });
+                        initPlayer(players, 2, 3, (j + 1) * TILE, (i + 1) * TILE, 2, 1, 1, al_map_rgb(0, 73, 232), (int[]) { ALLEGRO_KEY_I, ALLEGRO_KEY_K, ALLEGRO_KEY_L, ALLEGRO_KEY_J, ALLEGRO_KEY_O, ALLEGRO_KEY_P });
                     }
                     break;
-                case 40: // Player 4
+                case 40: // Gracz 4
                     if (playerNumber >= 4) {
-                        initPlayer(players,3 ,3, (j + 1) * TILE, (i + 1) * TILE, 2, 1, 1, al_map_rgb(1, 194, 0), (int[]) { ALLEGRO_KEY_PAD_8, ALLEGRO_KEY_PAD_5, ALLEGRO_KEY_PAD_6, ALLEGRO_KEY_PAD_4, ALLEGRO_KEY_PAD_SLASH, ALLEGRO_KEY_PAD_ASTERISK });
+                        initPlayer(players, 3, 3, (j + 1) * TILE, (i + 1) * TILE, 2, 1, 1, al_map_rgb(1, 194, 0), (int[]) { ALLEGRO_KEY_PAD_8, ALLEGRO_KEY_PAD_5, ALLEGRO_KEY_PAD_6, ALLEGRO_KEY_PAD_4, ALLEGRO_KEY_PAD_SLASH, ALLEGRO_KEY_PAD_ASTERISK });
                     }
                     else if (playerNumber == 2) {
-                        initPlayer(players,1, 3, (j + 1) * TILE, (i + 1) * TILE, 2, 1, 1, al_map_rgb(237, 28, 36), (int[]) { ALLEGRO_KEY_UP, ALLEGRO_KEY_DOWN, ALLEGRO_KEY_RIGHT, ALLEGRO_KEY_LEFT, ALLEGRO_KEY_RSHIFT, ALLEGRO_KEY_RCTRL });
+                        initPlayer(players, 1, 3, (j + 1) * TILE, (i + 1) * TILE, 2, 1, 1, al_map_rgb(237, 28, 36), (int[]) { ALLEGRO_KEY_UP, ALLEGRO_KEY_DOWN, ALLEGRO_KEY_RIGHT, ALLEGRO_KEY_LEFT, ALLEGRO_KEY_RSHIFT, ALLEGRO_KEY_RCTRL });
                     }
                     break;
                 default:
@@ -59,11 +81,24 @@ void createMap(Block** blocks, int map[9][17], Player* players, int playerNumber
 }
 
 
-
+/**
+ * @brief Generuje uk³ad mapy na podstawie podanego indeksu mapy.
+ *
+ * Ta funkcja generuje uk³ad mapy na podstawie podanego indeksu mapy.
+ * Ka¿da mapa jest reprezentowana jako dwuwymiarowa tablica liczb ca³kowitych,
+ * gdzie ka¿da liczba ca³kowita reprezentuje okreœlony rodzaj bloku lub elementu na mapie.
+ *
+ * @param blocks Tablica wskaŸników do struktur Block.
+ * @param players Tablica struktur Player.
+ * @param playerNumber Liczba graczy.
+ * @param mapIndex Indeks uk³adu mapy do wygenerowania.
+ * @param CHANCE WskaŸnik do liczby ca³kowitej reprezentuj¹cej wartoœæ szansy.
+ */
 void mapLayout(Block** blocks, Player* players, int playerNumber, int mapIndex, int* CHANCE) {
 
     switch (mapIndex) {
     case 1: {
+        // Definicja uk³adu mapy dla mapy 1
         int map[9][17] = {
             {10, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 30},
             {0, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 0},
@@ -75,8 +110,8 @@ void mapLayout(Block** blocks, Player* players, int playerNumber, int mapIndex, 
             {0, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 0},
             {20, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 40}
         };
-        *CHANCE = 100;
-        createMap(blocks, map, players, playerNumber);
+        *CHANCE = 100; // Ustawienie wartoœci szansy
+        createMap(blocks, map, players, playerNumber); // Stworzenie mapy
         break;
     };
     case 2: {
