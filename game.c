@@ -158,7 +158,7 @@ void game(int playerNumber, int map, bool* gamework) {
         al_get_keyboard_state(&keyState);
 
         if (event.type == ALLEGRO_EVENT_TIMER) {
-            if (rand() % CHANCE == 0) {
+            if (rand() % 1 == 0) {
                 createPowerUp(&powerUps, players, playerNumber, blocks, bombs);
             };
 

@@ -95,8 +95,44 @@ void createPowerUp(PowerUp** powerUps, Player* players, int playerNumber, Block*
     newPowerUp->graphic = al_create_bitmap(TILE, TILE);
     al_set_target_bitmap(newPowerUp->graphic);
     switch (newPowerUp->type) {
-        // Rysowanie odpowiedniej grafiki dla danego typu PowerUp'a
+    case HEALTH:
+        al_draw_scaled_bitmap(powerHealthGraphic, 0, 0, al_get_bitmap_width(powerHealthGraphic), al_get_bitmap_height(powerHealthGraphic), 0, 0, TILE, TILE, 0);
+        break;
+    case BOMB_POWER_UP:
+        al_draw_scaled_bitmap(powerBombPowerUpGraphic, 0, 0, al_get_bitmap_width(powerBombPowerUpGraphic), al_get_bitmap_height(powerBombPowerUpGraphic), 0, 0, TILE, TILE, 0);
+        break;
+    case BOMB_POWER_DOWN:
+        al_draw_scaled_bitmap(powerBombPowerDownGraphic, 0, 0, al_get_bitmap_width(powerBombPowerDownGraphic), al_get_bitmap_height(powerBombPowerDownGraphic), 0, 0, TILE, TILE, 0);
+        break;
+    case VELOCITY_UP:
+        al_draw_scaled_bitmap(powerVelocityUpGraphic, 0, 0, al_get_bitmap_width(powerVelocityUpGraphic), al_get_bitmap_height(powerVelocityUpGraphic), 0, 0, TILE, TILE, 0);
+        break;
+    case VELOCITY_DOWN:
+        al_draw_scaled_bitmap(powerVelocityDownGraphic, 0, 0, al_get_bitmap_width(powerVelocityDownGraphic), al_get_bitmap_height(powerVelocityDownGraphic), 0, 0, TILE, TILE, 0);
+        break;
+    case BOMB_LIMIT_UP:
+        al_draw_scaled_bitmap(powerBombLimitUpGraphic, 0, 0, al_get_bitmap_width(powerBombLimitUpGraphic), al_get_bitmap_height(powerBombLimitUpGraphic), 0, 0, TILE, TILE, 0);
+        break;
+    case BOMB_LIMIT_DOWN:
+        al_draw_scaled_bitmap(powerBombLimitDownGraphic, 0, 0, al_get_bitmap_width(powerBombLimitDownGraphic), al_get_bitmap_height(powerBombLimitDownGraphic), 0, 0, TILE, TILE, 0);
+        break;
+    case SHIELD:
+        al_draw_scaled_bitmap(powerShieldGraphic, 0, 0, al_get_bitmap_width(powerShieldGraphic), al_get_bitmap_height(powerShieldGraphic), 0, 0, TILE, TILE, 0);
+        break;
+    case INVISIBILITY:
+        al_draw_scaled_bitmap(powerInvisibilityGraphic, 0, 0, al_get_bitmap_width(powerInvisibilityGraphic), al_get_bitmap_height(powerInvisibilityGraphic), 0, 0, TILE, TILE, 0);
+        break;
+    case KICK:
+        al_draw_scaled_bitmap(powerKickGraphic, 0, 0, al_get_bitmap_width(powerKickGraphic), al_get_bitmap_height(powerKickGraphic), 0, 0, TILE, TILE, 0);
+        break;
+    case BOMB_THIEF:
+        al_draw_scaled_bitmap(powerBombThiefGraphic, 0, 0, al_get_bitmap_width(powerBombThiefGraphic), al_get_bitmap_height(powerBombThiefGraphic), 0, 0, TILE, TILE, 0);
+        break;
+    case RANDOM_TELEPORT:
+        al_draw_scaled_bitmap(powerRandomTeleportGraphic, 0, 0, al_get_bitmap_width(powerRandomTeleportGraphic), al_get_bitmap_height(powerRandomTeleportGraphic), 0, 0, TILE, TILE, 0);
+        break;
     }
+
 
     newPowerUp->next = *powerUps;
     *powerUps = newPowerUp;
